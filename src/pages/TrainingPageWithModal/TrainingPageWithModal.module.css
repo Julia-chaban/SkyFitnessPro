@@ -1,0 +1,291 @@
+.userProfileWrapper {
+    position: absolute;
+    top: 46px;
+    left: 1132px;
+    width: 168.35px;
+    height: 50px;
+    z-index: 100;
+}
+
+.page {
+    width: 1440px;
+    min-height: 1559px;
+    background: #FAFAFA;
+    position: relative;
+    margin: 0 auto;
+}
+
+/* Затемнение для всей страницы */
+.pageOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.logo {
+    position: absolute;
+    top: 50px;
+    left: 140px;
+    width: 220px;
+    height: 35px;
+    object-fit: contain;
+    z-index: 1001;
+}
+
+.contentBlock {
+    position: absolute;
+    top: 145px;
+    left: 140px;
+    width: 1160px;
+    height: 1154px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    z-index: 1001;
+}
+
+.title {
+    width: 810px;
+    height: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 60px;
+    line-height: 100%;
+    color: #000000;
+    margin: 0;
+}
+
+.videoContainer {
+    width: 1160px;
+    height: 639px;
+}
+
+.videoImage {
+    width: 1160px;
+    height: 639px;
+    object-fit: cover;
+}
+
+.exercisesBlock {
+    width: 1160px;
+    height: 375px;
+    border-radius: 30px;
+    padding: 40px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    box-sizing: border-box;
+}
+
+.exercisesContent {
+    width: 1080px;
+    height: 295px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.exercisesTitle {
+    width: 403px;
+    height: 35px;
+    font-family: 'StratosSkyeng', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.exercisesGrid {
+    width: 1080px;
+    height: 148px;
+    display: flex;
+    gap: 60px;
+}
+
+.exerciseColumn {
+    width: 320px;
+    height: 148px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exerciseItem {
+    width: 320px;
+    height: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.exerciseText {
+    width: 320px;
+    height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.progressBarBg {
+    width: 320px;
+    height: 6px;
+    border-radius: 50px;
+    background: #F7F7F7;
+    position: relative;
+}
+
+.progressBarFill {
+    height: 6px;
+    border-radius: 50px;
+    background: #BCEC30;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progressButton {
+    width: 320px;
+    height: 52px;
+    border-radius: 46px;
+    padding: 16px 26px;
+    background: #BCEC30;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    box-sizing: border-box;
+
+}
+
+.progressButton:hover {
+    opacity: 0.9;
+}
+
+/* Модальное окно */
+.modalContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 426px;
+    height: 595.5px;
+    border-radius: 30px;
+    padding: 40px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    z-index: 2000;
+}
+
+.modalTitle {
+    width: 346px;
+    height: 35px;
+    font-family: 'StratosSkyeng', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.scrollableContent {
+    width: 346px;
+    height: 432.5px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
+}
+
+.scrollableContent::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollableContent::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.scrollableContent::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 10px;
+    min-height: 80px;
+}
+
+.progressItem {
+    width: 320px;
+    height: 102px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.questionText {
+    width: 320px;
+    height: 40px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.inputField {
+    width: 320px;
+    height: 52px;
+    border-radius: 8px;
+    border: 1px solid #D0CECE;
+    padding: 16px 18px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    box-sizing: border-box;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #BCEC30;
+}
+
+.saveButton {
+    width: 346px;
+    height: 52px;
+    border-radius: 46px;
+    padding: 16px 26px;
+    background: #BCEC30;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease;
+    margin-top: auto;
+}
+
+.saveButton:hover {
+    opacity: 0.9;
+}

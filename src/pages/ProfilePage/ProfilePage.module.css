@@ -1,0 +1,284 @@
+.userProfileWrapper {
+    top: 46px;
+    left: 1132px;
+    width: 168.35px;
+    height: 50px;
+    z-index: 1000;
+    position: absolute;
+}
+
+.page {
+    width: 1440px;
+    min-height: 1559px;
+    background: #FAFAFA;
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo {
+    position: absolute;
+    top: 51px;
+    left: 140px;
+    width: 220px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.contentBlock {
+    width: 1160px;
+    height: 1134px;
+    position: absolute;
+    top: 145px;
+    left: 140px;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.profileTitle {
+    width: 810px;
+    height: 44px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.profileCard {
+    width: 1160px;
+    height: 257px;
+    border-radius: 30px;
+    padding: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    box-sizing: border-box;
+}
+
+.profileInner {
+    width: 530px;
+    height: 197px;
+    display: flex;
+    gap: 33px;
+}
+
+.profileIcon {
+    width: 197px;
+    height: 197px;
+}
+
+.profileIcon img {
+    width: 197px;
+    height: 197px;
+    object-fit: cover;
+}
+
+.profileInfo {
+    width: 300px;
+    height: 197px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profileName {
+    width: 300px;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.profileLogin {
+    width: 300px;
+    height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.logoutButton {
+    width: 192px;
+    height: 52px;
+    border-radius: 46px;
+    border: 1px solid #000000;
+    padding: 16px 26px;
+    background: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.coursesSection {
+    width: 1160px;
+    height: 733px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.coursesTitle {
+    width: 810px;
+    height: 44px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.coursesGrid {
+    width: 1160px;
+    height: 649px;
+    display: flex;
+    gap: 40px;
+}
+
+.courseCard {
+    width: 360px;
+    height: 649px;
+    border-radius: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.courseImage {
+    width: 360px;
+    height: 325px;
+    object-fit: cover;
+}
+
+.courseContent {
+    width: 300px;
+    height: 285px;
+    margin: 24px 30px 0 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.courseTitle {
+    width: 300px;
+    height: 35px;
+    font-family: 'StratosSkyeng', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.iconsRow {
+    width: 300px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.daysIcon {
+    width: 103px;
+    height: 38px;
+}
+
+.timeIcon {
+    width: 163px;
+    height: 38px;
+}
+
+.difficultyIcon {
+    width: 129px;
+    height: 38px;
+    display: block;
+}
+
+.progressSection {
+    width: 300px;
+    height: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+.progressText {
+    width: 128px;
+    height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.progressBarBg {
+    width: 300px;
+    height: 6px;
+    border-radius: 50px;
+    background: #F7F7F7;
+    position: relative;
+}
+
+.progressBarFill {
+    height: 6px;
+    border-radius: 50px;
+    background: #00C1FF;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.courseButton {
+    width: 300px;
+    height: 52px;
+    border-radius: 46px;
+    padding: 16px 26px;
+    background: #BCEC30;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    box-sizing: border-box;
+
+}
+
+.imageContainer {
+    position: relative;
+    width: 360px;
+    height: 325px;
+}
+
+.deletedCourse {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.deletedCourse .courseButton {
+    background: #CCCCCC;
+    cursor: not-allowed;
+}
+
+.disabledButton {
+    background: #CCCCCC;
+    cursor: not-allowed;
+    pointer-events: none;
+}

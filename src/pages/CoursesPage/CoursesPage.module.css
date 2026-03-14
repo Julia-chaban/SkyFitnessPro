@@ -1,0 +1,93 @@
+.userProfileWrapper {
+    position: absolute;
+    top: 46px;
+    left: 1132px;
+    width: 168.35px;
+    height: 50px;
+    z-index: 1000;
+}
+
+.page {
+    width: 1440px;
+    min-height: 1559px;
+    background: #FAFAFA;
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo {
+    position: absolute;
+    top: 50px;
+    left: 140px;
+    width: 220px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.loginButton {
+    position: absolute;
+    top: 50px;
+    left: 1197px;
+    width: 103px;
+    height: 52px;
+    background: #BCEC30;
+    border-radius: 46px;
+    padding: 16px 26px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.subtitle {
+    position: absolute;
+    top: 100px;
+    left: 140px;
+    width: 327px;
+    height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    opacity: 0.5;
+    margin: 0;
+}
+
+.title {
+    position: absolute;
+    top: 180px;
+    left: 140px;
+    width: 947px;
+    height: 120px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 60px;
+    font-weight: 500;
+    line-height: 100%;
+    color: #000000;
+    margin-top: 8px;
+}
+
+.greenBlock {
+    position: absolute;
+    top: 180px;
+    left: 1011px;
+    width: 288px;
+    height: 120.17px;
+    object-fit: contain;
+}
+
+.coursesGrid {
+    position: absolute;
+    top: 350px;
+    left: 140px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 1200px;
+}

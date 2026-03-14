@@ -1,0 +1,72 @@
+.card {
+    width: 360px;
+    height: 501px;
+    background: #FFFFFF;
+    border-radius: 30px;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.imageContainer {
+    position: relative;
+    width: 360px;
+    height: 325px;
+}
+
+.image {
+    width: 360px;
+    height: 325px;
+    border-radius: 30px;
+    object-fit: cover;
+    display: block;
+}
+
+.contentContainer {
+    width: 300px;
+    height: 137px;
+    margin-top: 24px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    width: 300px;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0 0 20px 0;
+}
+
+.firstRow {
+    display: flex;
+    gap: 6px;
+    width: 300px;
+    height: 38px;
+    margin-bottom: 0;
+}
+
+.daysIcon {
+    width: 103px;
+    height: 38px;
+    display: block;
+}
+
+.timeIcon {
+    width: 163px;
+    height: 38px;
+    display: block;
+}
+
+.difficultyIcon {
+    width: 129px;
+    height: 38px;
+    display: block;
+    margin-top: 8px;
+}

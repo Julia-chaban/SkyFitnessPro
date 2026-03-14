@@ -1,0 +1,160 @@
+.userProfileWrapper {
+    position: absolute;
+    top: 46px;
+    left: 1132px;
+    width: 168.35px;
+    height: 50px;
+    z-index: 100;
+}
+
+.page {
+    width: 1440px;
+    min-height: 1559px;
+    background: #FAFAFA;
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo {
+    position: absolute;
+    top: 50px;
+    left: 140px;
+    width: 220px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.contentBlock {
+    position: absolute;
+    top: 145px;
+    left: 140px;
+    width: 1160px;
+    height: 1154px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.title {
+    width: 810px;
+    height: 60px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 60px;
+    line-height: 100%;
+    color: #000000;
+    margin: 0;
+}
+
+.videoContainer {
+    width: 1160px;
+    height: 639px;
+}
+
+.videoImage {
+    width: 1160px;
+    height: 639px;
+    object-fit: cover;
+}
+
+.exercisesBlock {
+    width: 1160px;
+    height: 375px;
+    border-radius: 30px;
+    padding: 40px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    box-sizing: border-box;
+
+}
+
+.exercisesContent {
+    width: 1080px;
+    height: 203px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exercisesTitle {
+    width: 403px;
+    height: 35px;
+    font-family: 'StratosSkyeng', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.exercisesGrid {
+    width: 1080px;
+    height: 148px;
+    display: flex;
+    gap: 60px;
+}
+
+.exerciseColumn {
+    width: 320px;
+    height: 148px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exerciseItem {
+    width: 320px;
+    height: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.exerciseText {
+    width: 320px;
+    height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.progressBarBg {
+    width: 320px;
+    height: 6px;
+    border-radius: 50px;
+    background: #F7F7F7;
+    position: relative;
+}
+
+.progressBarFill {
+    height: 6px;
+    border-radius: 50px;
+    background: #BCEC30;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.progressButton {
+    width: 320px;
+    height: 52px;
+    border-radius: 46px;
+    padding: 16px 26px;
+    background: #BCEC30;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-top: 16px;
+}
+
+.progressButton:hover {
+    opacity: 0.9;
+}

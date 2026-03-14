@@ -1,0 +1,62 @@
+.iconContainer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    mix-blend-mode: screen;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.crossIcon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    mix-blend-mode: multiply;
+}
+
+.line {
+    position: absolute;
+    background: #000000;
+}
+
+.horizontal {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.vertical {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+/* Стиль для удаленного курса (горизонтальная палочка) */
+.minusIcon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    mix-blend-mode: multiply;
+}
+
+.minusLine {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #000000;
+    transform: translateY(-50%);
+}

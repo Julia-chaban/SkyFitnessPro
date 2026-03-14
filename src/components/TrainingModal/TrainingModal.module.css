@@ -1,0 +1,199 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modalContainer {
+    width: 460px;
+    height: 609px;
+    border-radius: 30px;
+    padding: 40px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.title {
+    width: 346px;
+    height: 35px;
+    font-family: 'StratosSkyeng', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.listContainer {
+    width: 380px;
+    height: 360px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.scrollableList {
+    width: 380px;
+    height: 360px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-right: 10px;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #000000 transparent;
+}
+
+/* Стилизация скролла для Chrome, Safari, Edge */
+.scrollableList::-webkit-scrollbar {
+    width: 6px;
+    min-height: 116px;
+}
+
+.scrollableList::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+.scrollableList::-webkit-scrollbar-thumb {
+    background: #000000;
+    border-radius: 10px;
+    min-height: 116px;
+}
+
+/* Линия под каждым элементом */
+.trainingItem {
+    width: 354px;
+    height: 54px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    padding-right: 16px;
+    position: relative;
+}
+
+.trainingItem::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 34px;
+    width: 320px;
+    height: 1px;
+    background: #D0CECE;
+    opacity: 0.3;
+}
+
+.checkboxContainer {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #D0CECE;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.checkboxChecked {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #BCEC30;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.checkmark {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #FFFFFF;
+    clip-path: polygon(14% 44%, 0 65%, 35% 100%, 100% 20%, 80% 0, 35% 55%);
+}
+
+.trainingInfo {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.trainingTitle {
+    width: 320px;
+    height: 26px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trainingSubtitle {
+    width: 320px;
+    height: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0 0 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.startButton {
+    width: 380px;
+    height: 52px;
+    border-radius: 46px;
+    padding: 16px 26px;
+    background: #BCEC30;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease;
+    margin-top: 20px;
+}
+
+.startButton:hover {
+    opacity: 0.9;
+}
+
+.startButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

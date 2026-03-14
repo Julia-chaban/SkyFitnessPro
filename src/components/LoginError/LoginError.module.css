@@ -1,0 +1,97 @@
+.loginErrorContainer {
+    width: 360px;
+    height: 465px;
+    gap: 48px;
+    border-radius: 30px;
+    padding: 40px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    width: 220px;
+    height: 35px;
+
+}
+
+.formContainer {
+    width: 280px;
+    height: 302px;
+    gap: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputField {
+    width: 280px;
+    height: 52px;
+    gap: 10px;
+    border-radius: 8px;
+    border: 1px solid #D0CECE;
+    padding: 16px 18px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    box-sizing: border-box;
+}
+
+.inputField::placeholder {
+    color: #D0CECE;
+}
+
+.loginButton {
+    width: 280px;
+    height: 52px;
+    gap: 10px;
+    border-radius: 46px;
+    padding: 16px 26px;
+    background: #BCEC30;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.registerButton {
+    width: 280px;
+    height: 52px;
+    gap: 10px;
+    border-radius: 46px;
+    border: 1px solid #000000;
+    padding: 16px 26px;
+    background: transparent;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+}
+
+.errorMessage {
+    width: 280px;
+    height: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 110%;
+    text-align: center;
+    color: #F84D4D;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

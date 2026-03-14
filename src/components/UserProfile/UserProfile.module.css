@@ -1,0 +1,52 @@
+.userProfile {
+    width: 168.35px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profileIconContainer {
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.profileIcon {
+    width: 41.67px;
+    height: 41.67px;
+
+    top: 4.17px;
+    left: 4.17px;
+}
+
+.profileIcon img {
+    width: 41.67px;
+    height: 41.67px;
+    object-fit: cover;
+}
+
+.profileData {
+    width: 79px;
+    height: 26px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+    text-align: right;
+    color: #000000;
+    white-space: nowrap;
+    margin-left: 8px;
+}
+
+.arrowIcon {
+    width: 8.03px;
+    height: 8.03px;
+    transform: rotate(-45deg);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000000;
+    border-top: none;
+    border-right: none;
+    margin-left: 12px;
+}

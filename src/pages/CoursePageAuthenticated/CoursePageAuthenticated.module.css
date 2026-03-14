@@ -1,0 +1,221 @@
+.userProfileWrapper {
+    position: absolute;
+    top: 46px;
+    left: 1132px;
+    width: 168.35px;
+    height: 50px;
+    z-index: 1000;
+}
+
+.page {
+    width: 1440px;
+    min-height: 1703px;
+    background: #FAFAFA;
+    position: relative;
+    margin: 0 auto;
+}
+
+.logo {
+    position: absolute;
+    top: 51px;
+    left: 140px;
+    width: 220px;
+    height: 35px;
+    object-fit: contain;
+}
+
+.loginButton {
+    position: absolute;
+    top: 50px;
+    left: 1197px;
+    width: 103px;
+    height: 52px;
+    background: #BCEC30;
+    border-radius: 46px;
+    padding: 16px 26px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: #000000;
+    font-weight: 400;
+    line-height: 110%;
+}
+
+.subtitle {
+    position: absolute;
+    top: 100px;
+    left: 140px;
+    width: 327px;
+    height: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    opacity: 0.5;
+    margin: 0;
+}
+
+.courseImage {
+    position: absolute;
+    top: 180px;
+    left: 140px;
+    width: 1160px;
+    height: 310px;
+    border-radius: 30px;
+    object-fit: cover;
+}
+
+.sectionTitle {
+    position: absolute;
+    left: 140px;
+    width: 810px;
+    height: 44px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 110%;
+    color: #000000;
+    margin: 0;
+}
+
+.forYouTitle {
+    top: 540px;
+}
+
+.blocksRow {
+    position: absolute;
+    top: 614px;
+    left: 122px;
+    display: flex;
+    gap: 10px;
+    width: 1160px;
+}
+
+.block {
+    height: 141px;
+    border-radius: 28px;
+    padding: 20px;
+    object-fit: cover;
+}
+
+.block1 {
+    width: 368px;
+}
+
+.block2 {
+    width: 431px;
+}
+
+.block3 {
+    width: 327px;
+}
+
+.directionsTitle {
+    top: 805px;
+}
+
+.directionsImage {
+    position: absolute;
+    top: 879px;
+    left: 140px;
+    width: 1160px;
+    height: 146px;
+    border-radius: 28px;
+    object-fit: cover;
+    box-sizing: border-box;
+}
+
+.offerBlock {
+    position: absolute;
+    top: 1065px;
+    left: 140px;
+    width: 1160px;
+    height: 588px;
+}
+
+.whiteBlock {
+    position: absolute;
+    top: 102px;
+    left: 0;
+    width: 1160px;
+    height: 486px;
+    background: #FFFFFF;
+}
+
+.textContent {
+    position: absolute;
+    top: 142px;
+    left: 40px;
+    width: 437px;
+    height: 406px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.offerTitle {
+    width: 398px;
+    height: 120px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 60px;
+    line-height: 100%;
+    color: #000000;
+    margin: 0;
+}
+
+.offerDescription {
+    width: 437px;
+    height: 178px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 110%;
+    color: #000000;
+    opacity: 0.6;
+    margin: 0;
+    white-space: pre-line;
+}
+
+.offerButton {
+    width: 437px;
+    height: 52px;
+    background: #BCEC30;
+    border-radius: 46px;
+    padding: 16px 26px;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 110%;
+    color: #000000;
+    cursor: pointer;
+}
+
+.block4 {
+    position: absolute;
+    top: 0;
+    left: 615.19px;
+    width: 487px;
+    height: 542.49px;
+    object-fit: contain;
+    transform: rotate(2.99deg);
+    z-index: 1;
+}
+
+.block5 {
+    position: absolute;
+    top: 182.6px;
+    left: 445.06px;
+    width: 670.18px;
+    height: 390.98px;
+    object-fit: contain;
+    transform: rotate(12.38deg);
+    border-width: 10.14px;
+    z-index: 2;
+}
