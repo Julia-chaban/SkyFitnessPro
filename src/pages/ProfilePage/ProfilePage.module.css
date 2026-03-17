@@ -176,8 +176,8 @@
 .courseTitle {
     width: 300px;
     height: 35px;
-    font-family: 'StratosSkyeng', sans-serif;
-    font-weight: 400;
+    font-family: 'Roboto';
+    font-weight: 500;
     font-size: 32px;
     line-height: 110%;
     color: #000000;
@@ -281,4 +281,268 @@
     background: #CCCCCC;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* Планшеты (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .page {
+        width: 100%;
+        max-width: 1024px;
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 30px;
+    }
+
+    .userProfileWrapper {
+        right: 30px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 30px;
+        width: calc(100% - 60px);
+    }
+
+    .coursesGrid {
+        gap: 20px;
+    }
+
+    .courseCard {
+        width: calc(33.33% - 14px);
+    }
+}
+
+/* Маленькие ноутбуки (1025px - 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .page {
+        width: 100%;
+        max-width: 1280px;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 40px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+}
+
+/* Средние ноутбуки (1281px - 1440px) */
+@media (min-width: 1281px) and (max-width: 1440px) {
+    .page {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+/* Большие экраны (1441px и больше) */
+@media (min-width: 1441px) {
+    .page {
+        width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+    .page {
+        width: 100%;
+        min-height: 100vh;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        position: relative;
+        top: 40px;
+        left: 0px;
+        width: 220px;
+        height: 35px;
+    }
+
+    .userProfileWrapper {
+        position: absolute;
+        top: 40px;
+        right: 16px;
+        left: auto;
+        width: auto;
+        max-width: 140px;
+    }
+
+    .userProfile {
+        width: auto;
+        gap: 4px;
+    }
+
+    .profileIcon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .profileIcon img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .profileData {
+        font-size: 18px;
+        width: auto;
+    }
+
+    .contentBlock {
+        position: relative;
+        top: 115px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        gap: 30px;
+    }
+
+    .profileTitle {
+        width: 100%;
+        font-size: 32px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .profileCard {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .profileInner {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profileIcon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+
+    .profileIcon img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profileInfo {
+        width: 100%;
+        height: auto;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profileName {
+        font-size: 24px;
+        width: 100%;
+    }
+
+    .profileLogin {
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .logoutButton {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .coursesSection {
+        width: 100%;
+        height: auto;
+        gap: 20px;
+    }
+
+    .coursesTitle {
+        width: 100%;
+        font-size: 32px;
+        height: auto;
+    }
+
+    .coursesGrid {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .courseCard {
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .courseImage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 360/325;
+    }
+
+    .courseContent {
+        width: calc(100% - 40px);
+        margin: 20px 20px;
+        height: auto;
+    }
+
+    .courseTitle {
+        font-size: 24px;
+        width: 100%;
+    }
+
+    .iconsRow {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .daysIcon,
+    .timeIcon,
+    .difficultyIcon {
+        width: calc(50% - 4px);
+        height: 38px;
+    }
+
+    .progressSection {
+        width: 100%;
+        height: auto;
+        margin-top: 15px;
+    }
+
+    .progressText {
+        font-size: 16px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .courseButton {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .imageContainer {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 360/325;
+    }
 }

@@ -210,3 +210,354 @@
     border-width: 10.14px;
     z-index: 2;
 }
+
+/* ========== МОБИЛЬНАЯ ВЕРСИЯ 375px ========== */
+@media (max-width: 375px) {
+    .page {
+        width: 375px;
+        min-height: 2075px;
+        padding: 0;
+        margin: 0 auto;
+        background: #FAFAFA;
+        position: relative;
+    }
+
+    /* Скрываем текст "Онлайн-тренировки для занятий дома" */
+    .subtitle {
+        display: none;
+    }
+
+    /* Логотип */
+    .logo {
+        position: absolute;
+        top: 40px;
+        left: 16px;
+        width: 220px;
+        height: 35px;
+        z-index: 10;
+    }
+
+    /* Кнопка войти */
+    .loginButton {
+        position: absolute;
+        top: 40px;
+        left: 276px;
+        width: 83px;
+        height: 36px;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 46px;
+        background: #BCEC30;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        z-index: 10;
+        border: none;
+        font-family: 'Roboto', sans-serif;
+        color: #000000;
+        font-weight: 400;
+    }
+
+    /* Основной контейнер контента */
+    .courseImage,
+    .sectionTitle,
+    .blocksRow,
+    .directionsTitle,
+    .directionsImage,
+    .block4,
+    .block5,
+    .offerBlock {
+        left: 16px;
+        right: auto;
+    }
+
+    /* Картинка курса (ioga.svg) */
+    .courseImage {
+        position: absolute;
+        top: 115px;
+        left: 16px;
+        width: 343px;
+        height: 389px;
+        object-fit: cover;
+        border-radius: 30px;
+    }
+
+    /* Заголовок "Подойдет для вас, если:" */
+    .forYouTitle {
+        top: 524px;
+        /* 115 + 389 + 20px */
+        left: 16px;
+        width: 343px;
+        font-size: 24px;
+        font-weight: 500;
+        height: 26px;
+    }
+
+    /* Блок с тремя картинками */
+    .blocksRow {
+        position: absolute;
+        top: 570px;
+        /* 524 + 26 + 20px */
+        left: 16px;
+        width: 343px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .block {
+        width: 343px;
+        height: 141px;
+        border-radius: 28px;
+        padding: 0px;
+        object-fit: cover;
+        box-sizing: border-box;
+    }
+
+    .block1,
+    .block2,
+    .block3 {
+        width: 343px;
+        height: 121px;
+    }
+
+    /* Заголовок "Направления" */
+    .directionsTitle {
+        top: 990px;
+        /* 570 + (141*3) + (16*2) + 20px */
+        left: 16px;
+        width: 343px;
+        font-size: 24px;
+        font-weight: 500;
+        height: 26px;
+    }
+
+
+
+    /* Картинка направлений (block6.svg) */
+    .directionsImage {
+        position: absolute;
+        top: 1040px;
+        /* 983 + 26 + 20px */
+        left: 16px;
+        width: 343px;
+        height: 336px;
+        border-radius: 28px;
+        object-fit: cover;
+        box-sizing: border-box;
+        z-index: 1;
+    }
+
+    .whiteBlock {
+        display: block;
+        /* Изменяем с none на block */
+        position: absolute;
+        top: 0;
+        /* Относительно offerBlock */
+        left: 0;
+        width: 343px;
+        height: 412px;
+        background: #FFFFFF;
+        border-radius: 30px;
+        box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+        z-index: 15;
+    }
+
+    /* Декоративные картинки */
+    .block4 {
+        position: absolute;
+        top: -320px;
+        left: 97.42px;
+        width: 313.22px;
+        height: 348.91px;
+        object-fit: contain;
+        transform: rotate(2.99deg);
+        z-index: 10;
+        display: block;
+        pointer-events: none;
+    }
+
+    .block5 {
+        position: absolute;
+        top: -270px;
+        left: -54px;
+        width: 474.94px;
+        height: 369.57px;
+        object-fit: contain;
+        z-index: 9;
+        display: block;
+        pointer-events: none;
+    }
+
+    /* Блок с предложением */
+    .offerBlock {
+        position: absolute;
+        top: 1633px;
+        left: 16px;
+        width: 343px;
+        height: 412px;
+        z-index: 10;
+    }
+
+    /* Внутренний блок контента */
+    .textContent {
+        position: absolute;
+        top: 30px;
+        /* Отступ сверху внутри белого блока */
+        left: 30px;
+        /* Отступ слева внутри белого блока */
+        width: 283px;
+        height: 352px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        z-index: 16;
+        background: transparent;
+        /* Прозрачный фон, так как белый блок уже есть */
+    }
+
+    /* Заголовок "Начните путь к новому телу" */
+    .offerTitle {
+        width: 283px;
+        height: 70px;
+        font-size: 32px;
+        line-height: 110%;
+        font-weight: 500;
+        color: #000000;
+        margin: 0;
+        white-space: normal;
+    }
+
+    /* Описание */
+    .offerDescription {
+        width: 283px;
+        height: auto;
+        font-size: 18px;
+        line-height: 110%;
+        color: #000000;
+        opacity: 0.6;
+        margin: 0;
+        white-space: normal;
+    }
+
+    /* Кнопка */
+    .offerButton {
+        width: 283px;
+        height: 50px;
+        border-radius: 46px;
+        padding: 16px 26px;
+        background: #BCEC30;
+        border: none;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        color: #000000;
+        cursor: pointer;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+
+
+
+
+}
+
+/* Для очень маленьких экранов (до 320px) */
+@media (max-width: 320px) {
+    .logo {
+        left: 10px;
+        width: 180px;
+    }
+
+    .loginButton {
+        left: 230px;
+        width: 75px;
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .courseImage {
+        left: 10px;
+        width: 300px;
+        height: 340px;
+    }
+
+    .forYouTitle {
+        left: 10px;
+        width: 300px;
+        top: 480px;
+    }
+
+    .blocksRow {
+        left: 10px;
+        width: 300px;
+    }
+
+    .block {
+        width: 300px;
+        height: 120px;
+    }
+
+    .directionsTitle {
+        left: 10px;
+        width: 300px;
+        top: 900px;
+    }
+
+    .directionsImage {
+        left: 10px;
+        width: 300px;
+        height: 300px;
+        top: 950px;
+    }
+
+    .offerBlock {
+        left: 10px;
+        width: 300px;
+        height: 400px;
+        top: 1550px;
+        padding: 20px;
+    }
+
+    .textContent {
+        width: 260px;
+        height: auto;
+    }
+
+    .offerTitle {
+        width: 260px;
+        font-size: 28px;
+        height: 60px;
+    }
+
+    .offerDescription {
+        width: 260px;
+        font-size: 16px;
+    }
+
+    .offerButton {
+        width: 260px;
+        height: 48px;
+        padding: 14px 22px;
+        font-size: 15px;
+    }
+
+    .block4 {
+        left: 50px;
+        width: 250px;
+        height: auto;
+        top: 1300px;
+    }
+
+    .block5 {
+        left: -30px;
+        width: 280px;
+        height: auto;
+        top: 1380px;
+    }
+}

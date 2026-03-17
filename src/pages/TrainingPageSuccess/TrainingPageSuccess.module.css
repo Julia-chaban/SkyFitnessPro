@@ -264,3 +264,243 @@
     height: 56.67px;
     object-fit: contain;
 }
+
+/* Планшеты (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .page {
+        width: 100%;
+        max-width: 1024px;
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 30px;
+    }
+
+    .userProfileWrapper {
+        right: 30px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 30px;
+        width: calc(100% - 60px);
+    }
+
+    .exercisesGrid {
+        gap: 30px;
+    }
+
+    .exerciseColumn {
+        width: calc(33.33% - 20px);
+    }
+}
+
+/* Маленькие ноутбуки (1025px - 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .page {
+        width: 100%;
+        max-width: 1280px;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 40px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+}
+
+/* Средние ноутбуки (1281px - 1440px) */
+@media (min-width: 1281px) and (max-width: 1440px) {
+    .page {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+/* Большие экраны (1441px и больше) */
+@media (min-width: 1441px) {
+    .page {
+        width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+    .page {
+        width: 100%;
+        min-height: 100vh;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        position: relative;
+        top: 40px;
+        left: 0;
+        width: 220px;
+        height: 35px;
+    }
+
+    .userProfileWrapper {
+        position: absolute;
+        top: 40px;
+        right: 16px;
+        left: auto;
+        width: auto;
+        max-width: 140px;
+    }
+
+    .contentBlock {
+        position: relative;
+        top: 115px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        gap: 30px;
+    }
+
+    .title {
+        width: 100%;
+        font-size: 32px;
+        height: auto;
+        margin: 20px 0;
+    }
+
+    .videoContainer {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1160/639;
+    }
+
+    .videoImage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1160/639;
+    }
+
+    .successModal {
+        position: fixed;
+        /* Меняем с absolute на fixed */
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90% !important;
+        max-width: 343px !important;
+        height: auto !important;
+        min-height: 252px !important;
+        padding: 30px 20px !important;
+        margin: 0 auto;
+        z-index: 9999 !important;
+    }
+
+    .successTitle {
+        width: 100% !important;
+        height: auto !important;
+        font-size: 24px !important;
+        line-height: 110% !important;
+    }
+
+    .iconContainer {
+        width: 56px !important;
+        height: 56px !important;
+    }
+
+    .successIcon {
+        width: 46px !important;
+        height: 46px !important;
+        top: 5px !important;
+        left: 5px !important;
+    }
+
+    .successIcon img {
+        width: 46px !important;
+        height: 46px !important;
+    }
+}
+
+.exercisesBlock {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+}
+
+.exercisesContent {
+    width: 100%;
+    height: auto;
+    gap: 15px;
+}
+
+.exercisesTitle {
+    width: 100%;
+    font-size: 24px;
+    height: auto;
+    white-space: normal;
+}
+
+.exercisesGrid {
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.exerciseColumn {
+    width: 100%;
+    height: auto !important;
+}
+
+.exerciseColumnDefault,
+.exerciseColumnLarge {
+    height: auto !important;
+    min-height: auto;
+}
+
+.exerciseItem {
+    width: 100%;
+    height: auto;
+    min-height: 36px;
+}
+
+.exerciseItemLarge {
+    width: 100%;
+    height: auto;
+    min-height: 56px;
+}
+
+.exerciseText {
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    line-height: 20px;
+    white-space: normal;
+}
+
+.exerciseTextLarge {
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.progressBarBg {
+    width: 100%;
+}
+
+.progressButton {
+    width: 100%;
+    margin-top: 20px;
+}

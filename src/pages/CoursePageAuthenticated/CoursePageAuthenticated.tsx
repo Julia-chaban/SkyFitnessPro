@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
 import styles from "./CoursePageAuthenticated.module.css";
@@ -9,6 +9,7 @@ interface CoursePageAuthenticatedProps {
   onProfileClick?: () => void;
   onLogout?: () => void;
   onAddCourse?: () => void;
+  isAuthenticated?: boolean; // Добавлен проп
 }
 
 const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
@@ -17,9 +18,20 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   onProfileClick,
   onLogout,
   onAddCourse,
+  isAuthenticated = true, // По умолчанию true для этой страницы
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 375);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleProfileClick = () => {
     navigate("/profile");
@@ -31,8 +43,27 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   };
 
   const handleAddCourse = () => {
-    // Переход на страницу профиля (мои курсы)
     navigate("/profile");
+  };
+
+  const handleLoginClick = () => {
+    navigate("/auth");
+  };
+
+  // Выбор картинки курса в зависимости от мобильной версии
+  const getCourseImage = () => {
+    if (isMobile) {
+      return `${process.env.PUBLIC_URL}/images/ioga.svg`;
+    }
+    return `${process.env.PUBLIC_URL}/images/card${id}.svg`;
+  };
+
+  // Выбор картинки направлений
+  const getDirectionsImage = () => {
+    if (isMobile) {
+      return `${process.env.PUBLIC_URL}/images/block6.svg`;
+    }
+    return `${process.env.PUBLIC_URL}/images/block3.svg`;
   };
 
   return (
@@ -44,26 +75,28 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         className={styles.logo}
       />
 
-      {/* Профиль пользователя - ВАЖНО! Этот блок был потерян */}
-      <div className={styles.userProfileWrapper}>
-        <UserProfile
-          userName={userName}
-          userEmail={userEmail}
-          onProfileClick={handleProfileClick}
-          onLogout={handleLogout}
-          onAddCourse={handleAddCourse}
-        />
-      </div>
+      {/* Условный рендеринг: профиль или кнопка входа */}
+      {isAuthenticated ? (
+        <div className={styles.userProfileWrapper}>
+          <UserProfile
+            userName={userName}
+            userEmail={userEmail}
+            onProfileClick={handleProfileClick}
+            onLogout={handleLogout}
+            onAddCourse={handleAddCourse}
+          />
+        </div>
+      ) : (
+        <button className={styles.loginButton} onClick={handleLoginClick}>
+          Войти
+        </button>
+      )}
 
-      {/* Текст под логотипом */}
+      {/* Текст под логотипом - скрываем на мобильном через CSS */}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
       {/* Картинка курса */}
-      <img
-        src={`${process.env.PUBLIC_URL}/images/card1.svg`}
-        alt="Course"
-        className={styles.courseImage}
-      />
+      <img src={getCourseImage()} alt="Course" className={styles.courseImage} />
 
       {/* Заголовок "Подойдет для вас, если:" */}
       <h2 className={`${styles.sectionTitle} ${styles.forYouTitle}`}>
@@ -96,7 +129,7 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
 
       {/* Картинка направлений */}
       <img
-        src={`${process.env.PUBLIC_URL}/images/block3.svg`}
+        src={getDirectionsImage()}
         alt="Directions"
         className={styles.directionsImage}
       />

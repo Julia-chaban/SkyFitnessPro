@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./CoursePage.module.css";
 
@@ -9,11 +9,39 @@ interface CoursePageProps {
 const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 375);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleLoginClick = () => {
     if (onLoginClick) {
       onLoginClick();
     }
+  };
+
+  // Выбор картинки курса в зависимости от id и мобильной версии
+  const getCourseImage = () => {
+    if (isMobile) {
+      // В мобильной версии для всех курсов используем ioga.svg
+      return `${process.env.PUBLIC_URL}/images/ioga.svg`;
+    }
+    // В десктопной версии используем card1.svg, card2.svg и т.д.
+    return `${process.env.PUBLIC_URL}/images/card${id}.svg`;
+  };
+
+  // Выбор картинки направлений
+  const getDirectionsImage = () => {
+    if (isMobile) {
+      return `${process.env.PUBLIC_URL}/images/block6.svg`;
+    }
+    return `${process.env.PUBLIC_URL}/images/block3.svg`;
   };
 
   return (
@@ -33,9 +61,9 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
       {/* Текст под логотипом */}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
-      {/* Картинка курса */}
+      {/* Картинка курса - динамическая */}
       <img
-        src={`${process.env.PUBLIC_URL}/images/card1.svg`}
+        src={getCourseImage()}
         alt="Course"
         className={styles.courseImage}
       />
@@ -69,9 +97,9 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
         Направления
       </h2>
 
-      {/* Картинка направлений */}
+      {/* Картинка направлений - динамическая */}
       <img
-        src={`${process.env.PUBLIC_URL}/images/block3.svg`}
+        src={getDirectionsImage()}
         alt="Directions"
         className={styles.directionsImage}
       />
