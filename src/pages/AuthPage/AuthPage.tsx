@@ -8,8 +8,12 @@ import { courses } from "../../data/courses";
 import styles from "./AuthPage.module.css";
 
 interface AuthPageProps {
-  onLogin: (email: string, password: string) => boolean;
-  onRegister: (email: string, password: string, name: string) => boolean;
+  onLogin: (email: string, password: string) => Promise<boolean>;
+  onRegister: (
+    email: string,
+    password: string,
+    name: string,
+  ) => Promise<boolean>;
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
@@ -19,8 +23,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (email: string, password: string) => {
-    const success = onLogin(email, password);
+  const handleLoginSubmit = async (email: string, password: string) => {
+    const success = await onLogin(email, password);
     if (success) {
       navigate("/");
     } else {
@@ -29,20 +33,21 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
     }
   };
 
-  const handleRegisterSubmit = (
+  const handleRegisterSubmit = async (
     email: string,
     password: string,
     name: string,
   ) => {
-    const success = onRegister(email, password, name);
+    const success = await onRegister(email, password, name);
     if (success) {
       setShowSuccessMessage(true);
-      setIsLogin(true);
+      setIsLogin(true); // Переключаем на форму входа после успешной регистрации
       setShowError(false);
       setTimeout(() => setShowSuccessMessage(false), 3000);
     } else {
       setErrorMessage("Данная почта уже используется. Попробуйте войти.");
       setShowError(true);
+      setIsLogin(true); // Переключаем на форму входа при ошибке
     }
   };
 
@@ -76,7 +81,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
         className={styles.greenBlock}
       />
 
-      {/* Все 5 карточек курсов с полным описанием */}
+      {/* Все 5 карточек курсов */}
       <div className={styles.coursesGrid}>
         {courses.map((course) => (
           <div key={course.id} className={styles.courseCard}>

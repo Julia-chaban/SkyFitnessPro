@@ -6,12 +6,14 @@ import styles from "./TrainingPageSuccess.module.css";
 interface TrainingPageSuccessProps {
   userName?: string;
   userEmail?: string;
+  token?: string; // Добавлен token
   onLogout?: () => void;
 }
 
 const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
-  userName = "Анна",
-  userEmail = "anna@mail.com",
+  userName = "",
+  userEmail = "",
+  token,
   onLogout,
 }) => {
   const navigate = useNavigate();
@@ -65,6 +67,7 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
         <UserProfile
           userName={userName}
           userEmail={userEmail}
+          token={token}
           onProfileClick={handleProfileClick}
           onLogout={onLogout}
           onAddCourse={handleAddCourse}

@@ -6,12 +6,14 @@ import styles from "./TrainingPageUpdated.module.css";
 interface TrainingPageUpdatedProps {
   userName?: string;
   userEmail?: string;
+  token?: string; // Добавлен token
   onLogout?: () => void;
 }
 
 const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
-  userName = "Анна",
-  userEmail = "anna@mail.com",
+  userName = "",
+  userEmail = "",
+  token,
   onLogout,
 }) => {
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
   // Обновленные данные с прогрессом
   const exercises = [
     { name: "Наклоны вперед", progress: 40 },
-    { name: "Нклоны назад", progress: 40 },
+    { name: "Наклоны назад", progress: 40 },
     { name: "Поднятие ног, согнутых в коленях", progress: 40 },
     { name: "Наклоны вперед", progress: 40 },
     { name: "Наклоны назад", progress: 40 },
@@ -56,6 +58,7 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
         <UserProfile
           userName={userName}
           userEmail={userEmail}
+          token={token}
           onProfileClick={handleProfileClick}
           onLogout={onLogout}
           onAddCourse={handleAddCourse}

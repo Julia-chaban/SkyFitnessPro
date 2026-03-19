@@ -6,8 +6,10 @@ interface ProfileModalProps {
   onClose: () => void;
   userName: string;
   userEmail: string;
+  token?: string; // Добавлен token (опционально)
   onProfileClick?: () => void;
   onLogout?: () => void;
+  onAddCourse?: () => void;
 }
 
 const ProfileModal: React.FC<ProfileModalProps> = ({
@@ -15,8 +17,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   onClose,
   userName,
   userEmail,
+  token,
   onProfileClick,
   onLogout,
+  onAddCourse,
 }) => {
   if (!isOpen) return null;
 

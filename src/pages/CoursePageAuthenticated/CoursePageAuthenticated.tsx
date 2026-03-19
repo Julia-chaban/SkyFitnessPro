@@ -1,34 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
+import { coursesService } from "../../services/courses.service";
+import { getCourseImage } from "../../data/courseImages";
 import styles from "./CoursePageAuthenticated.module.css";
 
 interface CoursePageAuthenticatedProps {
   userName?: string;
   userEmail?: string;
+  token?: string;
   onProfileClick?: () => void;
   onLogout?: () => void;
   onAddCourse?: () => void;
-  isAuthenticated?: boolean; // Добавлен проп
 }
 
 const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
-  userName = "Anna",
-  userEmail = "anna@mail.com",
+  userName = "",
+  userEmail = "",
+  token,
   onProfileClick,
   onLogout,
   onAddCourse,
-  isAuthenticated = true, // По умолчанию true для этой страницы
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
+  const [isAdding, setIsAdding] = useState(false);
+  const [addError, setAddError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 375);
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -42,23 +45,38 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
     navigate("/");
   };
 
-  const handleAddCourse = () => {
-    navigate("/profile");
-  };
-
-  const handleLoginClick = () => {
-    navigate("/auth");
-  };
-
-  // Выбор картинки курса в зависимости от мобильной версии
-  const getCourseImage = () => {
-    if (isMobile) {
-      return `${process.env.PUBLIC_URL}/images/ioga.svg`;
+  const handleAddCourse = async () => {
+    if (!token || !id) {
+      setAddError("Необходима авторизация");
+      return;
     }
-    return `${process.env.PUBLIC_URL}/images/card${id}.svg`;
+
+    try {
+      setIsAdding(true);
+      setAddError(null);
+
+      // Вызываем API для добавления курса пользователю
+      const response = await coursesService.addCourseToUser(id, token);
+      console.log("Course added successfully:", response);
+
+      // Перенаправляем на страницу профиля
+      navigate("/profile");
+    } catch (err) {
+      console.error("Error adding course:", err);
+      setAddError(
+        err instanceof Error ? err.message : "Ошибка при добавлении курса",
+      );
+    } finally {
+      setIsAdding(false);
+    }
   };
 
-  // Выбор картинки направлений
+  const getCourseImageUrl = () => {
+    if (!id) return `${process.env.PUBLIC_URL}/images/default.jpg`;
+    const imageName = getCourseImage(id, isMobile);
+    return `${process.env.PUBLIC_URL}/images/${imageName}`;
+  };
+
   const getDirectionsImage = () => {
     if (isMobile) {
       return `${process.env.PUBLIC_URL}/images/block6.svg`;
@@ -68,42 +86,35 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
 
   return (
     <div className={styles.page}>
-      {/* Логотип */}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {/* Условный рендеринг: профиль или кнопка входа */}
-      {isAuthenticated ? (
-        <div className={styles.userProfileWrapper}>
-          <UserProfile
-            userName={userName}
-            userEmail={userEmail}
-            onProfileClick={handleProfileClick}
-            onLogout={handleLogout}
-            onAddCourse={handleAddCourse}
-          />
-        </div>
-      ) : (
-        <button className={styles.loginButton} onClick={handleLoginClick}>
-          Войти
-        </button>
-      )}
+      <div className={styles.userProfileWrapper}>
+        <UserProfile
+          userName={userName}
+          userEmail={userEmail}
+          token={token}
+          onProfileClick={handleProfileClick}
+          onLogout={handleLogout}
+          onAddCourse={handleAddCourse}
+        />
+      </div>
 
-      {/* Текст под логотипом - скрываем на мобильном через CSS */}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
-      {/* Картинка курса */}
-      <img src={getCourseImage()} alt="Course" className={styles.courseImage} />
+      <img
+        src={getCourseImageUrl()}
+        alt="Course"
+        className={styles.courseImage}
+      />
 
-      {/* Заголовок "Подойдет для вас, если:" */}
       <h2 className={`${styles.sectionTitle} ${styles.forYouTitle}`}>
         Подойдет для вас, если:
       </h2>
 
-      {/* Ряд из трех блоков */}
       <div className={styles.blocksRow}>
         <img
           src={`${process.env.PUBLIC_URL}/images/block.svg`}
@@ -122,24 +133,19 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         />
       </div>
 
-      {/* Заголовок "Направления" */}
       <h2 className={`${styles.sectionTitle} ${styles.directionsTitle}`}>
         Направления
       </h2>
 
-      {/* Картинка направлений */}
       <img
         src={getDirectionsImage()}
         alt="Directions"
         className={styles.directionsImage}
       />
 
-      {/* Блок с предложением */}
       <div className={styles.offerBlock}>
-        {/* Белый фон */}
         <div className={styles.whiteBlock} />
 
-        {/* Текстовый контент */}
         <div className={styles.textContent}>
           <h3 className={styles.offerTitle}>
             Начните путь <br />к новому телу
@@ -155,12 +161,16 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
             <br />
             помогают противостоять стрессам
           </p>
-          <button className={styles.offerButton} onClick={handleAddCourse}>
-            Добавить курс
+          {addError && <div className={styles.errorMessage}>{addError}</div>}
+          <button
+            className={styles.offerButton}
+            onClick={handleAddCourse}
+            disabled={isAdding}
+          >
+            {isAdding ? "Добавление..." : "Добавить курс"}
           </button>
         </div>
 
-        {/* Картинки справа */}
         <img
           src={`${process.env.PUBLIC_URL}/images/block4.svg`}
           alt="Decorative 1"

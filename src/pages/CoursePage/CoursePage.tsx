@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getCourseImage } from "../../data/courseImages";
 import styles from "./CoursePage.module.css";
 
 interface CoursePageProps {
@@ -16,8 +17,8 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
       setIsMobile(window.innerWidth <= 375);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const handleLoginClick = () => {
@@ -27,13 +28,10 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
   };
 
   // Выбор картинки курса в зависимости от id и мобильной версии
-  const getCourseImage = () => {
-    if (isMobile) {
-      // В мобильной версии для всех курсов используем ioga.svg
-      return `${process.env.PUBLIC_URL}/images/ioga.svg`;
-    }
-    // В десктопной версии используем card1.svg, card2.svg и т.д.
-    return `${process.env.PUBLIC_URL}/images/card${id}.svg`;
+  const getCourseImageUrl = () => {
+    if (!id) return `${process.env.PUBLIC_URL}/images/default.jpg`;
+    const imageName = getCourseImage(id, isMobile);
+    return `${process.env.PUBLIC_URL}/images/${imageName}`;
   };
 
   // Выбор картинки направлений
@@ -63,7 +61,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
 
       {/* Картинка курса - динамическая */}
       <img
-        src={getCourseImage()}
+        src={getCourseImageUrl()}
         alt="Course"
         className={styles.courseImage}
       />
