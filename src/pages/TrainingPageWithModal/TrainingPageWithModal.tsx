@@ -37,7 +37,6 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
   const [existingProgress, setExistingProgress] = useState<number[]>([]);
 
   useEffect(() => {
-    // Получаем courseId из query параметров
     const params = new URLSearchParams(location.search);
     const courseIdParam = params.get("courseId");
     if (courseIdParam) {
@@ -57,12 +56,10 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
     try {
       setLoading(true);
 
-      // Получаем данные тренировки
       const workout = await workoutsService.getWorkoutById(id, token);
       setWorkoutName(workout.name);
       setExercises(workout.exercises);
 
-      // Если есть courseId, получаем существующий прогресс
       if (courseId) {
         try {
           const progress = await coursesService.getWorkoutProgress(
@@ -95,7 +92,7 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    // Возвращаемся на страницу тренировки с сохранением courseId
+
     navigate(`/training/${id}${courseId ? `?courseId=${courseId}` : ""}`);
   };
 
@@ -113,7 +110,6 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
     }
 
     try {
-      // Сохраняем прогресс через API
       await workoutsService.saveWorkoutProgress(
         courseId,
         id,
@@ -121,7 +117,6 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         token,
       );
 
-      // Переходим на страницу успеха с courseId
       navigate(`/training/${id}/success?courseId=${courseId}`);
     } catch (err) {
       console.error("Error saving progress:", err);
@@ -152,17 +147,17 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
 
   return (
     <div className={styles.page}>
-      {/* Затемнение всей страницы */}
+      {}
       <div className={styles.pageOverlay} onClick={handleOverlayClick} />
 
-      {/* Логотип (поверх затемнения) */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {/* Профиль пользователя (поверх затемнения) */}
+      {}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
@@ -174,11 +169,11 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         />
       </div>
 
-      {/* Основной контент (поверх затемнения) */}
+      {}
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
-        {/* Видео */}
+        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -187,13 +182,13 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
           />
         </div>
 
-        {/* Блок с упражнениями */}
+        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки</h2>
 
             <div className={styles.exercisesGrid}>
-              {/* Разбиваем упражнения на 3 колонки */}
+              {}
               {[0, 1, 2].map((colIndex) => (
                 <div key={colIndex} className={styles.exerciseColumn}>
                   {exercises
@@ -236,7 +231,7 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         </div>
       </div>
 
-      {/* Модальное окно прогресса */}
+      {}
       <ProgressModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

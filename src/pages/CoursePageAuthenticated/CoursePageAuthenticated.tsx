@@ -11,7 +11,6 @@ interface CoursePageAuthenticatedProps {
   token?: string;
   onProfileClick?: () => void;
   onLogout?: () => void;
-  onAddCourse?: () => void;
 }
 
 const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
@@ -20,13 +19,11 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   token,
   onProfileClick,
   onLogout,
-  onAddCourse,
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
   const [isAdding, setIsAdding] = useState(false);
-  const [addError, setAddError] = useState<string | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,26 +43,14 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   };
 
   const handleAddCourse = async () => {
-    if (!token || !id) {
-      setAddError("Необходима авторизация");
-      return;
-    }
+    if (!token || !id || isAdding) return;
 
     try {
       setIsAdding(true);
-      setAddError(null);
-
-      // Вызываем API для добавления курса пользователю
-      const response = await coursesService.addCourseToUser(id, token);
-      console.log("Course added successfully:", response);
-
-      // Перенаправляем на страницу профиля
+      await coursesService.addCourseToUser(id, token);
       navigate("/profile");
     } catch (err) {
       console.error("Error adding course:", err);
-      setAddError(
-        err instanceof Error ? err.message : "Ошибка при добавлении курса",
-      );
     } finally {
       setIsAdding(false);
     }
@@ -99,7 +84,6 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
           token={token}
           onProfileClick={handleProfileClick}
           onLogout={handleLogout}
-          onAddCourse={handleAddCourse}
         />
       </div>
 
@@ -161,7 +145,6 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
             <br />
             помогают противостоять стрессам
           </p>
-          {addError && <div className={styles.errorMessage}>{addError}</div>}
           <button
             className={styles.offerButton}
             onClick={handleAddCourse}

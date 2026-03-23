@@ -6,7 +6,7 @@ import styles from "./TrainingPageSuccess.module.css";
 interface TrainingPageSuccessProps {
   userName?: string;
   userEmail?: string;
-  token?: string; // Добавлен token
+  token?: string;
   onLogout?: () => void;
 }
 
@@ -37,7 +37,6 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
     }
   };
 
-  // Пример данных с прогрессом
   const exercises = [
     { name: "Наклоны вперед", progress: 40 },
     { name: "Наклоны назад", progress: 40 },
@@ -52,17 +51,17 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
 
   return (
     <div className={styles.page}>
-      {/* Затемнение всей страницы */}
+      {}
       <div className={styles.pageOverlay} onClick={handleOverlayClick} />
 
-      {/* Логотип */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {/* Профиль пользователя */}
+      {}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
@@ -74,11 +73,11 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
         />
       </div>
 
-      {/* Основной контент */}
+      {}
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>Йога</h1>
 
-        {/* Видео */}
+        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -87,13 +86,13 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
           />
         </div>
 
-        {/* Блок с упражнениями */}
+        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки 2</h2>
 
             <div className={styles.exercisesGrid}>
-              {/* Первая колонка */}
+              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
               >
@@ -132,7 +131,7 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
                 </div>
               </div>
 
-              {/* Вторая колонка */}
+              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
               >
@@ -171,7 +170,7 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
                 </div>
               </div>
 
-              {/* Третья колонка - с большим последним элементом */}
+              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnLarge}`}
               >
@@ -221,7 +220,7 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
         </div>
       </div>
 
-      {/* Модальное окно успеха */}
+      {}
       <div className={styles.successModal}>
         <h2 className={styles.successTitle}>
           Ваш прогресс

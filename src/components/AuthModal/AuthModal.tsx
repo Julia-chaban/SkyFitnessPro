@@ -60,7 +60,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
     }
   };
 
-  // Login with error
   if (isLogin && showError) {
     return (
       <div className={styles.overlay}>
@@ -74,7 +73,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
     );
   }
 
-  // Register with error
   if (!isLogin && showError) {
     return (
       <div className={styles.overlay}>
@@ -88,7 +86,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
     );
   }
 
-  // Login without error
   if (isLogin) {
     return (
       <div className={styles.overlay}>
@@ -101,7 +98,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
     );
   }
 
-  // Register without error
   return (
     <div className={styles.overlay}>
       <Register

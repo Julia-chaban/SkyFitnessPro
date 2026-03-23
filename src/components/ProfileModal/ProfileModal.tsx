@@ -6,7 +6,7 @@ interface ProfileModalProps {
   onClose: () => void;
   userName: string;
   userEmail: string;
-  token?: string; // Добавлен token (опционально)
+  token?: string;
   onProfileClick?: () => void;
   onLogout?: () => void;
   onAddCourse?: () => void;

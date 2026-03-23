@@ -1,6 +1,5 @@
-// Базовый URL API
 export const API_BASE_URL = "http://localhost:3002/fitness";
-// Вспомогательная функция для запросов
+
 export async function request<T>(
   endpoint: string,
   options?: RequestInit,
@@ -17,7 +16,6 @@ export async function request<T>(
   try {
     data = await response.json();
   } catch {
-    // Если ответ не в формате JSON
     throw new Error("Ошибка сервера");
   }
 
@@ -28,7 +26,6 @@ export async function request<T>(
   return data;
 }
 
-// Функция для запросов с авторизацией
 export async function authRequest<T>(
   endpoint: string,
   token: string,

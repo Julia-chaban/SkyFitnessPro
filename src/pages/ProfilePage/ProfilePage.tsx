@@ -66,29 +66,23 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     try {
       setLoading(true);
 
-      // Получаем все курсы
       const allCourses: APICourse[] = await coursesService.getAllCourses();
 
-      // Получаем ID курсов пользователя (приобретенные курсы)
       const userCourseIds: string[] =
         await coursesService.getUserCourses(token);
 
-      // Фильтруем только те курсы, которые есть у пользователя
       const userCoursesData = allCourses.filter((course: APICourse) =>
         userCourseIds.includes(course._id),
       );
 
-      // Загружаем прогресс для каждого курса пользователя
       const userCourses = await Promise.all(
         userCoursesData.map(async (course: APICourse) => {
           try {
-            // Получаем прогресс по курсу
             const progress = await coursesService.getUserCourseProgress(
               course._id,
               token,
             );
 
-            // Вычисляем общий прогресс
             const totalWorkouts = progress.workoutsProgress.length;
             const completedWorkouts = progress.workoutsProgress.filter(
               (w) => w.workoutCompleted,
@@ -126,7 +120,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         }),
       );
 
-      // Фильтруем успешно загруженные курсы
       setCourses(userCourses.filter((c): c is LocalCourse => c !== null));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ошибка загрузки курсов");
@@ -166,7 +159,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     if (!token) return;
 
     try {
-      // Оптимистичное обновление UI
       setCourses((prevCourses) =>
         prevCourses.map((course) =>
           course.id === courseId
@@ -175,10 +167,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         ),
       );
 
-      // Вызов API для удаления курса
       await coursesService.removeCourseFromUser(courseId, token);
     } catch (err) {
-      // Откат при ошибке
       setCourses((prevCourses) =>
         prevCourses.map((course) =>
           course.id === courseId ? { ...course, isDeleted: false } : course,

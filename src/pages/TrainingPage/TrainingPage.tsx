@@ -35,7 +35,6 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
   const [courseId, setCourseId] = useState<string>("");
 
   useEffect(() => {
-    // Получаем courseId из query параметров
     const params = new URLSearchParams(location.search);
     const courseIdParam = params.get("courseId");
     if (courseIdParam) {
@@ -55,13 +54,11 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
     try {
       setLoading(true);
 
-      // Получаем данные тренировки
       const workout = await workoutsService.getWorkoutById(id, token);
       setWorkoutName(workout.name);
 
       let progressData: number[] = [];
 
-      // Если есть courseId, получаем прогресс по этой тренировке
       if (courseId) {
         try {
           const progress = await coursesService.getWorkoutProgress(
@@ -75,7 +72,6 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
         }
       }
 
-      // Добавляем прогресс к каждому упражнению
       const exercisesWithProgress = workout.exercises.map(
         (ex: Exercise, index: number) => ({
           ...ex,
@@ -102,7 +98,6 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
   };
 
   const handleOpenProgress = () => {
-    // Передаем courseId в query параметрах
     navigate(
       `/training/${id}/progress${courseId ? `?courseId=${courseId}` : ""}`,
     );
@@ -118,9 +113,9 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
   };
 
   const getProgressColor = (progress: number) => {
-    if (progress === 100) return "#00C1FF"; // Синий для завершенных
-    if (progress > 0) return "#BCEC30"; // Зеленый для частичного прогресса
-    return "#BCEC30"; // Зеленый для начала
+    if (progress === 100) return "#00C1FF";
+    if (progress > 0) return "#BCEC30";
+    return "#BCEC30";
   };
 
   if (loading)
@@ -159,7 +154,7 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
-        {/* Видео */}
+        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -168,13 +163,13 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
           />
         </div>
 
-        {/* Блок с упражнениями */}
+        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки</h2>
 
             <div className={styles.exercisesGrid}>
-              {/* Разбиваем упражнения на 3 колонки */}
+              {}
               {[0, 1, 2].map((colIndex) => (
                 <div key={colIndex} className={styles.exerciseColumn}>
                   {exercises

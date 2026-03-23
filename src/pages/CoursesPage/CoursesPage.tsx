@@ -29,7 +29,7 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375); // ← ВЕРНУТЬ!
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,7 +37,7 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // ← ВЕРНУТЬ!
+  }, []);
 
   useEffect(() => {
     loadCourses();

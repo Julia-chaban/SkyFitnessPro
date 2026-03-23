@@ -41,47 +41,47 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
     const success = await onRegister(email, password, name);
     if (success) {
       setShowSuccessMessage(true);
-      setIsLogin(true); // Переключаем на форму входа после успешной регистрации
+      setIsLogin(true); 
       setShowError(false);
       setTimeout(() => setShowSuccessMessage(false), 3000);
     } else {
       setErrorMessage("Данная почта уже используется. Попробуйте войти.");
       setShowError(true);
-      setIsLogin(true); // Переключаем на форму входа при ошибке
+      setIsLogin(true); 
     }
   };
 
   return (
     <div className={styles.page}>
-      {/* Логотип */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {/* Кнопка входа (ведет на ту же страницу) */}
+      {}
       <button className={styles.loginButton} onClick={() => {}}>
         Войти
       </button>
 
-      {/* Текст под логотипом */}
+      {}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
-      {/* Заголовок */}
+      {}
       <h1 className={styles.title}>
         Начните заниматься спортом
         <br />и улучшите качество жизни
       </h1>
 
-      {/* Зеленый блок */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/Group.svg`}
         alt="Измени своё тело за полгода"
         className={styles.greenBlock}
       />
 
-      {/* Все 5 карточек курсов */}
+      {}
       <div className={styles.coursesGrid}>
         {courses.map((course) => (
           <div key={course.id} className={styles.courseCard}>
@@ -114,7 +114,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
         ))}
       </div>
 
-      {/* Кнопка наверх */}
+      {}
       <button
         className={styles.scrollButton}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -123,7 +123,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
         <span>Наверх</span>
       </button>
 
-      {/* Форма авторизации поверх контента */}
+      {}
       <div className={styles.authOverlay}>
         <div className={styles.authContainer}>
           <div className={styles.toggleButtons}>

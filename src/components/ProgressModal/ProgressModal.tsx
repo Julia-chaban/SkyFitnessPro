@@ -14,7 +14,7 @@ interface ProgressModalProps {
   workoutId: string;
   courseId: string;
   exercises: Array<{ _id: string; name: string; quantity: number }>;
-  initialProgress?: number[]; // Добавлен проп для начального прогресса
+  initialProgress?: number[];
   onSave: (progressData: number[]) => Promise<void>;
 }
 
@@ -31,7 +31,6 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Инициализация прогресса при открытии модального окна
   useEffect(() => {
     if (isOpen) {
       const items = exercises.map((ex, index) => ({
@@ -67,7 +66,6 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
       setIsSaving(true);
       setError(null);
 
-      // Валидация: проверяем, что значения не превышают максимум
       const invalidItems = progressItems.filter(
         (item) => item.maxValue !== undefined && item.value > item.maxValue,
       );

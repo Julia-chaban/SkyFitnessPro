@@ -42,7 +42,7 @@ const TrainingModal: React.FC<TrainingModalProps> = ({
     try {
       setLoading(true);
       const data = await workoutsService.getCourseWorkouts(courseId, token);
-      // Добавляем номер дня (если его нет в API)
+
       const workoutsWithDays = data.map((w: any, index: number) => ({
         ...w,
         day: index + 1,

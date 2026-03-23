@@ -12,19 +12,13 @@ export default async function handler(req, res) {
     return res.status(401).json({ message: "Отсутствует Authorization токен" });
   }
 
-  console.log("Token received in /users/me/courses:", token);
-
   const decoded = verifyToken(token);
   if (!decoded) {
-    console.log("Invalid token");
     return res.status(401).json({ message: "Невалидный токен" });
   }
 
-  console.log("Decoded token:", decoded);
-
   const user = findUserByEmail(decoded.email);
   if (!user) {
-    console.log("User not found for email:", decoded.email);
     return res.status(404).json({ message: "Пользователь не найден" });
   }
 
@@ -41,10 +35,8 @@ export default async function handler(req, res) {
     if (!courses.includes(courseId)) {
       courses.push(courseId);
       updateUserCourses(user.email, courses);
-      console.log(`Course ${courseId} added to user ${user.email}`);
     }
 
-    // Возвращаем только message, как в документации
     return res.status(200).json({
       message: "Курс успешно добавлен!",
     });

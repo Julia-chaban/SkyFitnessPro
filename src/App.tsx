@@ -45,14 +45,14 @@ function AppContent() {
       const response = await authService.login(email, password);
 
       if (!response.token) {
-        throw new Error("Не получен токен авторизации");
+        throw new Error("Не получен токен");
       }
 
       const userData = await authService.getUserData(response.token);
 
-      const userEmail = userData?.user?.email || email;
-      const userName =
-        userData?.user?.email?.split("@")[0] || email.split("@")[0];
+      // API возвращает { user: { email: string } }
+      const userEmail = userData.user?.email || email;
+      const userName = userEmail.split("@")[0];
 
       const newUser = {
         email: userEmail,
@@ -68,11 +68,7 @@ function AppContent() {
     }
   };
 
-  const handleRegister = async (
-    email: string,
-    password: string,
-    name: string,
-  ) => {
+  const handleRegister = async (email: string, password: string) => {
     try {
       await authService.register(email, password);
       return true;
@@ -84,7 +80,6 @@ function AppContent() {
 
   const handleLogout = () => {
     setCurrentUser(null);
-    localStorage.removeItem("currentUser");
     navigate("/");
   };
 
@@ -126,7 +121,6 @@ function AppContent() {
               token={currentUser?.token}
               onProfileClick={() => navigate("/profile")}
               onLogout={handleLogout}
-              onAddCourse={() => {}}
             />
           }
         />
