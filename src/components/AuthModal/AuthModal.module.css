@@ -10,25 +10,3 @@
     z-index: 999;
 
 }
-
-/* Планшеты (768px - 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .overlay {
-        padding: 20px;
-    }
-}
-
-/* Маленькие ноутбуки (1025px - 1280px) */
-@media (min-width: 1025px) and (max-width: 1280px) {
-    .overlay {
-        padding: 30px;
-    }
-}
-
-/* Мобильные устройства (до 768px) */
-@media (max-width: 768px) {
-    .overlay {
-        padding: 16px;
-        align-items: center;
-    }
-}

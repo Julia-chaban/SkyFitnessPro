@@ -1,93 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
-import { workoutsService } from "../../services/workouts.service";
-import { coursesService } from "../../services/courses.service";
 import styles from "./TrainingPage.module.css";
-
-interface Exercise {
-  _id: string;
-  name: string;
-  quantity: number;
-  progress?: number;
-}
 
 interface TrainingPageProps {
   userName?: string;
   userEmail?: string;
-  token?: string;
   onLogout?: () => void;
 }
 
 const TrainingPage: React.FC<TrainingPageProps> = ({
-  userName = "",
-  userEmail = "",
-  token,
+  userName = "Анна",
+  userEmail = "anna@mail.com",
   onLogout,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { id } = useParams<{ id: string }>();
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [workoutName, setWorkoutName] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [courseId, setCourseId] = useState<string>("");
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const courseIdParam = params.get("courseId");
-    if (courseIdParam) {
-      setCourseId(courseIdParam);
-    }
-  }, [location]);
-
-  useEffect(() => {
-    if (token && id) {
-      loadWorkoutData();
-    }
-  }, [token, id, courseId]);
-
-  const loadWorkoutData = async () => {
-    if (!token || !id) return;
-
-    try {
-      setLoading(true);
-
-      const workout = await workoutsService.getWorkoutById(id, token);
-      setWorkoutName(workout.name);
-
-      let progressData: number[] = [];
-
-      if (courseId) {
-        try {
-          const progress = await coursesService.getWorkoutProgress(
-            courseId,
-            id,
-            token,
-          );
-          progressData = progress.progressData || [];
-        } catch (err) {
-          console.log("No progress found for this workout, starting from 0");
-        }
-      }
-
-      const exercisesWithProgress = workout.exercises.map(
-        (ex: Exercise, index: number) => ({
-          ...ex,
-          progress: progressData[index] || 0,
-        }),
-      );
-
-      setExercises(exercisesWithProgress);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Ошибка загрузки тренировки",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleProfileClick = () => {
     navigate("/profile");
@@ -98,63 +26,34 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
   };
 
   const handleOpenProgress = () => {
-    navigate(
-      `/training/${id}/progress${courseId ? `?courseId=${courseId}` : ""}`,
-    );
+    navigate(`/training/${id}/progress`); // Переход на страницу с модальным окном
   };
-
-  const calculateProgress = (exercise: Exercise) => {
-    return exercise.quantity > 0
-      ? Math.min(
-          Math.round(((exercise.progress || 0) / exercise.quantity) * 100),
-          100,
-        )
-      : 0;
-  };
-
-  const getProgressColor = (progress: number) => {
-    if (progress === 100) return "#00C1FF";
-    if (progress > 0) return "#BCEC30";
-    return "#BCEC30";
-  };
-
-  if (loading)
-    return (
-      <div className={styles.page}>
-        <div className={styles.loading}>Загрузка тренировки...</div>
-      </div>
-    );
-
-  if (error)
-    return (
-      <div className={styles.page}>
-        <div className={styles.error}>Ошибка: {error}</div>
-      </div>
-    );
 
   return (
     <div className={styles.page}>
+      {/* Логотип */}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
+      {/* Профиль пользователя */}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
           userEmail={userEmail}
-          token={token}
           onProfileClick={handleProfileClick}
           onLogout={onLogout}
           onAddCourse={handleAddCourse}
         />
       </div>
 
+      {/* Основной контент */}
       <div className={styles.contentBlock}>
-        <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
+        <h1 className={styles.title}>Йога</h1>
 
-        {}
+        {/* Видео */}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -163,38 +62,110 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
           />
         </div>
 
-        {}
+        {/* Блок с упражнениями */}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
-            <h2 className={styles.exercisesTitle}>Упражнения тренировки</h2>
+            <h2 className={styles.exercisesTitle}>Упражнения тренировки 2</h2>
 
             <div className={styles.exercisesGrid}>
-              {}
-              {[0, 1, 2].map((colIndex) => (
-                <div key={colIndex} className={styles.exerciseColumn}>
-                  {exercises
-                    .slice(colIndex * 3, colIndex * 3 + 3)
-                    .map((exercise) => {
-                      const progress = calculateProgress(exercise);
-                      return (
-                        <div key={exercise._id} className={styles.exerciseItem}>
-                          <p className={styles.exerciseText}>
-                            {exercise.name} {progress}%
-                          </p>
-                          <div className={styles.progressBarBg}>
-                            <div
-                              className={styles.progressBarFill}
-                              style={{
-                                width: `${progress}%`,
-                                backgroundColor: getProgressColor(progress),
-                              }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
+              {/* Первая колонка */}
+              <div className={styles.exerciseColumn}>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>Наклоны вперед 0%</p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
                 </div>
-              ))}
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>Наклоны назад 0%</p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>
+                    Поднятие ног, согнутых в коленях 0%
+                  </p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Вторая колонка */}
+              <div className={styles.exerciseColumn}>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>Наклоны вперед 0%</p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>Наклоны назад 0%</p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>
+                    Поднятие ног, согнутых в коленях 0%
+                  </p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Третья колонка */}
+              <div className={styles.exerciseColumn}>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>Наклоны вперед 0%</p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>Наклоны назад 0%</p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+                <div className={styles.exerciseItem}>
+                  <p className={styles.exerciseText}>
+                    Поднятие ног, согнутых в коленях 0%
+                  </p>
+                  <div className={styles.progressBarBg}>
+                    <div
+                      className={styles.progressBarFill}
+                      style={{ width: "0%" }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <button

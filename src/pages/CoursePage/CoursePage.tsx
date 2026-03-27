@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCourseImage } from "../../data/courseImages";
 import styles from "./CoursePage.module.css";
 
 interface CoursePageProps {
@@ -10,16 +9,6 @@ interface CoursePageProps {
 const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 375);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleLoginClick = () => {
     if (onLoginClick) {
@@ -27,49 +16,36 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
     }
   };
 
-  const getCourseImageUrl = () => {
-    if (!id) return `${process.env.PUBLIC_URL}/images/default.jpg`;
-    const imageName = getCourseImage(id, isMobile);
-    return `${process.env.PUBLIC_URL}/images/${imageName}`;
-  };
-
-  const getDirectionsImage = () => {
-    if (isMobile) {
-      return `${process.env.PUBLIC_URL}/images/block6.svg`;
-    }
-    return `${process.env.PUBLIC_URL}/images/block3.svg`;
-  };
-
   return (
     <div className={styles.page}>
-      {}
+      {/* Логотип */}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {}
+      {/* Кнопка входа */}
       <button className={styles.loginButton} onClick={handleLoginClick}>
         Войти
       </button>
 
-      {}
+      {/* Текст под логотипом */}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
-      {}
+      {/* Картинка курса */}
       <img
-        src={getCourseImageUrl()}
+        src={`${process.env.PUBLIC_URL}/images/card1.svg`}
         alt="Course"
         className={styles.courseImage}
       />
 
-      {}
+      {/* Заголовок "Подойдет для вас, если:" */}
       <h2 className={`${styles.sectionTitle} ${styles.forYouTitle}`}>
         Подойдет для вас, если:
       </h2>
 
-      {}
+      {/* Ряд из трех блоков */}
       <div className={styles.blocksRow}>
         <img
           src={`${process.env.PUBLIC_URL}/images/block.svg`}
@@ -88,24 +64,24 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
         />
       </div>
 
-      {}
+      {/* Заголовок "Направления" */}
       <h2 className={`${styles.sectionTitle} ${styles.directionsTitle}`}>
         Направления
       </h2>
 
-      {}
+      {/* Картинка направлений */}
       <img
-        src={getDirectionsImage()}
+        src={`${process.env.PUBLIC_URL}/images/block3.svg`}
         alt="Directions"
         className={styles.directionsImage}
       />
 
-      {}
+      {/* Блок с предложением */}
       <div className={styles.offerBlock}>
-        {}
+        {/* Белый фон */}
         <div className={styles.whiteBlock} />
 
-        {}
+        {/* Текстовый контент */}
         <div className={styles.textContent}>
           <h3 className={styles.offerTitle}>
             Начните путь <br />к новому телу
@@ -126,7 +102,7 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
           </button>
         </div>
 
-        {}
+        {/* Картинки справа */}
         <img
           src={`${process.env.PUBLIC_URL}/images/block4.svg`}
           alt="Decorative 1"

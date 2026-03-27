@@ -1,138 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
 import DeleteIcon from "../../components/DeleteIcon/DeleteIcon";
 import TrainingModal from "../../components/TrainingModal/TrainingModal";
-import { coursesService } from "../../services/courses.service";
-import { courseNames, getMainPageImage } from "../../data/courseImages";
-import { Course as APICourse } from "../../types/api.types";
 import styles from "./ProfilePage.module.css";
 
-interface LocalCourse {
-  id: string;
+interface Course {
+  id: number;
   title: string;
   image: string;
   progress: number;
   buttonText: string;
   isDeleted?: boolean;
-  workoutProgress?: {
-    completed: number;
-    total: number;
-  };
 }
 
 interface ProfilePageProps {
   userName?: string;
   userEmail?: string;
-  token?: string;
   onLogout?: () => void;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({
   userName = "",
   userEmail = "",
-  token,
   onLogout,
 }) => {
   const navigate = useNavigate();
   const [displayName] = useState(userName);
   const [displayEmail] = useState(userEmail);
   const [userLogin] = useState(userEmail.split("@")[0]);
-  const [selectedCourse, setSelectedCourse] = useState<LocalCourse | null>(
-    null,
-  );
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isTrainingModalOpen, setIsTrainingModalOpen] = useState(false);
-  const [courses, setCourses] = useState<LocalCourse[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 375);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
-    if (token) {
-      loadUserCourses();
-    }
-  }, [token]);
-
-  const loadUserCourses = async () => {
-    if (!token) return;
-    try {
-      setLoading(true);
-
-      const allCourses: APICourse[] = await coursesService.getAllCourses();
-
-      const userCourseIds: string[] =
-        await coursesService.getUserCourses(token);
-
-      const userCoursesData = allCourses.filter((course: APICourse) =>
-        userCourseIds.includes(course._id),
-      );
-
-      const userCourses = await Promise.all(
-        userCoursesData.map(async (course: APICourse) => {
-          try {
-            const progress = await coursesService.getUserCourseProgress(
-              course._id,
-              token,
-            );
-
-            const totalWorkouts = progress.workoutsProgress.length;
-            const completedWorkouts = progress.workoutsProgress.filter(
-              (w) => w.workoutCompleted,
-            ).length;
-
-            const overallProgress =
-              totalWorkouts > 0
-                ? Math.round((completedWorkouts / totalWorkouts) * 100)
-                : 0;
-
-            const courseName = courseNames[course._id] || course.nameRU;
-
-            return {
-              id: course._id,
-              title: course.nameRU,
-              image: getMainPageImage(courseName),
-              progress: overallProgress,
-              buttonText: getButtonText(
-                overallProgress,
-                completedWorkouts === 0,
-              ),
-              isDeleted: false,
-              workoutProgress: {
-                completed: completedWorkouts,
-                total: totalWorkouts,
-              },
-            } as LocalCourse;
-          } catch (err) {
-            console.error(
-              `Error loading progress for course ${course._id}:`,
-              err,
-            );
-            return null;
-          }
-        }),
-      );
-
-      setCourses(userCourses.filter((c): c is LocalCourse => c !== null));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Ошибка загрузки курсов");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getButtonText = (progress: number, isNew: boolean) => {
-    if (progress === 0 && isNew) return "Начать тренировки";
-    if (progress === 100) return "Начать заново";
-    return "Продолжить";
-  };
+  const [courses, setCourses] = useState<Course[]>([
+    {
+      id: 1,
+      title: "Йога",
+      image: "ioga.svg",
+      progress: 40,
+      buttonText: "Продолжить",
+      isDeleted: false,
+    },
+    {
+      id: 2,
+      title: "Стретчинг",
+      image: "strech.svg",
+      progress: 75,
+      buttonText: "Начать тренировки",
+      isDeleted: false,
+    },
+    {
+      id: 3,
+      title: "Фитнес",
+      image: "fit.svg",
+      progress: 100,
+      buttonText: "Начать заново",
+      isDeleted: false,
+    },
+  ]);
 
   const handleProfileClick = () => {
     navigate("/profile");
@@ -148,37 +73,24 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     navigate("/courses");
   };
 
-  const handleCourseClick = (courseId: string) => {
+  const handleCourseClick = (courseId: number) => {
     const course = courses.find((c) => c.id === courseId);
     if (course && !course.isDeleted) {
       navigate(`/course/${courseId}/authenticated`);
     }
   };
 
-  const handleDeleteCourse = async (courseId: string) => {
-    if (!token) return;
-
-    try {
-      setCourses((prevCourses) =>
-        prevCourses.map((course) =>
-          course.id === courseId
-            ? { ...course, isDeleted: !course.isDeleted }
-            : course,
-        ),
-      );
-
-      await coursesService.removeCourseFromUser(courseId, token);
-    } catch (err) {
-      setCourses((prevCourses) =>
-        prevCourses.map((course) =>
-          course.id === courseId ? { ...course, isDeleted: false } : course,
-        ),
-      );
-      console.error("Ошибка удаления курса:", err);
-    }
+  const handleDeleteCourse = (courseId: number) => {
+    setCourses((prevCourses) =>
+      prevCourses.map((course) =>
+        course.id === courseId
+          ? { ...course, isDeleted: !course.isDeleted }
+          : course,
+      ),
+    );
   };
 
-  const handleStartTraining = (course: LocalCourse) => {
+  const handleStartTraining = (course: Course) => {
     setSelectedCourse(course);
     setIsTrainingModalOpen(true);
   };
@@ -188,48 +100,38 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     setSelectedCourse(null);
   };
 
-  const handleStartSelectedTrainings = (selectedTrainingIds: string[]) => {
-    navigate(
-      `/training/${selectedCourse?.id}?workouts=${selectedTrainingIds.join(",")}`,
-    );
+  const handleStartSelectedTrainings = (selectedTrainingIds: number[]) => {
+    console.log("Selected trainings:", selectedTrainingIds);
+    // Переходим на страницу тренировки с ID курса
+    navigate(`/training/${selectedCourse?.id}`);
     setIsTrainingModalOpen(false);
   };
 
-  if (loading)
-    return (
-      <div className={styles.page}>
-        <div className={styles.loading}>Загрузка...</div>
-      </div>
-    );
-  if (error)
-    return (
-      <div className={styles.page}>
-        <div className={styles.error}>{error}</div>
-      </div>
-    );
-
   return (
     <div className={styles.page}>
+      {/* Логотип */}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
+      {/* Профиль пользователя (иконка, имя, стрелочка) */}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={displayName}
           userEmail={displayEmail}
-          token={token}
           onProfileClick={handleProfileClick}
           onLogout={handleLogout}
           onAddCourse={handleAddCourse}
         />
       </div>
 
+      {/* Основной контент */}
       <div className={styles.contentBlock}>
         <h1 className={styles.profileTitle}>Профиль</h1>
 
+        {/* Карточка профиля */}
         <div className={styles.profileCard}>
           <div className={styles.profileInner}>
             <div className={styles.profileIcon}>
@@ -248,6 +150,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
           </div>
         </div>
 
+        {/* Мои курсы */}
         <div className={styles.coursesSection}>
           <h2 className={styles.coursesTitle}>Мои курсы</h2>
 
@@ -256,7 +159,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
               <div
                 key={course.id}
                 className={`${styles.courseCard} ${course.isDeleted ? styles.deletedCourse : ""}`}
-                onClick={() => handleCourseClick(course.id)}
               >
                 <div className={styles.imageContainer}>
                   <img
@@ -309,10 +211,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
                   <button
                     className={`${styles.courseButton} ${course.isDeleted ? styles.disabledButton : ""}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleStartTraining(course);
-                    }}
+                    onClick={() => handleStartTraining(course)}
                     disabled={course.isDeleted}
                   >
                     {course.buttonText}
@@ -324,13 +223,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         </div>
       </div>
 
-      {selectedCourse && token && (
+      {/* Модальное окно выбора тренировки */}
+      {selectedCourse && (
         <TrainingModal
           isOpen={isTrainingModalOpen}
           onClose={handleCloseTrainingModal}
-          courseId={selectedCourse.id}
           courseTitle={selectedCourse.title}
-          token={token}
           onStartTraining={handleStartSelectedTrainings}
         />
       )}

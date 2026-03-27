@@ -1,37 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
-import { coursesService } from "../../services/courses.service";
-import { getCourseImage } from "../../data/courseImages";
 import styles from "./CoursePageAuthenticated.module.css";
 
 interface CoursePageAuthenticatedProps {
   userName?: string;
   userEmail?: string;
-  token?: string;
   onProfileClick?: () => void;
   onLogout?: () => void;
+  onAddCourse?: () => void;
 }
 
 const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
-  userName = "",
-  userEmail = "",
-  token,
+  userName = "Anna",
+  userEmail = "anna@mail.com",
   onProfileClick,
   onLogout,
+  onAddCourse,
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
-  const [isAdding, setIsAdding] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 375);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleProfileClick = () => {
     navigate("/profile");
@@ -42,63 +30,47 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
     navigate("/");
   };
 
-  const handleAddCourse = async () => {
-    if (!token || !id || isAdding) return;
-
-    try {
-      setIsAdding(true);
-      await coursesService.addCourseToUser(id, token);
-      navigate("/profile");
-    } catch (err) {
-      console.error("Error adding course:", err);
-    } finally {
-      setIsAdding(false);
-    }
-  };
-
-  const getCourseImageUrl = () => {
-    if (!id) return `${process.env.PUBLIC_URL}/images/default.jpg`;
-    const imageName = getCourseImage(id, isMobile);
-    return `${process.env.PUBLIC_URL}/images/${imageName}`;
-  };
-
-  const getDirectionsImage = () => {
-    if (isMobile) {
-      return `${process.env.PUBLIC_URL}/images/block6.svg`;
-    }
-    return `${process.env.PUBLIC_URL}/images/block3.svg`;
+  const handleAddCourse = () => {
+    // Переход на страницу профиля (мои курсы)
+    navigate("/profile");
   };
 
   return (
     <div className={styles.page}>
+      {/* Логотип */}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
+      {/* Профиль пользователя - ВАЖНО! Этот блок был потерян */}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
           userEmail={userEmail}
-          token={token}
           onProfileClick={handleProfileClick}
           onLogout={handleLogout}
+          onAddCourse={handleAddCourse}
         />
       </div>
 
+      {/* Текст под логотипом */}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
+      {/* Картинка курса */}
       <img
-        src={getCourseImageUrl()}
+        src={`${process.env.PUBLIC_URL}/images/card1.svg`}
         alt="Course"
         className={styles.courseImage}
       />
 
+      {/* Заголовок "Подойдет для вас, если:" */}
       <h2 className={`${styles.sectionTitle} ${styles.forYouTitle}`}>
         Подойдет для вас, если:
       </h2>
 
+      {/* Ряд из трех блоков */}
       <div className={styles.blocksRow}>
         <img
           src={`${process.env.PUBLIC_URL}/images/block.svg`}
@@ -117,19 +89,24 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         />
       </div>
 
+      {/* Заголовок "Направления" */}
       <h2 className={`${styles.sectionTitle} ${styles.directionsTitle}`}>
         Направления
       </h2>
 
+      {/* Картинка направлений */}
       <img
-        src={getDirectionsImage()}
+        src={`${process.env.PUBLIC_URL}/images/block3.svg`}
         alt="Directions"
         className={styles.directionsImage}
       />
 
+      {/* Блок с предложением */}
       <div className={styles.offerBlock}>
+        {/* Белый фон */}
         <div className={styles.whiteBlock} />
 
+        {/* Текстовый контент */}
         <div className={styles.textContent}>
           <h3 className={styles.offerTitle}>
             Начните путь <br />к новому телу
@@ -145,15 +122,12 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
             <br />
             помогают противостоять стрессам
           </p>
-          <button
-            className={styles.offerButton}
-            onClick={handleAddCourse}
-            disabled={isAdding}
-          >
-            {isAdding ? "Добавление..." : "Добавить курс"}
+          <button className={styles.offerButton} onClick={handleAddCourse}>
+            Добавить курс
           </button>
         </div>
 
+        {/* Картинки справа */}
         <img
           src={`${process.env.PUBLIC_URL}/images/block4.svg`}
           alt="Decorative 1"
