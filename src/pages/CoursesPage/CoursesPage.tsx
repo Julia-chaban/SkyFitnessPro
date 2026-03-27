@@ -29,15 +29,6 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 375);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     loadCourses();
@@ -46,6 +37,7 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
   const loadCourses = async () => {
     try {
       setLoading(true);
+      // Не передаем токен, используем обычный запрос
       const data = await coursesService.getAllCourses();
       setCourses(data);
     } catch (err) {

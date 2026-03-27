@@ -48,19 +48,16 @@ function AppContent() {
         throw new Error("Не получен токен");
       }
 
-      const userData = await authService.getUserData(response.token);
-
-      // API возвращает { user: { email: string } }
-      const userEmail = userData.user?.email || email;
-      const userName = userEmail.split("@")[0];
-
+      // Сохраняем пользователя с токеном
+      const userName = email.split("@")[0];
       const newUser = {
-        email: userEmail,
+        email: email,
         name: userName,
         token: response.token,
       };
 
       setCurrentUser(newUser);
+      console.log("Login successful, token saved");
       return true;
     } catch (err) {
       console.error("Login error:", err);
@@ -71,6 +68,7 @@ function AppContent() {
   const handleRegister = async (email: string, password: string) => {
     try {
       await authService.register(email, password);
+      console.log("Register successful");
       return true;
     } catch (err) {
       console.error("Register error:", err);

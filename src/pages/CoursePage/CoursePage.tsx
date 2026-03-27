@@ -28,7 +28,12 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
   };
 
   const getCourseImageUrl = () => {
-    if (!id) return `${process.env.PUBLIC_URL}/images/default.jpg`;
+    if (!id) {
+      
+      return isMobile
+        ? `${process.env.PUBLIC_URL}/images/ioga.svg`
+        : `${process.env.PUBLIC_URL}/images/card1.jpg`;
+    }
     const imageName = getCourseImage(id, isMobile);
     return `${process.env.PUBLIC_URL}/images/${imageName}`;
   };
@@ -42,34 +47,28 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
 
   return (
     <div className={styles.page}>
-      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {}
       <button className={styles.loginButton} onClick={handleLoginClick}>
         Войти
       </button>
 
-      {}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
-      {}
       <img
         src={getCourseImageUrl()}
         alt="Course"
         className={styles.courseImage}
       />
 
-      {}
       <h2 className={`${styles.sectionTitle} ${styles.forYouTitle}`}>
         Подойдет для вас, если:
       </h2>
 
-      {}
       <div className={styles.blocksRow}>
         <img
           src={`${process.env.PUBLIC_URL}/images/block.svg`}
@@ -88,24 +87,19 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
         />
       </div>
 
-      {}
       <h2 className={`${styles.sectionTitle} ${styles.directionsTitle}`}>
         Направления
       </h2>
 
-      {}
       <img
         src={getDirectionsImage()}
         alt="Directions"
         className={styles.directionsImage}
       />
 
-      {}
       <div className={styles.offerBlock}>
-        {}
         <div className={styles.whiteBlock} />
 
-        {}
         <div className={styles.textContent}>
           <h3 className={styles.offerTitle}>
             Начните путь <br />к новому телу
@@ -126,7 +120,6 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
           </button>
         </div>
 
-        {}
         <img
           src={`${process.env.PUBLIC_URL}/images/block4.svg`}
           alt="Decorative 1"

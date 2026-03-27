@@ -4,9 +4,11 @@ import UserProfile from "../../components/UserProfile/UserProfile";
 import DeleteIcon from "../../components/DeleteIcon/DeleteIcon";
 import TrainingModal from "../../components/TrainingModal/TrainingModal";
 import { coursesService } from "../../services/courses.service";
-import { courseNames, getMainPageImage } from "../../data/courseImages";
-import { Course as APICourse } from "../../types/api.types";
+import { getMainPageImage } from "../../data/courseImages";
+import { Course as APICourse, WorkoutProgress } from "../../types/api.types";
 import styles from "./ProfilePage.module.css";
+
+const USER_COURSES_KEY = "user_selected_courses";
 
 interface LocalCourse {
   id: string;
@@ -61,6 +63,17 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     }
   }, [token]);
 
+  const getCourseNameById = (courseId: string): string => {
+    const names: Record<string, string> = {
+      ab1c3f: "Йога",
+      "6i67sm": "Степ-аэробика",
+      ypox9r: "Фитнес",
+      kfpq8e: "Стретчинг",
+      q02a6i: "Бодифлекс",
+    };
+    return names[courseId] || "";
+  };
+
   const loadUserCourses = async () => {
     if (!token) return;
     try {
@@ -68,8 +81,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
       const allCourses: APICourse[] = await coursesService.getAllCourses();
 
-      const userCourseIds: string[] =
-        await coursesService.getUserCourses(token);
+      const saved = localStorage.getItem(USER_COURSES_KEY);
+      const userCourseIds: string[] = saved ? JSON.parse(saved) : [];
 
       const userCoursesData = allCourses.filter((course: APICourse) =>
         userCourseIds.includes(course._id),
@@ -85,7 +98,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
             const totalWorkouts = progress.workoutsProgress.length;
             const completedWorkouts = progress.workoutsProgress.filter(
-              (w) => w.workoutCompleted,
+              (w: WorkoutProgress) => w.workoutCompleted,
             ).length;
 
             const overallProgress =
@@ -93,12 +106,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
                 ? Math.round((completedWorkouts / totalWorkouts) * 100)
                 : 0;
 
-            const courseName = courseNames[course._id] || course.nameRU;
+            const courseName = getCourseNameById(course._id);
+            const image = getMainPageImage(courseName);
 
             return {
               id: course._id,
               title: course.nameRU,
-              image: getMainPageImage(courseName),
+              image: image,
               progress: overallProgress,
               buttonText: getButtonText(
                 overallProgress,
@@ -110,11 +124,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
                 total: totalWorkouts,
               },
             } as LocalCourse;
-          } catch (err) {
-            console.error(
-              `Error loading progress for course ${course._id}:`,
-              err,
-            );
+          } catch {
             return null;
           }
         }),
@@ -167,14 +177,21 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         ),
       );
 
+      const saved = localStorage.getItem(USER_COURSES_KEY);
+      if (saved) {
+        const coursesList = JSON.parse(saved).filter(
+          (id: string) => id !== courseId,
+        );
+        localStorage.setItem(USER_COURSES_KEY, JSON.stringify(coursesList));
+      }
+
       await coursesService.removeCourseFromUser(courseId, token);
-    } catch (err) {
+    } catch {
       setCourses((prevCourses) =>
         prevCourses.map((course) =>
           course.id === courseId ? { ...course, isDeleted: false } : course,
         ),
       );
-      console.error("Ошибка удаления курса:", err);
     }
   };
 

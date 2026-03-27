@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
-import { coursesService } from "../../services/courses.service";
 import { getCourseImage } from "../../data/courseImages";
 import styles from "./CoursePageAuthenticated.module.css";
+
+const USER_COURSES_KEY = "user_selected_courses";
 
 interface CoursePageAuthenticatedProps {
   userName?: string;
@@ -43,11 +44,20 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   };
 
   const handleAddCourse = async () => {
-    if (!token || !id || isAdding) return;
+    if (!id || isAdding) return;
 
     try {
       setIsAdding(true);
-      await coursesService.addCourseToUser(id, token);
+
+      // Сохраняем курс в localStorage
+      const saved = localStorage.getItem(USER_COURSES_KEY);
+      const courses = saved ? JSON.parse(saved) : [];
+
+      if (!courses.includes(id)) {
+        courses.push(id);
+        localStorage.setItem(USER_COURSES_KEY, JSON.stringify(courses));
+      }
+
       navigate("/profile");
     } catch (err) {
       console.error("Error adding course:", err);
@@ -57,7 +67,11 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   };
 
   const getCourseImageUrl = () => {
-    if (!id) return `${process.env.PUBLIC_URL}/images/default.jpg`;
+    if (!id) {
+      return isMobile
+        ? `${process.env.PUBLIC_URL}/images/ioga.svg`
+        : `${process.env.PUBLIC_URL}/images/card1.jpg`;
+    }
     const imageName = getCourseImage(id, isMobile);
     return `${process.env.PUBLIC_URL}/images/${imageName}`;
   };

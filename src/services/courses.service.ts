@@ -54,9 +54,13 @@ export const coursesService = {
     courseId: string,
     token: string,
   ): Promise<{ message: string }> {
-    return authRequest(`/users/me/courses/${courseId}`, token, {
-      method: "DELETE",
-    });
+    return authRequest<{ message: string }>(
+      `/users/me/courses/${courseId}`,
+      token,
+      {
+        method: "DELETE",
+      },
+    );
   },
 
   async resetCourseProgress(
