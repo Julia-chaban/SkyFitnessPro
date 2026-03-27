@@ -8,8 +8,12 @@ import { courses } from "../../data/courses";
 import styles from "./AuthPage.module.css";
 
 interface AuthPageProps {
-  onLogin: (email: string, password: string) => boolean;
-  onRegister: (email: string, password: string, name: string) => boolean;
+  onLogin: (email: string, password: string) => Promise<boolean>;
+  onRegister: (
+    email: string,
+    password: string,
+    name: string,
+  ) => Promise<boolean>;
 }
 
 const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
@@ -19,8 +23,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const navigate = useNavigate();
 
-  const handleLoginSubmit = (email: string, password: string) => {
-    const success = onLogin(email, password);
+  const handleLoginSubmit = async (email: string, password: string) => {
+    const success = await onLogin(email, password);
     if (success) {
       navigate("/");
     } else {
@@ -29,54 +33,55 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
     }
   };
 
-  const handleRegisterSubmit = (
+  const handleRegisterSubmit = async (
     email: string,
     password: string,
     name: string,
   ) => {
-    const success = onRegister(email, password, name);
+    const success = await onRegister(email, password, name);
     if (success) {
       setShowSuccessMessage(true);
-      setIsLogin(true);
+      setIsLogin(true); 
       setShowError(false);
       setTimeout(() => setShowSuccessMessage(false), 3000);
     } else {
       setErrorMessage("Данная почта уже используется. Попробуйте войти.");
       setShowError(true);
+      setIsLogin(true); 
     }
   };
 
   return (
     <div className={styles.page}>
-      {/* Логотип */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {/* Кнопка входа (ведет на ту же страницу) */}
+      {}
       <button className={styles.loginButton} onClick={() => {}}>
         Войти
       </button>
 
-      {/* Текст под логотипом */}
+      {}
       <p className={styles.subtitle}>Онлайн-тренировки для занятий дома</p>
 
-      {/* Заголовок */}
+      {}
       <h1 className={styles.title}>
         Начните заниматься спортом
         <br />и улучшите качество жизни
       </h1>
 
-      {/* Зеленый блок */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/Group.svg`}
         alt="Измени своё тело за полгода"
         className={styles.greenBlock}
       />
 
-      {/* Все 5 карточек курсов с полным описанием */}
+      {}
       <div className={styles.coursesGrid}>
         {courses.map((course) => (
           <div key={course.id} className={styles.courseCard}>
@@ -109,7 +114,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
         ))}
       </div>
 
-      {/* Кнопка наверх */}
+      {}
       <button
         className={styles.scrollButton}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -118,7 +123,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onLogin, onRegister }) => {
         <span>Наверх</span>
       </button>
 
-      {/* Форма авторизации поверх контента */}
+      {}
       <div className={styles.authOverlay}>
         <div className={styles.authContainer}>
           <div className={styles.toggleButtons}>

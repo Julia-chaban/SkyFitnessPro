@@ -6,12 +6,14 @@ import styles from "./TrainingPageUpdated.module.css";
 interface TrainingPageUpdatedProps {
   userName?: string;
   userEmail?: string;
+  token?: string; 
   onLogout?: () => void;
 }
 
 const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
-  userName = "Анна",
-  userEmail = "anna@mail.com",
+  userName = "",
+  userEmail = "",
+  token,
   onLogout,
 }) => {
   const navigate = useNavigate();
@@ -29,10 +31,10 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
     navigate(`/training/${id}/progress`);
   };
 
-  // Обновленные данные с прогрессом
+  
   const exercises = [
     { name: "Наклоны вперед", progress: 40 },
-    { name: "Нклоны назад", progress: 40 },
+    { name: "Наклоны назад", progress: 40 },
     { name: "Поднятие ног, согнутых в коленях", progress: 40 },
     { name: "Наклоны вперед", progress: 40 },
     { name: "Наклоны назад", progress: 40 },
@@ -44,29 +46,30 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
 
   return (
     <div className={styles.page}>
-      {/* Логотип */}
+      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {/* Профиль пользователя */}
+      {}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
           userEmail={userEmail}
+          token={token}
           onProfileClick={handleProfileClick}
           onLogout={onLogout}
           onAddCourse={handleAddCourse}
         />
       </div>
 
-      {/* Основной контент */}
+      {}
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>Йога</h1>
 
-        {/* Видео */}
+        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -75,13 +78,13 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
           />
         </div>
 
-        {/* Блок с упражнениями */}
+        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки 2</h2>
 
             <div className={styles.exercisesGrid}>
-              {/* Первая колонка */}
+              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
               >
@@ -129,7 +132,7 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
                 </div>
               </div>
 
-              {/* Вторая колонка */}
+              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
               >
@@ -177,7 +180,7 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
                 </div>
               </div>
 
-              {/* Третья колонка - с большим последним элементом */}
+              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnLarge}`}
               >

@@ -1,62 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { workoutsService } from "../../services/workouts.service";
 import styles from "./TrainingModal.module.css";
 
-interface Training {
-  id: number;
-  title: string;
-  subtitle: string;
-  day: number;
+interface Workout {
+  _id: string;
+  name: string;
+  day?: number;
 }
 
 interface TrainingModalProps {
   isOpen: boolean;
   onClose: () => void;
+  courseId: string;
   courseTitle: string;
-  onStartTraining: (selectedTrainingIds: number[]) => void;
+  token: string;
+  onStartTraining: (selectedWorkoutIds: string[]) => void;
 }
 
 const TrainingModal: React.FC<TrainingModalProps> = ({
   isOpen,
   onClose,
+  courseId,
   courseTitle,
+  token,
   onStartTraining,
 }) => {
-  const [selectedTrainings, setSelectedTrainings] = useState<number[]>([]);
+  const [selectedTrainings, setSelectedTrainings] = useState<string[]>([]);
+  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const trainings: Training[] = [
-    {
-      id: 1,
-      title: "Утренняя практика",
-      subtitle: "Йога на каждый день",
-      day: 1,
-    },
-    {
-      id: 2,
-      title: "Красота и здоровье",
-      subtitle: "Йога на каждый день",
-      day: 2,
-    },
-    {
-      id: 3,
-      title: "Асаны стоя",
-      subtitle: "Йога на каждый день",
-      day: 3,
-    },
-    {
-      id: 4,
-      title: "Растягиваем мышцы бедра",
-      subtitle: "Йога на каждый день",
-      day: 4,
-    },
-    {
-      id: 5,
-      title: "Гибкость спины",
-      subtitle: "Йога на каждый день",
-      day: 5,
-    },
-  ];
+  useEffect(() => {
+    if (isOpen && token) {
+      loadWorkouts();
+    }
+  }, [isOpen, courseId, token]);
+
+  const loadWorkouts = async () => {
+    try {
+      setLoading(true);
+      const data = await workoutsService.getCourseWorkouts(courseId, token);
+
+      const workoutsWithDays = data.map((w: any, index: number) => ({
+        ...w,
+        day: index + 1,
+      }));
+      setWorkouts(workoutsWithDays);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Ошибка загрузки тренировок",
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -66,11 +65,11 @@ const TrainingModal: React.FC<TrainingModalProps> = ({
     }
   };
 
-  const toggleTraining = (trainingId: number) => {
+  const toggleTraining = (workoutId: string) => {
     setSelectedTrainings((prev) =>
-      prev.includes(trainingId)
-        ? prev.filter((id) => id !== trainingId)
-        : [...prev, trainingId],
+      prev.includes(workoutId)
+        ? prev.filter((id) => id !== workoutId)
+        : [...prev, workoutId],
     );
   };
 
@@ -88,36 +87,40 @@ const TrainingModal: React.FC<TrainingModalProps> = ({
 
         <div className={styles.listContainer}>
           <div className={styles.scrollableList}>
-            {trainings.map((training) => (
-              <div
-                key={training.id}
-                className={styles.trainingItem}
-                onClick={() => toggleTraining(training.id)}
-              >
-                <div className={styles.checkboxContainer}>
-                  {selectedTrainings.includes(training.id) ? (
-                    <div className={styles.checkboxChecked}>
-                      <div className={styles.checkmark} />
-                    </div>
-                  ) : (
-                    <div className={styles.checkbox} />
-                  )}
+            {loading && <div className={styles.loading}>Загрузка...</div>}
+            {error && <div className={styles.error}>{error}</div>}
+            {!loading &&
+              !error &&
+              workouts.map((workout) => (
+                <div
+                  key={workout._id}
+                  className={styles.trainingItem}
+                  onClick={() => toggleTraining(workout._id)}
+                >
+                  <div className={styles.checkboxContainer}>
+                    {selectedTrainings.includes(workout._id) ? (
+                      <div className={styles.checkboxChecked}>
+                        <div className={styles.checkmark} />
+                      </div>
+                    ) : (
+                      <div className={styles.checkbox} />
+                    )}
+                  </div>
+                  <div className={styles.trainingInfo}>
+                    <h3 className={styles.trainingTitle}>{workout.name}</h3>
+                    <p className={styles.trainingSubtitle}>
+                      {courseTitle} / {workout.day || "?"} день
+                    </p>
+                  </div>
                 </div>
-                <div className={styles.trainingInfo}>
-                  <h3 className={styles.trainingTitle}>{training.title}</h3>
-                  <p className={styles.trainingSubtitle}>
-                    {training.subtitle} / {training.day} день
-                  </p>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
 
         <button
           className={styles.startButton}
           onClick={handleStart}
-          disabled={selectedTrainings.length === 0}
+          disabled={selectedTrainings.length === 0 || loading}
         >
           Начать
         </button>

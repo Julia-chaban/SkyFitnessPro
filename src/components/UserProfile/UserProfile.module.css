@@ -31,7 +31,7 @@
     height: 26px;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 110%;
     text-align: right;
     color: #000000;
@@ -49,4 +49,33 @@
     border-top: none;
     border-right: none;
     margin-left: 12px;
+}
+
+/* Мобильная версия 375px */
+@media (max-width: 375px) {
+    .userProfile {
+        width: auto;
+        gap: 4px;
+    }
+
+    .profileData {
+        display: none;
+        /* Скрываем имя на мобильном */
+    }
+
+    .profileIcon {
+        width: 41.67px;
+        height: 41.67px;
+    }
+
+    .profileIcon img {
+        width: 41.67px;
+        height: 41.67px;
+    }
+
+    .arrowIcon {
+        width: 8.03px;
+        height: 8.03px;
+        margin-left: 2px;
+    }
 }

@@ -14,28 +14,21 @@ import TrainingPage from "./pages/TrainingPage/TrainingPage";
 import TrainingPageWithModal from "./pages/TrainingPageWithModal/TrainingPageWithModal";
 import TrainingPageSuccess from "./pages/TrainingPageSuccess/TrainingPageSuccess";
 import TrainingPageUpdated from "./pages/TrainingPageUpdated/TrainingPageUpdated";
+import { authService } from "./services/auth.service";
 
 interface User {
   email: string;
-  password: string;
   name: string;
+  token: string;
 }
 
 function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [users, setUsers] = useState<User[]>(() => {
-    const savedUsers = localStorage.getItem("users");
-    return savedUsers ? JSON.parse(savedUsers) : [];
-  });
   const [currentUser, setCurrentUser] = useState<User | null>(() => {
     const savedUser = localStorage.getItem("currentUser");
     return savedUser ? JSON.parse(savedUser) : null;
   });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
-  }, [users]);
 
   useEffect(() => {
     if (currentUser) {
@@ -47,37 +40,52 @@ function AppContent() {
     }
   }, [currentUser]);
 
-  const handleLogin = (email: string, password: string) => {
-    const user = users.find(
-      (u) => u.email === email && u.password === password,
-    );
-    if (user) {
-      setCurrentUser(user);
-      return true;
-    }
-    return false;
-  };
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      const response = await authService.login(email, password);
 
-  const handleRegister = (email: string, password: string, name: string) => {
-    const existingUser = users.find((u) => u.email === email);
-    if (existingUser) {
+      if (!response.token) {
+        throw new Error("Не получен токен");
+      }
+
+      const userData = await authService.getUserData(response.token);
+
+      // API возвращает { user: { email: string } }
+      const userEmail = userData.user?.email || email;
+      const userName = userEmail.split("@")[0];
+
+      const newUser = {
+        email: userEmail,
+        name: userName,
+        token: response.token,
+      };
+
+      setCurrentUser(newUser);
+      return true;
+    } catch (err) {
+      console.error("Login error:", err);
       return false;
     }
-    const newUser = { email, password, name };
-    setUsers([...users, newUser]);
-    return true;
+  };
+
+  const handleRegister = async (email: string, password: string) => {
+    try {
+      await authService.register(email, password);
+      return true;
+    } catch (err) {
+      console.error("Register error:", err);
+      return false;
+    }
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
-    localStorage.removeItem("currentUser");
-    window.location.href = "/";
+    navigate("/");
   };
 
   return (
     <div className="App">
       <Routes>
-        {/* Главная страница - одна для всех */}
         <Route
           path="/"
           element={
@@ -85,13 +93,13 @@ function AppContent() {
               isAuthenticated={isAuthenticated}
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onLoginClick={() => navigate("/auth")}
               onLogout={handleLogout}
             />
           }
         />
 
-        {/* Страница авторизации */}
         <Route
           path="/auth"
           element={
@@ -99,81 +107,79 @@ function AppContent() {
           }
         />
 
-        {/* Страница курса для неавторизованного пользователя */}
         <Route
           path="/course/:id"
           element={<CoursePage onLoginClick={() => navigate("/auth")} />}
         />
 
-        {/* Страница курса для авторизованного пользователя */}
         <Route
           path="/course/:id/authenticated"
           element={
             <CoursePageAuthenticated
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onProfileClick={() => navigate("/profile")}
               onLogout={handleLogout}
-              onAddCourse={() => {}}
             />
           }
         />
 
-        {/* Страница личного профиля */}
         <Route
           path="/profile"
           element={
             <ProfilePage
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onLogout={handleLogout}
             />
           }
         />
 
-        {/* Страница тренировки (видеоурок) */}
         <Route
           path="/training/:id"
           element={
             <TrainingPage
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onLogout={handleLogout}
             />
           }
         />
 
-        {/* Страница тренировки с модальным окном прогресса */}
         <Route
           path="/training/:id/progress"
           element={
             <TrainingPageWithModal
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onLogout={handleLogout}
             />
           }
         />
 
-        {/* Страница успеха (после сохранения прогресса) */}
         <Route
           path="/training/:id/success"
           element={
             <TrainingPageSuccess
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onLogout={handleLogout}
             />
           }
         />
 
-        {/* Страница с обновленным прогрессом */}
         <Route
           path="/training/:id/updated"
           element={
             <TrainingPageUpdated
               userName={currentUser?.name || ""}
               userEmail={currentUser?.email || ""}
+              token={currentUser?.token}
               onLogout={handleLogout}
             />
           }

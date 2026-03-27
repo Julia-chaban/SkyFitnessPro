@@ -289,3 +289,223 @@
 .saveButton:hover {
     opacity: 0.9;
 }
+
+/* Планшеты (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .page {
+        width: 100%;
+        max-width: 1024px;
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 30px;
+    }
+
+    .userProfileWrapper {
+        right: 30px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 30px;
+        width: calc(100% - 60px);
+    }
+
+    .exercisesGrid {
+        gap: 30px;
+    }
+
+    .modalContainer {
+        width: 426px;
+        height: 595.5px;
+    }
+}
+
+/* Маленькие ноутбуки (1025px - 1280px) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .page {
+        width: 100%;
+        max-width: 1280px;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 40px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+
+    .modalContainer {
+        width: 426px;
+        height: 595.5px;
+    }
+}
+
+/* Мобильные устройства (до 768px) */
+@media (max-width: 768px) {
+    .page {
+        width: 100%;
+        min-height: 100vh;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        position: relative;
+        top: 20px;
+        left: 0;
+        width: 160px;
+        height: 28px;
+    }
+
+    .userProfileWrapper {
+        position: absolute;
+        top: 20px;
+        right: 16px;
+        left: auto;
+        width: auto;
+        max-width: 140px;
+    }
+
+    .contentBlock {
+        position: relative;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        gap: 25px;
+    }
+
+    .title {
+        width: 100%;
+        font-size: 32px;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .videoContainer {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1160/639;
+    }
+
+    .videoImage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1160/639;
+    }
+
+    .exercisesBlock {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .exercisesContent {
+        width: 100%;
+        height: auto;
+        gap: 20px;
+    }
+
+    .exercisesTitle {
+        width: 100%;
+        font-size: 24px;
+        height: auto;
+        white-space: normal;
+    }
+
+    .exercisesGrid {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .exerciseColumn {
+        width: 100%;
+        height: auto;
+    }
+
+    .exerciseItem {
+        width: 100%;
+        height: auto;
+        min-height: 36px;
+    }
+
+    .exerciseText {
+        width: 100%;
+        height: auto;
+        font-size: 16px;
+        white-space: normal;
+        line-height: 20px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .progressButton {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Модальное окно */
+    .modalContainer {
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        min-height: auto;
+        padding: 25px 20px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        gap: 25px;
+    }
+
+    .modalTitle {
+        width: 100%;
+        font-size: 24px;
+        height: auto;
+    }
+
+    .scrollableContent {
+        width: 100%;
+        height: auto;
+        max-height: 350px;
+        gap: 20px;
+    }
+
+    .progressItem {
+        width: 100%;
+        height: auto;
+        min-height: 90px;
+    }
+
+    .questionText {
+        width: 100%;
+        height: auto;
+        font-size: 16px;
+        line-height: 18px;
+        white-space: normal;
+    }
+
+    .inputField {
+        width: 100%;
+    }
+
+    .saveButton {
+        width: 100%;
+    }
+}
