@@ -5,19 +5,17 @@ import styles from "./UserProfile.module.css";
 interface UserProfileProps {
   userName: string;
   userEmail: string;
-  token?: string;
   onProfileClick?: () => void;
   onLogout?: () => void;
-  onAddCourse?: () => void;
+  onAddCourse?: () => void; // Этот пропс может быть, но не передается в ProfileModal
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
   userName,
   userEmail,
-  token,
   onProfileClick,
   onLogout,
-  onAddCourse,
+  onAddCourse, // Получаем, но не передаем в ProfileModal
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,6 +39,14 @@ const UserProfile: React.FC<UserProfileProps> = ({
     }
   };
 
+  // Обработчик для добавления курса (если нужно)
+  const handleAddCourse = () => {
+    setIsModalOpen(false);
+    if (onAddCourse) {
+      onAddCourse();
+    }
+  };
+
   return (
     <>
       <div className={styles.userProfile} onClick={handleIconClick}>
@@ -59,10 +65,9 @@ const UserProfile: React.FC<UserProfileProps> = ({
         onClose={handleCloseModal}
         userName={userName}
         userEmail={userEmail}
-        token={token}
         onProfileClick={handleProfileClick}
         onLogout={handleLogout}
-        onAddCourse={onAddCourse}
+        // Убрали onAddCourse отсюда, так как его нет в ProfileModal
       />
     </>
   );

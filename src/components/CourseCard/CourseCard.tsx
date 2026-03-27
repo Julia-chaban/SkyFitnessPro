@@ -1,25 +1,17 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Course } from "../../types/course.types";
 import Icon from "../Icon/Icon";
 import styles from "./CourseCard.module.css";
 
 interface CourseCardProps {
-  course: {
-    id: string;
-    title: string;
-    image: string;
-    duration: string;
-    timePerDay: string;
-    difficulty: string;
-  };
+  course: Course;
   isAuthenticated?: boolean;
-  token?: string;
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
   course,
   isAuthenticated = false,
-  token,
 }) => {
   const navigate = useNavigate();
 
