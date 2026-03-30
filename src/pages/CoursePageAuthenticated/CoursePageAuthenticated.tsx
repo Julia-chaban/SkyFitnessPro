@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
+import { coursesService } from "../../services/courses.service";
 import { getCourseImage } from "../../data/courseImages";
 import styles from "./CoursePageAuthenticated.module.css";
 
@@ -58,6 +59,17 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         localStorage.setItem(USER_COURSES_KEY, JSON.stringify(courses));
       }
 
+      // Пытаемся добавить курс через API (если ошибка - игнорируем)
+      if (token) {
+        try {
+          await coursesService.addCourseToUser(id, token);
+        } catch (apiError) {
+          // Игнорируем ошибки API (курс уже добавлен или сервер недоступен)
+          console.warn("API error (ignored):", apiError);
+        }
+      }
+
+      // Всегда переходим на страницу профиля
       navigate("/profile");
     } catch (err) {
       console.error("Error adding course:", err);

@@ -54,7 +54,8 @@
 /* Мобильная версия 375px */
 @media (max-width: 375px) {
     .userProfile {
-        width: auto;
+        width: 54px;
+        height: 36px;
         gap: 4px;
     }
 
@@ -64,13 +65,13 @@
     }
 
     .profileIcon {
-        width: 41.67px;
-        height: 41.67px;
+        width: 36px;
+        height: 36px;
     }
 
     .profileIcon img {
-        width: 41.67px;
-        height: 41.67px;
+        width: 30px;
+        height: 30px;
     }
 
     .arrowIcon {

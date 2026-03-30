@@ -1,3 +1,6 @@
+/* TrainingPage.module.css */
+
+/* ========== ДЕСКТОП (1025px и выше) - ПО УМОЛЧАНИЮ ========== */
 .userProfileWrapper {
     position: absolute;
     top: 46px;
@@ -65,7 +68,7 @@
     background: #FFFFFF;
     box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
     box-sizing: border-box;
-
+    gap: 24px;
 }
 
 .exercisesContent {
@@ -159,7 +162,7 @@
     opacity: 0.9;
 }
 
-/* Планшеты (768px - 1024px) */
+/* ========== ПЛАНШЕТЫ (769px - 1024px) ========== */
 @media (min-width: 769px) and (max-width: 1024px) {
     .page {
         width: 100%;
@@ -191,30 +194,30 @@
     }
 }
 
-/* Мобильная версия 375px */
-@media (max-width: 375px) {
+/* ========== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ========== */
+@media (max-width: 768px) {
     .page {
-        width: 375px;
+        width: 100%;
         min-height: 1236px;
         padding: 0;
         margin: 0 auto;
         background: #FAFAFA;
+        box-sizing: border-box;
     }
 
     .logo {
         position: absolute;
         top: 40px;
         left: 16px;
-        width: 220px;
-        height: 35px;
+        width: 160px;
+        height: 28px;
         z-index: 10;
     }
 
     .userProfileWrapper {
         position: absolute;
         top: 40px;
-        right: 16px;
-        left: auto;
+        left: 253px;
         width: auto;
         z-index: 10;
     }
@@ -228,7 +231,7 @@
         position: absolute;
         top: 115px;
         left: 16px;
-        width: 343px;
+        width: calc(100% - 32px);
         height: auto;
         min-height: 1100px;
         display: flex;
@@ -237,7 +240,7 @@
     }
 
     .title {
-        width: 343px;
+        width: 100%;
         font-size: 32px;
         line-height: 110%;
         height: auto;
@@ -245,20 +248,20 @@
     }
 
     .videoContainer {
-        width: 343px;
+        width: 100%;
         height: auto;
         aspect-ratio: 1160/639;
     }
 
     .videoImage {
-        width: 343px;
+        width: 100%;
         height: auto;
         aspect-ratio: 1160/639;
         object-fit: cover;
     }
 
     .exercisesBlock {
-        width: 343px;
+        width: 100%;
         height: auto;
         min-height: 400px;
         border-radius: 30px;
@@ -269,7 +272,7 @@
     }
 
     .exercisesContent {
-        width: 283px;
+        width: 100%;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -278,14 +281,12 @@
     }
 
     .exercisesTitle {
-        width: 283px;
-        height: 70px;
-        /* Две строки по 35px */
+        width: 100%;
+        height: auto;
         font-family: 'StratosSkyeng', sans-serif;
         font-weight: 400;
-        font-size: 32px;
+        font-size: 28px;
         line-height: 35px;
-        /* 35px на строку */
         color: #000000;
         margin: 0;
         white-space: normal;
@@ -293,7 +294,7 @@
     }
 
     .exercisesGrid {
-        width: 283px;
+        width: 100%;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -301,7 +302,7 @@
     }
 
     .exerciseColumn {
-        width: 283px;
+        width: 100%;
         height: auto;
         display: flex;
         flex-direction: column;
@@ -309,7 +310,7 @@
     }
 
     .exerciseItem {
-        width: 283px;
+        width: 100%;
         height: auto;
         min-height: 36px;
         display: flex;
@@ -318,7 +319,7 @@
     }
 
     .exerciseText {
-        width: 283px;
+        width: 100%;
         height: auto;
         font-size: 16px;
         line-height: 20px;
@@ -328,13 +329,13 @@
     }
 
     .progressBarBg {
-        width: 283px;
+        width: 100%;
         height: 6px;
     }
 
-    /* Кнопка Обновить свой прогресс */
     .progressButton {
-        width: 283px;
+        width: 100%;
+        max-width: 320px;
         height: 52px;
         border-radius: 46px;
         padding: 16px 26px;
@@ -359,48 +360,69 @@
     }
 }
 
-/* Для очень маленьких экранов (до 320px) */
+/* ========== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ (до 375px) ========== */
+@media (max-width: 375px) {
+    .logo {
+        width: 140px;
+        height: 24px;
+    }
+
+    .exercisesTitle {
+        font-size: 24px;
+        line-height: 28px;
+    }
+
+    .progressButton {
+        font-size: 16px;
+        padding: 14px 20px;
+        height: 48px;
+    }
+}
+
+/* ========== ДЛЯ ЭКРАНОВ ДО 320px ========== */
 @media (max-width: 320px) {
     .contentBlock {
         left: 10px;
-        width: 300px;
+        width: calc(100% - 20px);
     }
 
     .exercisesBlock {
-        width: 300px;
+        width: 100%;
         padding: 15px;
     }
 
     .exercisesContent {
-        width: 260px;
+        width: 100%;
     }
 
     .exercisesTitle {
-        width: 260px;
-        font-size: 28px;
-        line-height: 32px;
-        height: 64px;
+        width: 100%;
+        font-size: 22px;
+        line-height: 26px;
     }
 
     .exerciseColumn {
-        width: 260px;
+        width: 100%;
     }
 
     .exerciseItem {
-        width: 260px;
+        width: 100%;
     }
 
     .exerciseText {
-        width: 260px;
+        width: 100%;
+        font-size: 14px;
     }
 
     .progressBarBg {
-        width: 260px;
+        width: 100%;
     }
 
     .progressButton {
-        width: 260px;
-        padding: 14px 20px;
-        font-size: 16px;
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 16px;
+        font-size: 14px;
+        height: 44px;
     }
 }

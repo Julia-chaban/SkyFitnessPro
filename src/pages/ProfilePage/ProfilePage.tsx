@@ -1,3 +1,4 @@
+// src/pages/ProfilePage/ProfilePage.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
@@ -9,6 +10,7 @@ import { Course as APICourse, WorkoutProgress } from "../../types/api.types";
 import styles from "./ProfilePage.module.css";
 
 const USER_COURSES_KEY = "user_selected_courses";
+const MAX_COURSES = 3;
 
 interface LocalCourse {
   id: string;
@@ -58,9 +60,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   }, []);
 
   useEffect(() => {
-    if (token) {
-      loadUserCourses();
-    }
+    loadUserCourses();
   }, [token]);
 
   const getCourseNameById = (courseId: string): string => {
@@ -75,36 +75,51 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   };
 
   const loadUserCourses = async () => {
-    if (!token) return;
     try {
       setLoading(true);
-
-      const allCourses: APICourse[] = await coursesService.getAllCourses();
 
       const saved = localStorage.getItem(USER_COURSES_KEY);
       const userCourseIds: string[] = saved ? JSON.parse(saved) : [];
 
+      if (userCourseIds.length === 0) {
+        setCourses([]);
+        setLoading(false);
+        return;
+      }
+
+      const limitedCourseIds = userCourseIds.slice(0, MAX_COURSES);
+
+      const allCourses: APICourse[] = await coursesService.getAllCourses();
+
       const userCoursesData = allCourses.filter((course: APICourse) =>
-        userCourseIds.includes(course._id),
+        limitedCourseIds.includes(course._id),
       );
 
       const userCourses = await Promise.all(
         userCoursesData.map(async (course: APICourse) => {
           try {
-            const progress = await coursesService.getUserCourseProgress(
-              course._id,
-              token,
-            );
+            let overallProgress = 0;
+            let completedWorkouts = 0;
+            let totalWorkouts = 0;
 
-            const totalWorkouts = progress.workoutsProgress.length;
-            const completedWorkouts = progress.workoutsProgress.filter(
-              (w: WorkoutProgress) => w.workoutCompleted,
-            ).length;
-
-            const overallProgress =
-              totalWorkouts > 0
-                ? Math.round((completedWorkouts / totalWorkouts) * 100)
-                : 0;
+            if (token) {
+              try {
+                const progress = await coursesService.getUserCourseProgress(
+                  course._id,
+                  token,
+                );
+                totalWorkouts = progress.workoutsProgress.length;
+                completedWorkouts = progress.workoutsProgress.filter(
+                  (w: WorkoutProgress) => w.workoutCompleted,
+                ).length;
+                overallProgress =
+                  totalWorkouts > 0
+                    ? Math.round((completedWorkouts / totalWorkouts) * 100)
+                    : 0;
+              } catch {
+                // Игнорируем ошибки API
+              }
+            }
 
             const courseName = getCourseNameById(course._id);
             const image = getMainPageImage(courseName);
@@ -114,10 +129,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
               title: course.nameRU,
               image: image,
               progress: overallProgress,
-              buttonText: getButtonText(
-                overallProgress,
-                completedWorkouts === 0,
-              ),
+              buttonText: getButtonText(overallProgress, overallProgress === 0),
               isDeleted: false,
               workoutProgress: {
                 completed: completedWorkouts,
@@ -132,6 +144,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
       setCourses(userCourses.filter((c): c is LocalCourse => c !== null));
     } catch (err) {
+      console.error("Error loading courses:", err);
       setError(err instanceof Error ? err.message : "Ошибка загрузки курсов");
     } finally {
       setLoading(false);
@@ -195,9 +208,48 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     }
   };
 
-  const handleStartTraining = (course: LocalCourse) => {
-    setSelectedCourse(course);
-    setIsTrainingModalOpen(true);
+  // ========== ИСПРАВЛЕННЫЙ МЕТОД ==========
+  // Теперь при нажатии на кнопку "Продолжить" или "Начать тренировки"
+  // открывается первая незавершенная тренировка курса
+  const handleStartTraining = async (course: LocalCourse) => {
+    if (!token) return;
+
+    try {
+      // Получаем прогресс курса
+      const progress = await coursesService.getUserCourseProgress(
+        course.id,
+        token,
+      );
+
+      let workoutIdToOpen = "";
+
+      // Ищем первую незавершенную тренировку
+      const incompleteWorkout = progress.workoutsProgress.find(
+        (w: WorkoutProgress) => !w.workoutCompleted,
+      );
+
+      if (incompleteWorkout) {
+        // Если есть незавершенная тренировка, открываем её
+        workoutIdToOpen = incompleteWorkout.workoutId;
+      } else if (progress.workoutsProgress.length > 0) {
+        // Если все тренировки завершены, открываем первую (для повторения)
+        workoutIdToOpen = progress.workoutsProgress[0].workoutId;
+      } else {
+        // Если нет данных о прогрессе, открываем модальное окно для выбора
+        setSelectedCourse(course);
+        setIsTrainingModalOpen(true);
+        return;
+      }
+
+      // Переход на страницу тренировки
+      // URL: /training/{workoutId}?courseId={courseId}
+      navigate(`/training/${workoutIdToOpen}?courseId=${course.id}`);
+    } catch (error) {
+      // В случае ошибки открываем модальное окно
+      console.error("Error loading course progress:", error);
+      setSelectedCourse(course);
+      setIsTrainingModalOpen(true);
+    }
   };
 
   const handleCloseTrainingModal = () => {
@@ -205,10 +257,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     setSelectedCourse(null);
   };
 
+  // ========== ИСПРАВЛЕННЫЙ МЕТОД ==========
+  // Теперь правильно формирует URL при выборе тренировок в модальном окне
   const handleStartSelectedTrainings = (selectedTrainingIds: string[]) => {
-    navigate(
-      `/training/${selectedCourse?.id}?workouts=${selectedTrainingIds.join(",")}`,
-    );
+    if (selectedTrainingIds && selectedTrainingIds.length > 0) {
+      // Берем первый выбранный ID тренировки (workoutId)
+      const workoutId = selectedTrainingIds[0];
+      // Переход с правильными параметрами
+      navigate(`/training/${workoutId}?courseId=${selectedCourse?.id}`);
+    }
     setIsTrainingModalOpen(false);
   };
 

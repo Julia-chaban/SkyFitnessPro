@@ -122,7 +122,8 @@
     .modalOverlay {
         justify-content: center;
         align-items: center;
-
+        width: 318px;
+        left: 16px;
     }
 
     .modalContainer {
