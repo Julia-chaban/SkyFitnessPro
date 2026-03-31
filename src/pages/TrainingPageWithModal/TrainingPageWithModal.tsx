@@ -69,9 +69,10 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
           );
           setExistingProgress(progress.progressData || []);
         } catch (err) {
-          console.log("No existing progress found");
           setExistingProgress(new Array(workout.exercises.length).fill(0));
         }
+      } else {
+        setExistingProgress(new Array(workout.exercises.length).fill(0));
       }
     } catch (err) {
       setError(
@@ -92,8 +93,7 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-
-    navigate(`/training/${id}${courseId ? `?courseId=${courseId}` : ""}`);
+    navigate(`/training/${id}?courseId=${courseId}`);
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -117,6 +117,7 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         token,
       );
 
+      setIsModalOpen(false);
       navigate(`/training/${id}/success?courseId=${courseId}`);
     } catch (err) {
       console.error("Error saving progress:", err);
@@ -147,17 +148,14 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
 
   return (
     <div className={styles.page}>
-      {}
       <div className={styles.pageOverlay} onClick={handleOverlayClick} />
 
-      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
@@ -169,11 +167,9 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         />
       </div>
 
-      {}
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
-        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -182,13 +178,11 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
           />
         </div>
 
-        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки</h2>
 
             <div className={styles.exercisesGrid}>
-              {}
               {[0, 1, 2].map((colIndex) => (
                 <div key={colIndex} className={styles.exerciseColumn}>
                   {exercises
@@ -231,7 +225,6 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         </div>
       </div>
 
-      {}
       <ProgressModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

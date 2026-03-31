@@ -48,7 +48,6 @@ function AppContent() {
         throw new Error("Не получен токен");
       }
 
-      // Сохраняем пользователя с токеном
       const userName = email.split("@")[0];
       const newUser = {
         email: email,
@@ -57,10 +56,8 @@ function AppContent() {
       };
 
       setCurrentUser(newUser);
-      console.log("Login successful, token saved");
       return true;
     } catch (err) {
-      console.error("Login error:", err);
       return false;
     }
   };
@@ -68,10 +65,8 @@ function AppContent() {
   const handleRegister = async (email: string, password: string) => {
     try {
       await authService.register(email, password);
-      console.log("Register successful");
       return true;
     } catch (err) {
-      console.error("Register error:", err);
       return false;
     }
   };

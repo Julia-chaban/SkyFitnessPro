@@ -1,4 +1,3 @@
-// src/pages/ProfilePage/ProfilePage.tsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
@@ -208,14 +207,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     }
   };
 
-  // ========== ИСПРАВЛЕННЫЙ МЕТОД ==========
-  // Теперь при нажатии на кнопку "Продолжить" или "Начать тренировки"
-  // открывается первая незавершенная тренировка курса
   const handleStartTraining = async (course: LocalCourse) => {
     if (!token) return;
 
     try {
-      // Получаем прогресс курса
       const progress = await coursesService.getUserCourseProgress(
         course.id,
         token,
@@ -223,29 +218,22 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
       let workoutIdToOpen = "";
 
-      // Ищем первую незавершенную тренировку
       const incompleteWorkout = progress.workoutsProgress.find(
         (w: WorkoutProgress) => !w.workoutCompleted,
       );
 
       if (incompleteWorkout) {
-        // Если есть незавершенная тренировка, открываем её
         workoutIdToOpen = incompleteWorkout.workoutId;
       } else if (progress.workoutsProgress.length > 0) {
-        // Если все тренировки завершены, открываем первую (для повторения)
         workoutIdToOpen = progress.workoutsProgress[0].workoutId;
       } else {
-        // Если нет данных о прогрессе, открываем модальное окно для выбора
         setSelectedCourse(course);
         setIsTrainingModalOpen(true);
         return;
       }
 
-      // Переход на страницу тренировки
-      // URL: /training/{workoutId}?courseId={courseId}
       navigate(`/training/${workoutIdToOpen}?courseId=${course.id}`);
     } catch (error) {
-      // В случае ошибки открываем модальное окно
       console.error("Error loading course progress:", error);
       setSelectedCourse(course);
       setIsTrainingModalOpen(true);
@@ -257,13 +245,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     setSelectedCourse(null);
   };
 
-  // ========== ИСПРАВЛЕННЫЙ МЕТОД ==========
-  // Теперь правильно формирует URL при выборе тренировок в модальном окне
   const handleStartSelectedTrainings = (selectedTrainingIds: string[]) => {
     if (selectedTrainingIds && selectedTrainingIds.length > 0) {
-      // Берем первый выбранный ID тренировки (workoutId)
       const workoutId = selectedTrainingIds[0];
-      // Переход с правильными параметрами
       navigate(`/training/${workoutId}?courseId=${selectedCourse?.id}`);
     }
     setIsTrainingModalOpen(false);

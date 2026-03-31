@@ -68,7 +68,7 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
           );
           progressData = progress.progressData || [];
         } catch (err) {
-          console.log("No progress found for this workout, starting from 0");
+          // No progress found
         }
       }
 
@@ -98,9 +98,7 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
   };
 
   const handleOpenProgress = () => {
-    navigate(
-      `/training/${id}/progress${courseId ? `?courseId=${courseId}` : ""}`,
-    );
+    navigate(`/training/${id}/progress?courseId=${courseId}`);
   };
 
   const calculateProgress = (exercise: Exercise) => {
@@ -114,7 +112,6 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
 
   const getProgressColor = (progress: number) => {
     if (progress === 100) return "#00C1FF";
-    if (progress > 0) return "#BCEC30";
     return "#BCEC30";
   };
 
@@ -154,7 +151,6 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
-        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -163,13 +159,11 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
           />
         </div>
 
-        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки</h2>
 
             <div className={styles.exercisesGrid}>
-              {}
               {[0, 1, 2].map((colIndex) => (
                 <div key={colIndex} className={styles.exerciseColumn}>
                   {exercises

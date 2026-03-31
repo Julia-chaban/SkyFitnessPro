@@ -78,10 +78,8 @@ const ProgressModal: React.FC<ProgressModalProps> = ({
 
       const progressData = progressItems.map((item) => item.value);
       await onSave(progressData);
-      onClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ошибка при сохранении");
-    } finally {
       setIsSaving(false);
     }
   };

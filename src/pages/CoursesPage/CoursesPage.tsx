@@ -37,7 +37,6 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
   const loadCourses = async () => {
     try {
       setLoading(true);
-      // Не передаем токен, используем обычный запрос
       const data = await coursesService.getAllCourses();
       setCourses(data);
     } catch (err) {

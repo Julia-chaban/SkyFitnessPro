@@ -50,7 +50,6 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
     try {
       setIsAdding(true);
 
-      // Сохраняем курс в localStorage
       const saved = localStorage.getItem(USER_COURSES_KEY);
       const courses = saved ? JSON.parse(saved) : [];
 
@@ -59,17 +58,14 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         localStorage.setItem(USER_COURSES_KEY, JSON.stringify(courses));
       }
 
-      // Пытаемся добавить курс через API (если ошибка - игнорируем)
       if (token) {
         try {
           await coursesService.addCourseToUser(id, token);
         } catch (apiError) {
-          // Игнорируем ошибки API (курс уже добавлен или сервер недоступен)
-          console.warn("API error (ignored):", apiError);
+          // Игнорируем ошибки API
         }
       }
 
-      // Всегда переходим на страницу профиля
       navigate("/profile");
     } catch (err) {
       console.error("Error adding course:", err);

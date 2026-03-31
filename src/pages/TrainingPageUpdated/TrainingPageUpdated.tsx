@@ -1,12 +1,12 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
 import styles from "./TrainingPageUpdated.module.css";
 
 interface TrainingPageUpdatedProps {
   userName?: string;
   userEmail?: string;
-  token?: string; 
+  token?: string;
   onLogout?: () => void;
 }
 
@@ -17,7 +17,17 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
   onLogout,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams<{ id: string }>();
+  const [courseId, setCourseId] = React.useState<string>("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const courseIdParam = params.get("courseId");
+    if (courseIdParam) {
+      setCourseId(courseIdParam);
+    }
+  }, [location]);
 
   const handleProfileClick = () => {
     navigate("/profile");
@@ -28,10 +38,9 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
   };
 
   const handleUpdateProgress = () => {
-    navigate(`/training/${id}/progress`);
+    navigate(`/training/${id}/progress?courseId=${courseId}`);
   };
 
-  
   const exercises = [
     { name: "Наклоны вперед", progress: 40 },
     { name: "Наклоны назад", progress: 40 },
@@ -46,14 +55,12 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
 
   return (
     <div className={styles.page}>
-      {}
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
       />
 
-      {}
       <div className={styles.userProfileWrapper}>
         <UserProfile
           userName={userName}
@@ -65,11 +72,9 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
         />
       </div>
 
-      {}
       <div className={styles.contentBlock}>
         <h1 className={styles.title}>Йога</h1>
 
-        {}
         <div className={styles.videoContainer}>
           <img
             src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
@@ -78,13 +83,11 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
           />
         </div>
 
-        {}
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
             <h2 className={styles.exercisesTitle}>Упражнения тренировки 2</h2>
 
             <div className={styles.exercisesGrid}>
-              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
               >
@@ -132,7 +135,6 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
                 </div>
               </div>
 
-              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
               >
@@ -180,7 +182,6 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
                 </div>
               </div>
 
-              {}
               <div
                 className={`${styles.exerciseColumn} ${styles.exerciseColumnLarge}`}
               >

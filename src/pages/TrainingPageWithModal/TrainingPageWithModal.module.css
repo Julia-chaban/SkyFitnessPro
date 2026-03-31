@@ -41,7 +41,7 @@
     top: 145px;
     left: 140px;
     width: 1160px;
-    height: 1154px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -72,7 +72,7 @@
 
 .exercisesBlock {
     width: 1160px;
-    height: 375px;
+    height: auto;
     border-radius: 30px;
     padding: 40px;
     background: #FFFFFF;
@@ -82,7 +82,7 @@
 
 .exercisesContent {
     width: 1080px;
-    height: 295px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -101,14 +101,15 @@
 
 .exercisesGrid {
     width: 1080px;
-    height: 148px;
+    height: auto;
     display: flex;
     gap: 60px;
+    flex-wrap: wrap;
 }
 
 .exerciseColumn {
     width: 320px;
-    height: 148px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -116,7 +117,7 @@
 
 .exerciseItem {
     width: 320px;
-    height: 36px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -124,7 +125,7 @@
 
 .exerciseText {
     width: 320px;
-    height: 20px;
+    height: auto;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;

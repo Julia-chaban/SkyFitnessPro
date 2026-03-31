@@ -1,6 +1,3 @@
-/* TrainingPage.module.css */
-
-/* ========== ДЕСКТОП (1025px и выше) - ПО УМОЛЧАНИЮ ========== */
 .userProfileWrapper {
     position: absolute;
     top: 46px;
@@ -32,7 +29,7 @@
     top: 145px;
     left: 140px;
     width: 1160px;
-    height: 1154px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -62,7 +59,7 @@
 
 .exercisesBlock {
     width: 1160px;
-    height: 375px;
+    height: auto;
     border-radius: 30px;
     padding: 40px;
     background: #FFFFFF;
@@ -73,7 +70,7 @@
 
 .exercisesContent {
     width: 1080px;
-    height: 203px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -92,14 +89,15 @@
 
 .exercisesGrid {
     width: 1080px;
-    height: 148px;
+    height: auto;
     display: flex;
     gap: 60px;
+    flex-wrap: wrap;
 }
 
 .exerciseColumn {
     width: 320px;
-    height: 148px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -107,7 +105,7 @@
 
 .exerciseItem {
     width: 320px;
-    height: 36px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -115,7 +113,7 @@
 
 .exerciseText {
     width: 320px;
-    height: 20px;
+    height: auto;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;
@@ -162,7 +160,7 @@
     opacity: 0.9;
 }
 
-/* ========== ПЛАНШЕТЫ (769px - 1024px) ========== */
+
 @media (min-width: 769px) and (max-width: 1024px) {
     .page {
         width: 100%;
@@ -194,7 +192,6 @@
     }
 }
 
-/* ========== МОБИЛЬНАЯ ВЕРСИЯ (до 768px) ========== */
 @media (max-width: 768px) {
     .page {
         width: 100%;
@@ -360,7 +357,7 @@
     }
 }
 
-/* ========== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ (до 375px) ========== */
+
 @media (max-width: 375px) {
     .logo {
         width: 140px;
@@ -379,7 +376,7 @@
     }
 }
 
-/* ========== ДЛЯ ЭКРАНОВ ДО 320px ========== */
+
 @media (max-width: 320px) {
     .contentBlock {
         left: 10px;
