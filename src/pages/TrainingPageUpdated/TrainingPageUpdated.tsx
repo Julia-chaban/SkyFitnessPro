@@ -8,6 +8,7 @@ interface TrainingPageUpdatedProps {
   userEmail?: string;
   token?: string;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
@@ -15,6 +16,7 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
   userEmail = "",
   token,
   onLogout,
+  onLogoClick,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,6 +37,12 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
 
   const handleAddCourse = () => {
     navigate("/courses");
+  };
+
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
   };
 
   const handleUpdateProgress = () => {
@@ -59,6 +67,8 @@ const TrainingPageUpdated: React.FC<TrainingPageUpdatedProps> = ({
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <div className={styles.userProfileWrapper}>

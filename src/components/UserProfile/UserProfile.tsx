@@ -50,7 +50,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             alt="Profile"
           />
         </div>
-        <span className={styles.profileData}>{userName}</span>
+        <span className={styles.profileName}>{userName}</span>
         <div className={styles.arrowIcon} />
       </div>
 

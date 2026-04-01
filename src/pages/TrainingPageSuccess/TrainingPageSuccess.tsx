@@ -1,13 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
+import { workoutsService } from "../../services/workouts.service";
+import { coursesService } from "../../services/courses.service";
 import styles from "./TrainingPageSuccess.module.css";
+
+interface Exercise {
+  _id: string;
+  name: string;
+  quantity: number;
+  progress?: number;
+}
 
 interface TrainingPageSuccessProps {
   userName?: string;
   userEmail?: string;
   token?: string;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
@@ -15,11 +25,15 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
   userEmail = "",
   token,
   onLogout,
+  onLogoClick,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
-  const [courseId, setCourseId] = React.useState<string>("");
+  const [courseId, setCourseId] = useState<string>("");
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [workoutName, setWorkoutName] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -29,12 +43,55 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
     }
   }, [location]);
 
+  useEffect(() => {
+    if (token && id && courseId) {
+      loadWorkoutData();
+    }
+  }, [token, id, courseId]);
+
+  const loadWorkoutData = async () => {
+    if (!token || !id || !courseId) return;
+
+    try {
+      setLoading(true);
+
+      const workout = await workoutsService.getWorkoutById(id, token);
+      setWorkoutName(workout.name);
+
+      const progress = await coursesService.getWorkoutProgress(
+        courseId,
+        id,
+        token,
+      );
+      const progressData = progress.progressData || [];
+
+      const exercisesWithProgress = workout.exercises.map(
+        (ex: Exercise, index: number) => ({
+          ...ex,
+          progress: progressData[index] || 0,
+        }),
+      );
+
+      setExercises(exercisesWithProgress);
+    } catch (err) {
+      console.error("Error loading workout data:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleProfileClick = () => {
     navigate("/profile");
   };
 
   const handleAddCourse = () => {
     navigate("/courses");
+  };
+
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
   };
 
   const handleUpdateProgress = () => {
@@ -47,17 +104,22 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
     }
   };
 
-  const exercises = [
-    { name: "Наклоны вперед", progress: 40 },
-    { name: "Наклоны назад", progress: 40 },
-    { name: "Поднятие ног, согнутых в коленях", progress: 40 },
-    { name: "Наклоны вперед", progress: 40 },
-    { name: "Наклоны назад", progress: 40 },
-    { name: "Поднятие ног, согнутых в коленях", progress: 40 },
-    { name: "Наклоны вперед", progress: 40 },
-    { name: "Наклоны назад", progress: 40 },
-    { name: "Поднятие ног, согнутых в коленях", progress: 40 },
-  ];
+  const calculateProgress = (exercise: Exercise) => {
+    return exercise.quantity > 0
+      ? Math.min(
+          Math.round(((exercise.progress || 0) / exercise.quantity) * 100),
+          100,
+        )
+      : 0;
+  };
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.loading}>Загрузка...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -67,6 +129,8 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <div className={styles.userProfileWrapper}>
@@ -81,7 +145,7 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
       </div>
 
       <div className={styles.contentBlock}>
-        <h1 className={styles.title}>Йога</h1>
+        <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
         <div className={styles.videoContainer}>
           <img
@@ -93,122 +157,35 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
 
         <div className={styles.exercisesBlock}>
           <div className={styles.exercisesContent}>
-            <h2 className={styles.exercisesTitle}>Упражнения тренировки 2</h2>
+            <h2 className={styles.exercisesTitle}>Упражнения тренировки</h2>
 
             <div className={styles.exercisesGrid}>
-              <div
-                className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
-              >
-                <div className={styles.exerciseItem}>
-                  <p className={styles.exerciseText}>
-                    Наклоны вперед {exercises[0].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[0].progress}%` }}
-                    />
-                  </div>
+              {[0, 1, 2].map((colIndex) => (
+                <div key={colIndex} className={styles.exerciseColumn}>
+                  {exercises
+                    .slice(colIndex * 3, colIndex * 3 + 3)
+                    .map((exercise) => {
+                      const progress = calculateProgress(exercise);
+                      return (
+                        <div key={exercise._id} className={styles.exerciseItem}>
+                          <p className={styles.exerciseText}>
+                            {exercise.name} {progress}%
+                          </p>
+                          <div className={styles.progressBarBg}>
+                            <div
+                              className={styles.progressBarFill}
+                              style={{
+                                width: `${progress}%`,
+                                backgroundColor:
+                                  progress === 100 ? "#00C1FF" : "#BCEC30",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
-                <div className={styles.exerciseItem}>
-                  <p className={styles.exerciseText}>
-                    Наклоны назад {exercises[1].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[1].progress}%` }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.exerciseItemLarge}>
-                  <p className={styles.exerciseTextLarge}>
-                    Поднятие ног, согнутых в коленях {exercises[2].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[2].progress}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`${styles.exerciseColumn} ${styles.exerciseColumnDefault}`}
-              >
-                <div className={styles.exerciseItem}>
-                  <p className={styles.exerciseText}>
-                    Наклоны вперед {exercises[3].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[3].progress}%` }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.exerciseItem}>
-                  <p className={styles.exerciseText}>
-                    Наклоны назад {exercises[4].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[4].progress}%` }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.exerciseItemLarge}>
-                  <p className={styles.exerciseTextLarge}>
-                    Поднятие ног, согнутых в коленях {exercises[5].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[5].progress}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className={`${styles.exerciseColumn} ${styles.exerciseColumnLarge}`}
-              >
-                <div className={styles.exerciseItem}>
-                  <p className={styles.exerciseText}>
-                    Наклоны вперед {exercises[6].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[6].progress}%` }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.exerciseItem}>
-                  <p className={styles.exerciseText}>
-                    Наклоны назад {exercises[7].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[7].progress}%` }}
-                    />
-                  </div>
-                </div>
-                <div className={styles.exerciseItemLarge}>
-                  <p className={styles.exerciseTextLarge}>
-                    Поднятие ног, согнутых в коленях {exercises[8].progress}%
-                  </p>
-                  <div className={styles.progressBarBg}>
-                    <div
-                      className={styles.progressBarFill}
-                      style={{ width: `${exercises[8].progress}%` }}
-                    />
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
 
             <button

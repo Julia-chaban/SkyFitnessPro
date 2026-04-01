@@ -5,9 +5,13 @@ import styles from "./CoursePage.module.css";
 
 interface CoursePageProps {
   onLoginClick?: () => void;
+  onLogoClick?: () => void;
 }
 
-const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
+const CoursePage: React.FC<CoursePageProps> = ({
+  onLoginClick,
+  onLogoClick,
+}) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
@@ -27,9 +31,14 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
     }
   };
 
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
+  };
+
   const getCourseImageUrl = () => {
     if (!id) {
-      
       return isMobile
         ? `${process.env.PUBLIC_URL}/images/ioga.svg`
         : `${process.env.PUBLIC_URL}/images/card1.jpg`;
@@ -51,6 +60,8 @@ const CoursePage: React.FC<CoursePageProps> = ({ onLoginClick }) => {
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <button className={styles.loginButton} onClick={handleLoginClick}>

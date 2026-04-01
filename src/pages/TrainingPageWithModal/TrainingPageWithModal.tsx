@@ -17,6 +17,7 @@ interface TrainingPageWithModalProps {
   userEmail?: string;
   token?: string;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
@@ -24,6 +25,7 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
   userEmail = "",
   token,
   onLogout,
+  onLogoClick,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -91,6 +93,12 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
     navigate("/courses");
   };
 
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     navigate(`/training/${id}?courseId=${courseId}`);
@@ -154,6 +162,8 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <div className={styles.userProfileWrapper}>

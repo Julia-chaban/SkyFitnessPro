@@ -8,8 +8,15 @@ import styles from "./AuthModal.module.css";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onLogin: (email: string, password: string) => boolean;
-  onRegister: (email: string, password: string, name: string) => boolean;
+  onLogin: (
+    email: string,
+    password: string,
+  ) => Promise<{ success: boolean; message?: string }>;
+  onRegister: (
+    email: string,
+    password: string,
+    name: string,
+  ) => Promise<{ success: boolean; message?: string }>;
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({
@@ -21,42 +28,67 @@ const AuthModal: React.FC<AuthModalProps> = ({
   const [isLogin, setIsLogin] = useState(true);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   if (!isOpen) return null;
 
   const handleSwitchToRegister = () => {
     setIsLogin(false);
     setShowError(false);
+    setErrorMessage("");
   };
 
   const handleSwitchToLogin = () => {
     setIsLogin(true);
     setShowError(false);
+    setErrorMessage("");
   };
 
-  const handleLoginSubmit = (email: string, password: string) => {
-    const success = onLogin(email, password);
-    if (success) {
-      onClose();
-    } else {
-      setErrorMessage("Пароль введен неверно, попробуйте еще раз.");
+  const handleLoginSubmit = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      const result = await onLogin(email, password);
+      if (result.success) {
+        onClose();
+      } else {
+        setErrorMessage(
+          result.message || "Пароль введен неверно, попробуйте еще раз.",
+        );
+        setShowError(true);
+      }
+    } catch (err) {
+      setErrorMessage("Произошла ошибка при входе. Попробуйте позже.");
       setShowError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleRegisterSubmit = (
+  const handleRegisterSubmit = async (
     email: string,
     password: string,
     name: string,
   ) => {
-    const success = onRegister(email, password, name);
-    if (success) {
-      setErrorMessage("Регистрация успешна! Теперь вы можете войти.");
-      setIsLogin(true);
+    setIsLoading(true);
+    try {
+      const result = await onRegister(email, password, name);
+      if (result.success) {
+        setErrorMessage(
+          result.message || "Регистрация успешна! Теперь вы можете войти.",
+        );
+        setIsLogin(true);
+        setShowError(true);
+      } else {
+        setErrorMessage(
+          result.message || "Данная почта уже используется. Попробуйте войти.",
+        );
+        setShowError(true);
+      }
+    } catch (err) {
+      setErrorMessage("Произошла ошибка при регистрации. Попробуйте позже.");
       setShowError(true);
-    } else {
-      setErrorMessage("Данная почта уже используется. Попробуйте войти.");
-      setShowError(true);
+    } finally {
+      setIsLoading(false);
     }
   };
 

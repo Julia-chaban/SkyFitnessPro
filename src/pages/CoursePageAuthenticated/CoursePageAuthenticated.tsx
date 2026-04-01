@@ -13,6 +13,7 @@ interface CoursePageAuthenticatedProps {
   token?: string;
   onProfileClick?: () => void;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
@@ -21,11 +22,13 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   token,
   onProfileClick,
   onLogout,
+  onLogoClick,
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
   const [isAdding, setIsAdding] = useState(false);
+  const [isCourseAdded, setIsCourseAdded] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,6 +38,16 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    checkIfCourseAdded();
+  }, [id]);
+
+  const checkIfCourseAdded = () => {
+    const saved = localStorage.getItem(USER_COURSES_KEY);
+    const courses = saved ? JSON.parse(saved) : [];
+    setIsCourseAdded(courses.includes(id));
+  };
+
   const handleProfileClick = () => {
     navigate("/profile");
   };
@@ -42,6 +55,12 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   const handleLogout = () => {
     if (onLogout) onLogout();
     navigate("/");
+  };
+
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
   };
 
   const handleAddCourse = async () => {
@@ -56,14 +75,13 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
       if (!courses.includes(id)) {
         courses.push(id);
         localStorage.setItem(USER_COURSES_KEY, JSON.stringify(courses));
+        setIsCourseAdded(true);
       }
 
       if (token) {
         try {
           await coursesService.addCourseToUser(id, token);
-        } catch (apiError) {
-          // Игнорируем ошибки API
-        }
+        } catch (apiError) {}
       }
 
       navigate("/profile");
@@ -91,12 +109,20 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
     return `${process.env.PUBLIC_URL}/images/block3.svg`;
   };
 
+  const getButtonText = () => {
+    if (isCourseAdded) return "Курс уже добавлен";
+    if (isAdding) return "Добавление...";
+    return "Добавить курс";
+  };
+
   return (
     <div className={styles.page}>
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <div className={styles.userProfileWrapper}>
@@ -170,9 +196,9 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
           <button
             className={styles.offerButton}
             onClick={handleAddCourse}
-            disabled={isAdding}
+            disabled={isAdding || isCourseAdded}
           >
-            {isAdding ? "Добавление..." : "Добавить курс"}
+            {getButtonText()}
           </button>
         </div>
 

@@ -12,11 +12,19 @@ interface Exercise {
   progress?: number;
 }
 
+interface Workout {
+  _id: string;
+  name: string;
+  video: string;
+  exercises: Exercise[];
+}
+
 interface TrainingPageProps {
   userName?: string;
   userEmail?: string;
   token?: string;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const TrainingPage: React.FC<TrainingPageProps> = ({
@@ -24,12 +32,15 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
   userEmail = "",
   token,
   onLogout,
+  onLogoClick,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [workoutName, setWorkoutName] = useState("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [videoError, setVideoError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [courseId, setCourseId] = useState<string>("");
@@ -54,8 +65,11 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
     try {
       setLoading(true);
 
-      const workout = await workoutsService.getWorkoutById(id, token);
+      const workout: Workout = await workoutsService.getWorkoutById(id, token);
+
       setWorkoutName(workout.name);
+      setVideoUrl(workout.video || "");
+      setVideoError(false);
 
       let progressData: number[] = [];
 
@@ -97,8 +111,18 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
     navigate("/courses");
   };
 
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
+  };
+
   const handleOpenProgress = () => {
     navigate(`/training/${id}/progress?courseId=${courseId}`);
+  };
+
+  const handleVideoError = () => {
+    setVideoError(true);
   };
 
   const calculateProgress = (exercise: Exercise) => {
@@ -129,12 +153,16 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
       </div>
     );
 
+  const showVideo = videoUrl && !videoError;
+
   return (
     <div className={styles.page}>
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <div className={styles.userProfileWrapper}>
@@ -152,11 +180,33 @@ const TrainingPage: React.FC<TrainingPageProps> = ({
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
         <div className={styles.videoContainer}>
-          <img
-            src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
-            alt="Video"
-            className={styles.videoImage}
-          />
+          {showVideo ? (
+            <iframe
+              width="100%"
+              height="100%"
+              src={videoUrl}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className={styles.videoIframe}
+              onError={handleVideoError}
+            />
+          ) : (
+            <div className={styles.videoPlaceholder}>
+              <p>Видео временно недоступно</p>
+              {videoUrl && (
+                <a
+                  href={videoUrl.replace("/embed/", "/watch?v=")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.videoLink}
+                >
+                  Открыть на YouTube
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={styles.exercisesBlock}>

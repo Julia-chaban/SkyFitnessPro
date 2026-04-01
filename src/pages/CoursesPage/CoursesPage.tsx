@@ -15,6 +15,7 @@ interface CoursesPageProps {
   token?: string;
   onLoginClick?: () => void;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const CoursesPage: React.FC<CoursesPageProps> = ({
@@ -24,6 +25,7 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
   token,
   onLoginClick,
   onLogout,
+  onLogoClick,
 }) => {
   const navigate = useNavigate();
   const [courses, setCourses] = useState<Course[]>([]);
@@ -54,6 +56,12 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
     navigate("/add-course");
   };
 
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
+  };
+
   if (loading) return <div className={styles.loading}>Загрузка...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
 
@@ -63,6 +71,8 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       {isAuthenticated && token ? (

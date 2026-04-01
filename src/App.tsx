@@ -76,6 +76,11 @@ function AppContent() {
     navigate("/");
   };
 
+  const handleLogoClick = () => {
+    setCurrentUser(null);
+    navigate("/");
+  };
+
   return (
     <div className="App">
       <Routes>
@@ -89,6 +94,7 @@ function AppContent() {
               token={currentUser?.token}
               onLoginClick={() => navigate("/auth")}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />
@@ -102,7 +108,12 @@ function AppContent() {
 
         <Route
           path="/course/:id"
-          element={<CoursePage onLoginClick={() => navigate("/auth")} />}
+          element={
+            <CoursePage
+              onLoginClick={() => navigate("/auth")}
+              onLogoClick={handleLogoClick}
+            />
+          }
         />
 
         <Route
@@ -114,6 +125,7 @@ function AppContent() {
               token={currentUser?.token}
               onProfileClick={() => navigate("/profile")}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />
@@ -126,6 +138,7 @@ function AppContent() {
               userEmail={currentUser?.email || ""}
               token={currentUser?.token}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />
@@ -138,6 +151,7 @@ function AppContent() {
               userEmail={currentUser?.email || ""}
               token={currentUser?.token}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />
@@ -150,6 +164,7 @@ function AppContent() {
               userEmail={currentUser?.email || ""}
               token={currentUser?.token}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />
@@ -162,6 +177,7 @@ function AppContent() {
               userEmail={currentUser?.email || ""}
               token={currentUser?.token}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />
@@ -174,6 +190,7 @@ function AppContent() {
               userEmail={currentUser?.email || ""}
               token={currentUser?.token}
               onLogout={handleLogout}
+              onLogoClick={handleLogoClick}
             />
           }
         />

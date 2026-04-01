@@ -29,6 +29,7 @@ interface ProfilePageProps {
   userEmail?: string;
   token?: string;
   onLogout?: () => void;
+  onLogoClick?: () => void;
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({
@@ -36,6 +37,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   userEmail = "",
   token,
   onLogout,
+  onLogoClick,
 }) => {
   const navigate = useNavigate();
   const [displayName] = useState(userName);
@@ -170,6 +172,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     navigate("/courses");
   };
 
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    }
+  };
+
   const handleCourseClick = (courseId: string) => {
     const course = courses.find((c) => c.id === courseId);
     if (course && !course.isDeleted) {
@@ -272,6 +280,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
         alt="SkyFitnessPro"
         className={styles.logo}
+        onClick={handleLogoClick}
+        style={{ cursor: "pointer" }}
       />
 
       <div className={styles.userProfileWrapper}>
@@ -309,76 +319,85 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         <div className={styles.coursesSection}>
           <h2 className={styles.coursesTitle}>Мои курсы</h2>
 
-          <div className={styles.coursesGrid}>
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                className={`${styles.courseCard} ${course.isDeleted ? styles.deletedCourse : ""}`}
-                onClick={() => handleCourseClick(course.id)}
-              >
-                <div className={styles.imageContainer}>
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/${course.image}`}
-                    alt={course.title}
-                    className={styles.courseImage}
-                  />
-                  <DeleteIcon
-                    isDeleted={course.isDeleted}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteCourse(course.id);
-                    }}
-                  />
-                </div>
-
-                <div className={styles.courseContent}>
-                  <h3 className={styles.courseTitle}>{course.title}</h3>
-
-                  <div className={styles.iconsRow}>
+          {courses.length === 0 ? (
+            <div className={styles.emptyCourses}>
+              <p className={styles.emptyText}>Пока вы не записались ни на один курс</p>
+              <button className={styles.goToCoursesButton} onClick={handleAddCourse}>
+                Выбрать курс
+              </button>
+            </div>
+          ) : (
+            <div className={styles.coursesGrid}>
+              {courses.map((course) => (
+                <div
+                  key={course.id}
+                  className={`${styles.courseCard} ${course.isDeleted ? styles.deletedCourse : ""}`}
+                  onClick={() => handleCourseClick(course.id)}
+                >
+                  <div className={styles.imageContainer}>
                     <img
-                      src={`${process.env.PUBLIC_URL}/images/25day.svg`}
-                      alt="25 дней"
-                      className={styles.daysIcon}
+                      src={`${process.env.PUBLIC_URL}/images/${course.image}`}
+                      alt={course.title}
+                      className={styles.courseImage}
                     />
-                    <img
-                      src={`${process.env.PUBLIC_URL}/images/20min.svg`}
-                      alt="20-50 мин/день"
-                      className={styles.timeIcon}
+                    <DeleteIcon
+                      isDeleted={course.isDeleted}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteCourse(course.id);
+                      }}
                     />
                   </div>
 
-                  <img
-                    src={`${process.env.PUBLIC_URL}/images/mult.svg`}
-                    alt="Сложность"
-                    className={styles.difficultyIcon}
-                  />
+                  <div className={styles.courseContent}>
+                    <h3 className={styles.courseTitle}>{course.title}</h3>
 
-                  <div className={styles.progressSection}>
-                    <p className={styles.progressText}>
-                      Прогресс {course.progress}%
-                    </p>
-                    <div className={styles.progressBarBg}>
-                      <div
-                        className={styles.progressBarFill}
-                        style={{ width: `${course.progress}%` }}
+                    <div className={styles.iconsRow}>
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/25day.svg`}
+                        alt="25 дней"
+                        className={styles.daysIcon}
+                      />
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/20min.svg`}
+                        alt="20-50 мин/день"
+                        className={styles.timeIcon}
                       />
                     </div>
-                  </div>
 
-                  <button
-                    className={`${styles.courseButton} ${course.isDeleted ? styles.disabledButton : ""}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleStartTraining(course);
-                    }}
-                    disabled={course.isDeleted}
-                  >
-                    {course.buttonText}
-                  </button>
+                    <img
+                      src={`${process.env.PUBLIC_URL}/images/mult.svg`}
+                      alt="Сложность"
+                      className={styles.difficultyIcon}
+                    />
+
+                    <div className={styles.progressSection}>
+                      <p className={styles.progressText}>
+                        Прогресс {course.progress}%
+                      </p>
+                      <div className={styles.progressBarBg}>
+                        <div
+                          className={styles.progressBarFill}
+                          style={{ width: `${course.progress}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      className={`${styles.courseButton} ${course.isDeleted ? styles.disabledButton : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleStartTraining(course);
+                      }}
+                      disabled={course.isDeleted}
+                    >
+                      {course.buttonText}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
