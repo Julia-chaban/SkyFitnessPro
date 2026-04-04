@@ -4,7 +4,7 @@
     left: 1132px;
     width: 168.35px;
     height: 50px;
-    z-index: 1000;
+    z-index: 100;
 }
 
 .page {
@@ -15,17 +15,6 @@
     margin: 0 auto;
 }
 
-/* Затемнение для всей страницы */
-.pageOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-}
-
 .logo {
     position: absolute;
     top: 50px;
@@ -33,7 +22,6 @@
     width: 220px;
     height: 35px;
     object-fit: contain;
-    z-index: 1001;
 }
 
 .contentBlock {
@@ -41,11 +29,10 @@
     top: 145px;
     left: 140px;
     width: 1160px;
-    height: 1154px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
-    z-index: 100;
 }
 
 .title {
@@ -61,7 +48,53 @@
 
 .videoContainer {
     width: 1160px;
-    height: 639px;
+    height: auto;
+    aspect-ratio: 1160/639;
+    border-radius: 30px;
+    overflow: hidden;
+    background: #1A1A1A;
+}
+
+.videoIframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 30px;
+}
+
+.videoPlaceholder {
+    width: 100%;
+    height: 100%;
+    background: #E0E0E0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    border-radius: 30px;
+    aspect-ratio: 1160/639;
+}
+
+.videoPlaceholder p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: #666;
+    margin: 0;
+}
+
+.videoLink {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #BCEC30;
+    text-decoration: none;
+    padding: 8px 16px;
+    background: #1A1A1A;
+    border-radius: 46px;
+    transition: opacity 0.2s;
+}
+
+.videoLink:hover {
+    opacity: 0.8;
 }
 
 .videoImage {
@@ -72,7 +105,7 @@
 
 .exercisesBlock {
     width: 1160px;
-    height: 395px;
+    height: auto;
     border-radius: 30px;
     padding: 40px;
     background: #FFFFFF;
@@ -82,17 +115,16 @@
 
 .exercisesContent {
     width: 1080px;
-    height: 223px;
-    /* Увеличено для правильного размещения */
+    height: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
 }
 
 .exercisesTitle {
     width: 403px;
     height: 35px;
-    font-family: 'Roboto';
+    font-family: 'StratosSkyeng', sans-serif;
     font-weight: 400;
     font-size: 32px;
     line-height: 110%;
@@ -102,62 +134,55 @@
 
 .exercisesGrid {
     width: 1080px;
+    height: auto;
     display: flex;
     gap: 60px;
+    flex-wrap: wrap;
 }
 
 .exerciseColumn {
     width: 320px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Обычные колонки (первые две) */
 .exerciseColumnDefault {
-    height: 148px;
+    height: auto;
 }
 
-/* Колонка с многострочным текстом (третья) */
 .exerciseColumnLarge {
-    height: 168px;
-    /* Увеличено для двух строк текста */
+    height: auto;
 }
 
 .exerciseItem {
     width: 320px;
-    height: 40px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* Специальный элемент для многострочного текста */
 .exerciseItemLarge {
     width: 320px;
-    min-height: 56px;
-    /* Минимальная высота для двух строк */
+    height: auto;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    /* Уменьшенный отступ */
+    gap: 10px;
 }
 
 .exerciseText {
     width: 320px;
-    height: 40px;
+    height: auto;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;
     line-height: 110%;
     color: #000000;
     margin: 0;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Текст для многострочного упражнения */
 .exerciseTextLarge {
     width: 320px;
     font-family: 'Roboto', sans-serif;
@@ -167,12 +192,7 @@
     color: #000000;
     margin: 0;
     white-space: normal;
-    /* Разрешаем перенос текста */
     word-wrap: break-word;
-    min-height: 40px;
-    /* Высота для двух строк */
-    display: flex;
-    align-items: center;
 }
 
 .progressBarBg {
@@ -213,61 +233,6 @@
     opacity: 0.9;
 }
 
-/* Модальное окно успеха */
-.successModal {
-    position: absolute;
-    top: 645px;
-    left: 507px;
-    width: 426px;
-    height: 270px;
-    border-radius: 30px;
-    padding: 40px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 34px;
-    z-index: 2000;
-}
-
-.successTitle {
-    width: 346px;
-    height: 88px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 110%;
-    text-align: center;
-    color: #000000;
-    margin: 0;
-}
-
-.iconContainer {
-    width: 68px;
-    height: 68px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.successIcon {
-    width: 56.67px;
-    height: 56.67px;
-    position: absolute;
-    top: 5.67px;
-    left: 5.67px;
-}
-
-.successIcon img {
-    width: 56.67px;
-    height: 56.67px;
-    object-fit: contain;
-}
-
-/* Планшеты (768px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .page {
         width: 100%;
@@ -290,6 +255,36 @@
         width: calc(100% - 60px);
     }
 
+    .title {
+        width: 100%;
+        font-size: 48px;
+        height: auto;
+    }
+
+    .videoContainer {
+        width: 100%;
+        aspect-ratio: 1160/639;
+        border-radius: 20px;
+    }
+
+    .videoIframe {
+        border-radius: 20px;
+    }
+
+    .videoPlaceholder {
+        border-radius: 20px;
+        aspect-ratio: 1160/639;
+    }
+
+    .videoPlaceholder p {
+        font-size: 16px;
+    }
+
+    .videoLink {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
     .exercisesGrid {
         gap: 30px;
     }
@@ -297,9 +292,31 @@
     .exerciseColumn {
         width: calc(33.33% - 20px);
     }
+
+    .exercisesContent {
+        width: 100%;
+    }
+
+    .exercisesTitle {
+        width: 100%;
+        font-size: 28px;
+    }
+
+    .exerciseText {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .progressButton {
+        width: 100%;
+        max-width: 320px;
+    }
 }
 
-/* Маленькие ноутбуки (1025px - 1280px) */
 @media (min-width: 1025px) and (max-width: 1280px) {
     .page {
         width: 100%;
@@ -321,9 +338,20 @@
         left: 40px;
         width: calc(100% - 80px);
     }
+
+    .videoContainer {
+        border-radius: 25px;
+    }
+
+    .videoIframe {
+        border-radius: 25px;
+    }
+
+    .videoPlaceholder {
+        border-radius: 25px;
+    }
 }
 
-/* Средние ноутбуки (1281px - 1440px) */
 @media (min-width: 1281px) and (max-width: 1440px) {
     .page {
         width: 100%;
@@ -332,7 +360,6 @@
     }
 }
 
-/* Большие экраны (1441px и больше) */
 @media (min-width: 1441px) {
     .page {
         width: 1440px;
@@ -340,7 +367,6 @@
     }
 }
 
-/* Мобильные устройства (до 768px) */
 @media (max-width: 768px) {
     .page {
         width: 100%;
@@ -353,8 +379,9 @@
         position: relative;
         top: 40px;
         left: 0;
-        width: 220px;
-        height: 35px;
+        width: 160px;
+        height: 28px;
+        z-index: 10;
     }
 
     .userProfileWrapper {
@@ -384,8 +411,26 @@
 
     .videoContainer {
         width: 100%;
-        height: auto;
         aspect-ratio: 1160/639;
+        border-radius: 20px;
+    }
+
+    .videoIframe {
+        border-radius: 20px;
+    }
+
+    .videoPlaceholder {
+        border-radius: 20px;
+        aspect-ratio: 1160/639;
+    }
+
+    .videoPlaceholder p {
+        font-size: 14px;
+    }
+
+    .videoLink {
+        font-size: 14px;
+        padding: 6px 12px;
     }
 
     .videoImage {
@@ -403,20 +448,14 @@
     .exercisesContent {
         width: 100%;
         height: auto;
-        gap: 15px;
+        gap: 20px;
     }
 
     .exercisesTitle {
-        width: 283px;
-        height: 70px;
-        /* Высота для двух строк */
-        font-size: 32px;
-        line-height: 35px;
-        /* Высота строки */
+        width: 100%;
+        font-size: 28px;
+        height: auto;
         white-space: normal;
-        word-wrap: break-word;
-        display: flex;
-        align-items: center;
     }
 
     .exercisesGrid {
@@ -427,13 +466,7 @@
 
     .exerciseColumn {
         width: 100%;
-        height: auto !important;
-    }
-
-    .exerciseColumnDefault,
-    .exerciseColumnLarge {
-        height: auto !important;
-        min-height: auto;
+        height: auto;
     }
 
     .exerciseItem {
@@ -450,16 +483,13 @@
 
     .exerciseText {
         width: 100%;
-        height: auto;
         font-size: 16px;
-        line-height: 20px;
         white-space: normal;
+        line-height: 20px;
     }
 
     .exerciseTextLarge {
         width: 100%;
-        height: auto;
-        min-height: 40px;
         font-size: 16px;
         line-height: 20px;
     }
@@ -471,5 +501,115 @@
     .progressButton {
         width: 100%;
         margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+
+    .videoContainer {
+        border-radius: 16px;
+    }
+
+    .videoIframe {
+        border-radius: 16px;
+    }
+
+    .videoPlaceholder {
+        border-radius: 16px;
+    }
+
+    .videoPlaceholder p {
+        font-size: 12px;
+    }
+
+    .videoLink {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .exercisesTitle {
+        font-size: 24px;
+    }
+
+    .exerciseText {
+        font-size: 14px;
+    }
+
+    .progressButton {
+        font-size: 16px;
+        padding: 14px 20px;
+        height: 48px;
+    }
+}
+
+@media (max-width: 375px) {
+    .logo {
+        width: 140px;
+        height: 24px;
+    }
+
+    .videoContainer {
+        border-radius: 14px;
+    }
+
+    .videoIframe {
+        border-radius: 14px;
+    }
+
+    .videoPlaceholder {
+        border-radius: 14px;
+    }
+
+    .exercisesTitle {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .progressButton {
+        font-size: 15px;
+        padding: 12px 18px;
+        height: 46px;
+    }
+}
+
+@media (max-width: 320px) {
+    .contentBlock {
+        top: 100px;
+    }
+
+    .videoContainer {
+        border-radius: 12px;
+    }
+
+    .videoIframe {
+        border-radius: 12px;
+    }
+
+    .videoPlaceholder {
+        border-radius: 12px;
+    }
+
+    .exercisesBlock {
+        padding: 15px;
+    }
+
+    .exercisesTitle {
+        font-size: 20px;
+        line-height: 26px;
+    }
+
+    .exerciseText {
+        font-size: 13px;
+    }
+
+    .progressButton {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 16px;
+        font-size: 14px;
+        height: 44px;
     }
 }

@@ -5,12 +5,14 @@ interface LoginProps {
   onSwitchToRegister: () => void;
   onClose: () => void;
   onLogin: (email: string, password: string) => void;
+  isLoading?: boolean;
 }
 
 const Login: React.FC<LoginProps> = ({
   onSwitchToRegister,
   onClose,
   onLogin,
+  isLoading = false,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +38,7 @@ const Login: React.FC<LoginProps> = ({
           className={styles.inputField}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isLoading}
         />
 
         <input
@@ -44,13 +47,22 @@ const Login: React.FC<LoginProps> = ({
           className={styles.inputField}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoading}
         />
 
-        <button className={styles.loginButton} onClick={handleLogin}>
-          Войти
+        <button
+          className={styles.loginButton}
+          onClick={handleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? "Вход..." : "Войти"}
         </button>
 
-        <button className={styles.registerButton} onClick={onSwitchToRegister}>
+        <button
+          className={styles.registerButton}
+          onClick={onSwitchToRegister}
+          disabled={isLoading}
+        >
           Зарегистрироваться
         </button>
       </div>

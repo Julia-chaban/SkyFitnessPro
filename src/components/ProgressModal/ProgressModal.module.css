@@ -118,11 +118,38 @@
     margin-top: 10px;
 }
 
-/* Мобильная адаптация */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .modalContainer {
+        width: 426px;
+        padding: 35px 30px;
+    }
+
+    .modalTitle {
+        font-size: 28px;
+    }
+
+    .questionText {
+        font-size: 17px;
+    }
+
+    .inputField {
+        height: 50px;
+        padding: 15px 17px;
+        font-size: 17px;
+    }
+
+    .saveButton {
+        height: 50px;
+        padding: 15px 24px;
+        font-size: 17px;
+    }
+}
+
 @media (max-width: 768px) {
     .modalContainer {
         width: 90%;
         padding: 30px 20px;
+        gap: 25px;
     }
 
     .modalTitle {
@@ -143,5 +170,89 @@
         height: 48px;
         padding: 14px 22px;
         font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modalContainer {
+        width: 95%;
+        padding: 25px 15px;
+        gap: 20px;
+    }
+
+    .modalTitle {
+        font-size: 22px;
+    }
+
+    .questionText {
+        font-size: 15px;
+    }
+
+    .inputField {
+        height: 44px;
+        padding: 12px 14px;
+        font-size: 15px;
+    }
+
+    .saveButton {
+        height: 44px;
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 375px) {
+    .modalContainer {
+        width: 95%;
+        padding: 20px 12px;
+        gap: 18px;
+    }
+
+    .modalTitle {
+        font-size: 20px;
+    }
+
+    .questionText {
+        font-size: 14px;
+    }
+
+    .inputField {
+        height: 42px;
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .saveButton {
+        height: 42px;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 320px) {
+    .modalContainer {
+        width: 95%;
+        padding: 18px 10px;
+        gap: 15px;
+    }
+
+    .modalTitle {
+        font-size: 18px;
+    }
+
+    .questionText {
+        font-size: 13px;
+    }
+
+    .inputField {
+        height: 40px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .saveButton {
+        height: 40px;
+        padding: 8px 16px;
+        font-size: 13px;
     }
 }

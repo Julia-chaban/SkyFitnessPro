@@ -45,10 +45,97 @@
     border-color: #000000;
     border-top: none;
     border-right: none;
-    margin-left: 50px;
+    margin-left: 12px;
     flex-shrink: 0;
 }
 
+@media (min-width: 769px) and (max-width: 1024px) {
+    .userProfile {
+        width: 150px;
+        height: 45px;
+    }
+
+    .profileName {
+        font-size: 18px;
+        margin-left: 6px;
+    }
+
+    .profileIcon {
+        width: 36px;
+        height: 36px;
+        top: 4.5px;
+        left: 4.5px;
+    }
+
+    .profileIcon img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .arrowIcon {
+        width: 7px;
+        height: 7px;
+        margin-left: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .userProfile {
+        width: auto;
+        height: 40px;
+        gap: 6px;
+    }
+
+    .profileName {
+        font-size: 16px;
+        margin-left: 6px;
+    }
+
+    .profileIcon {
+        width: 32px;
+        height: 32px;
+        top: 4px;
+        left: 4px;
+    }
+
+    .profileIcon img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .arrowIcon {
+        width: 7px;
+        height: 7px;
+        margin-left: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .userProfile {
+        gap: 4px;
+    }
+
+    .profileName {
+        font-size: 14px;
+        margin-left: 4px;
+    }
+
+    .profileIcon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .profileIcon img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .arrowIcon {
+        width: 6px;
+        height: 6px;
+        margin-left: 6px;
+    }
+}
 
 @media (max-width: 375px) {
     .userProfile {
@@ -72,8 +159,32 @@
     }
 
     .arrowIcon {
-        width: 8.03px;
-        height: 8.03px;
+        width: 8px;
+        height: 8px;
+        margin-left: 2px;
+    }
+}
+
+@media (max-width: 320px) {
+    .userProfile {
+        width: 50px;
+        height: 34px;
+        gap: 3px;
+    }
+
+    .profileIcon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .profileIcon img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .arrowIcon {
+        width: 6px;
+        height: 6px;
         margin-left: 2px;
     }
 }

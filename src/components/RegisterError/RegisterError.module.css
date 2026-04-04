@@ -19,7 +19,6 @@
 .logo {
     width: 220px;
     height: 35px;
-    
 }
 
 .formContainer {
@@ -98,4 +97,205 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .registerErrorContainer {
+        width: 340px;
+        height: auto;
+        min-height: 500px;
+        padding: 35px;
+        gap: 35px;
+    }
+
+    .logo {
+        width: 200px;
+        height: 32px;
+    }
+
+    .formContainer {
+        width: 260px;
+        height: auto;
+    }
+
+    .inputField {
+        width: 260px;
+        height: 48px;
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+
+    .registerButton {
+        width: 260px;
+        height: 48px;
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+
+    .loginButton {
+        width: 260px;
+        height: 48px;
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+
+    .errorMessage {
+        width: 260px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .registerErrorContainer {
+        width: 90%;
+        max-width: 343px;
+        height: auto;
+        min-height: 500px;
+        padding: 30px 20px;
+        gap: 30px;
+    }
+
+    .logo {
+        width: 180px;
+        height: 28px;
+    }
+
+    .formContainer {
+        width: 100%;
+        height: auto;
+        gap: 12px;
+    }
+
+    .inputField {
+        width: 100%;
+        height: 48px;
+        padding: 14px 16px;
+        font-size: 16px;
+    }
+
+    .registerButton {
+        width: 100%;
+        height: 48px;
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+
+    .loginButton {
+        width: 100%;
+        height: 48px;
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+
+    .errorMessage {
+        width: 100%;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .registerErrorContainer {
+        max-width: 320px;
+        padding: 25px 15px;
+        gap: 25px;
+    }
+
+    .logo {
+        width: 160px;
+        height: 25px;
+    }
+
+    .inputField {
+        height: 44px;
+        padding: 12px 14px;
+        font-size: 15px;
+    }
+
+    .registerButton {
+        height: 44px;
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+
+    .loginButton {
+        height: 44px;
+        padding: 12px 20px;
+        font-size: 15px;
+    }
+
+    .errorMessage {
+        font-size: 12px;
+        height: auto;
+        min-height: 25px;
+    }
+}
+
+@media (max-width: 375px) {
+    .registerErrorContainer {
+        max-width: 300px;
+        padding: 20px 15px;
+        gap: 20px;
+    }
+
+    .logo {
+        width: 140px;
+        height: 22px;
+    }
+
+    .inputField {
+        height: 42px;
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .registerButton {
+        height: 42px;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+    .loginButton {
+        height: 42px;
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+    .errorMessage {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .registerErrorContainer {
+        max-width: 280px;
+        padding: 18px 12px;
+        gap: 18px;
+    }
+
+    .logo {
+        width: 130px;
+        height: 20px;
+    }
+
+    .inputField {
+        height: 40px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .registerButton {
+        height: 40px;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .loginButton {
+        height: 40px;
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .errorMessage {
+        font-size: 11px;
+    }
 }

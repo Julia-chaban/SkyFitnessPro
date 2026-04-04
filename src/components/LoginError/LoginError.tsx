@@ -6,6 +6,7 @@ interface LoginErrorProps {
   onClose: () => void;
   errorMessage: string;
   onLogin: (email: string, password: string) => void;
+  isLoading?: boolean;
 }
 
 const LoginError: React.FC<LoginErrorProps> = ({
@@ -13,12 +14,13 @@ const LoginError: React.FC<LoginErrorProps> = ({
   onClose,
   errorMessage,
   onLogin,
+  isLoading = false,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (email && password) {
+    if (email && password && !isLoading) {
       onLogin(email, password);
     }
   };
@@ -38,6 +40,7 @@ const LoginError: React.FC<LoginErrorProps> = ({
           className={styles.inputField}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isLoading}
         />
 
         <input
@@ -46,15 +49,24 @@ const LoginError: React.FC<LoginErrorProps> = ({
           className={styles.inputField}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoading}
         />
 
         <div className={styles.errorMessage}>{errorMessage}</div>
 
-        <button className={styles.loginButton} onClick={handleLogin}>
-          Войти
+        <button
+          className={styles.loginButton}
+          onClick={handleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? "Вход..." : "Войти"}
         </button>
 
-        <button className={styles.registerButton} onClick={onSwitchToRegister}>
+        <button
+          className={styles.registerButton}
+          onClick={onSwitchToRegister}
+          disabled={isLoading}
+        >
           Зарегистрироваться
         </button>
       </div>

@@ -6,6 +6,7 @@ interface RegisterErrorProps {
   onClose: () => void;
   errorMessage: string;
   onRegister: (email: string, password: string, name: string) => void;
+  isLoading?: boolean;
 }
 
 const RegisterError: React.FC<RegisterErrorProps> = ({
@@ -13,6 +14,7 @@ const RegisterError: React.FC<RegisterErrorProps> = ({
   onClose,
   errorMessage,
   onRegister,
+  isLoading = false,
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +22,7 @@ const RegisterError: React.FC<RegisterErrorProps> = ({
   const [name, setName] = useState("");
 
   const handleRegister = () => {
-    if (password === confirmPassword && email && name) {
+    if (password === confirmPassword && email && name && !isLoading) {
       onRegister(email, password, name);
     }
   };
@@ -40,6 +42,7 @@ const RegisterError: React.FC<RegisterErrorProps> = ({
           className={styles.inputField}
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isLoading}
         />
 
         <input
@@ -48,6 +51,7 @@ const RegisterError: React.FC<RegisterErrorProps> = ({
           className={styles.inputField}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isLoading}
         />
 
         <input
@@ -56,6 +60,7 @@ const RegisterError: React.FC<RegisterErrorProps> = ({
           className={styles.inputField}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoading}
         />
 
         <input
@@ -64,12 +69,13 @@ const RegisterError: React.FC<RegisterErrorProps> = ({
           className={styles.inputField}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          disabled={isLoading}
         />
 
         <div className={styles.errorMessage}>{errorMessage}</div>
 
-        <button className={styles.registerButton} onClick={handleRegister}>
-          Зарегистрироваться
+        <button className={styles.registerButton} onClick={handleRegister} disabled={isLoading}>
+          {isLoading ? "Регистрация..." : "Зарегистрироваться"}
         </button>
       </div>
     </div>

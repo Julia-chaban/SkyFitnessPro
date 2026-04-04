@@ -58,7 +58,6 @@
     scrollbar-color: #000000 transparent;
 }
 
-/* Стилизация скролла для Chrome, Safari, Edge */
 .scrollableList::-webkit-scrollbar {
     width: 6px;
     min-height: 116px;
@@ -75,7 +74,6 @@
     min-height: 116px;
 }
 
-/* Линия под каждым элементом */
 .trainingItem {
     width: 354px;
     height: 54px;
@@ -198,7 +196,13 @@
     cursor: not-allowed;
 }
 
-/* Планшеты (768px - 1024px) */
+@media (min-width: 1025px) {
+    .modalContainer {
+        width: 460px;
+        height: 609px;
+    }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
     .modalContainer {
         width: 460px;
@@ -206,18 +210,9 @@
     }
 }
 
-/* Маленькие ноутбуки (1025px - 1280px) */
-@media (min-width: 1025px) and (max-width: 1280px) {
-    .modalContainer {
-        width: 460px;
-        height: 609px;
-    }
-}
-
-/* Мобильные устройства (до 768px) */
 @media (max-width: 768px) {
     .modalContainer {
-        width: 100%;
+        width: 90%;
         max-width: 343px;
         height: auto;
         min-height: auto;
@@ -229,6 +224,7 @@
         width: 100%;
         font-size: 24px;
         height: auto;
+        text-align: center;
     }
 
     .listContainer {
@@ -279,5 +275,86 @@
     .startButton {
         width: 100%;
         margin-top: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modalContainer {
+        width: 95%;
+        max-width: 320px;
+        padding: 20px 15px;
+        gap: 20px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .trainingTitle {
+        font-size: 16px;
+    }
+
+    .trainingSubtitle {
+        font-size: 13px;
+    }
+
+    .startButton {
+        height: 48px;
+        padding: 14px 22px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 375px) {
+    .modalContainer {
+        width: 95%;
+        max-width: 300px;
+        padding: 18px 12px;
+        gap: 18px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .trainingTitle {
+        font-size: 15px;
+    }
+
+    .trainingSubtitle {
+        font-size: 12px;
+    }
+
+    .startButton {
+        height: 44px;
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 320px) {
+    .modalContainer {
+        width: 95%;
+        max-width: 280px;
+        padding: 15px 10px;
+        gap: 15px;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .trainingTitle {
+        font-size: 14px;
+    }
+
+    .trainingSubtitle {
+        font-size: 11px;
+    }
+
+    .startButton {
+        height: 40px;
+        padding: 10px 16px;
+        font-size: 14px;
     }
 }

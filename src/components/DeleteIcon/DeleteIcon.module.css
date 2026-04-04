@@ -11,7 +11,6 @@
     justify-content: center;
     cursor: pointer;
     z-index: 10;
-    mix-blend-mode: screen;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -19,7 +18,6 @@
     width: 16px;
     height: 16px;
     position: relative;
-    mix-blend-mode: multiply;
 }
 
 .line {
@@ -43,20 +41,132 @@
     transform: translateX(-50%);
 }
 
-/* Стиль для удаленного курса (горизонтальная палочка) */
 .minusIcon {
     width: 16px;
     height: 16px;
     position: relative;
-    mix-blend-mode: multiply;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .minusLine {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
+    width: 16px;
     height: 2px;
     background: #000000;
-    transform: translateY(-50%);
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .iconContainer {
+        top: 16px;
+        right: 16px;
+        width: 30px;
+        height: 30px;
+    }
+
+    .crossIcon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .minusIcon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .minusLine {
+        width: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .iconContainer {
+        top: 16px;
+        right: 16px;
+        width: 28px;
+        height: 28px;
+    }
+
+    .crossIcon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .minusIcon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .minusLine {
+        width: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .iconContainer {
+        top: 12px;
+        right: 12px;
+        width: 26px;
+        height: 26px;
+    }
+
+    .crossIcon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .minusIcon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .minusLine {
+        width: 12px;
+    }
+}
+
+@media (max-width: 375px) {
+    .iconContainer {
+        top: 12px;
+        right: 12px;
+        width: 24px;
+        height: 24px;
+    }
+
+    .crossIcon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .minusIcon {
+        width: 12px;
+        height: 12px;
+    }
+
+    .minusLine {
+        width: 12px;
+    }
+}
+
+@media (max-width: 320px) {
+    .iconContainer {
+        top: 10px;
+        right: 10px;
+        width: 22px;
+        height: 22px;
+    }
+
+    .crossIcon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .minusIcon {
+        width: 10px;
+        height: 10px;
+    }
+
+    .minusLine {
+        width: 10px;
+    }
 }

@@ -48,7 +48,8 @@
 
 .videoContainer {
     width: 1160px;
-    height: 639px;
+    height: auto;
+    aspect-ratio: 1160/639;
     border-radius: 30px;
     overflow: hidden;
     background: #1A1A1A;
@@ -71,6 +72,7 @@
     justify-content: center;
     gap: 16px;
     border-radius: 30px;
+    aspect-ratio: 1160/639;
 }
 
 .videoPlaceholder p {
@@ -214,21 +216,33 @@
 
     .logo {
         left: 30px;
+        top: 40px;
     }
 
     .userProfileWrapper {
         right: 30px;
         left: auto;
+        top: 40px;
     }
 
     .contentBlock {
         left: 30px;
         width: calc(100% - 60px);
+        top: 120px;
+    }
+
+    .title {
+        width: 100%;
+        font-size: 48px;
+        height: auto;
     }
 
     .videoContainer {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1160/639;
+    }
+
+    .videoPlaceholder {
         aspect-ratio: 1160/639;
     }
 
@@ -239,12 +253,74 @@
     .exerciseColumn {
         width: calc(33.33% - 20px);
     }
+
+    .exercisesContent {
+        width: 100%;
+    }
+
+    .exercisesTitle {
+        width: 100%;
+        font-size: 28px;
+        height: auto;
+    }
+
+    .exerciseText {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .progressButton {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .page {
+        width: 100%;
+        max-width: 1280px;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 40px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1440px) {
+    .page {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1441px) {
+    .page {
+        width: 1440px;
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 768px) {
     .page {
         width: 100%;
-        min-height: 1236px;
+        min-height: auto;
         padding: 0;
         margin: 0 auto;
         background: #FAFAFA;
@@ -263,7 +339,8 @@
     .userProfileWrapper {
         position: absolute;
         top: 40px;
-        left: 253px;
+        left: auto;
+        right: 16px;
         width: auto;
         z-index: 10;
     }
@@ -278,7 +355,7 @@
         left: 16px;
         width: calc(100% - 32px);
         height: auto;
-        min-height: 1100px;
+        min-height: auto;
         display: flex;
         flex-direction: column;
         gap: 24px;
@@ -294,18 +371,16 @@
 
     .videoContainer {
         width: 100%;
-        height: auto;
         aspect-ratio: 1160/639;
         border-radius: 20px;
     }
 
     .videoIframe {
-        width: 100%;
-        height: 100%;
         border-radius: 20px;
     }
 
     .videoPlaceholder {
+        aspect-ratio: 1160/639;
         border-radius: 20px;
     }
 
@@ -318,17 +393,10 @@
         padding: 6px 12px;
     }
 
-    .videoImage {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1160/639;
-        object-fit: cover;
-    }
-
     .exercisesBlock {
         width: 100%;
         height: auto;
-        min-height: 400px;
+        min-height: auto;
         border-radius: 30px;
         padding: 20px;
         background: #FFFFFF;
@@ -425,6 +493,27 @@
     }
 }
 
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+
+    .exercisesTitle {
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .exerciseText {
+        font-size: 14px;
+    }
+
+    .progressButton {
+        font-size: 16px;
+        padding: 14px 20px;
+        height: 48px;
+    }
+}
+
 @media (max-width: 375px) {
     .logo {
         width: 140px;
@@ -444,14 +533,14 @@
     }
 
     .exercisesTitle {
-        font-size: 24px;
+        font-size: 22px;
         line-height: 28px;
     }
 
     .progressButton {
-        font-size: 16px;
-        padding: 14px 20px;
-        height: 48px;
+        font-size: 15px;
+        padding: 12px 18px;
+        height: 46px;
     }
 }
 
@@ -472,7 +561,7 @@
 
     .exercisesTitle {
         width: 100%;
-        font-size: 22px;
+        font-size: 20px;
         line-height: 26px;
     }
 
@@ -486,7 +575,7 @@
 
     .exerciseText {
         width: 100%;
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .progressBarBg {

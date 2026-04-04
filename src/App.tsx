@@ -45,7 +45,7 @@ function AppContent() {
       const response = await authService.login(email, password);
 
       if (!response.token) {
-        throw new Error("Не получен токен");
+        return { success: false, message: "Не получен токен" };
       }
 
       const userName = email.split("@")[0];
@@ -56,18 +56,25 @@ function AppContent() {
       };
 
       setCurrentUser(newUser);
-      return true;
-    } catch (err) {
-      return false;
+      return { success: true };
+    } catch (err: any) {
+      const message = err?.message || "Неверный email или пароль";
+      return { success: false, message };
     }
   };
 
-  const handleRegister = async (email: string, password: string) => {
+  const handleRegister = async (
+    email: string,
+    password: string,
+    name: string,
+  ) => {
     try {
       await authService.register(email, password);
-      return true;
-    } catch (err) {
-      return false;
+      return { success: true, message: "Регистрация успешна!" };
+    } catch (err: any) {
+      const message =
+        err?.message || "Ошибка регистрации. Попробуйте другой email.";
+      return { success: false, message };
     }
   };
 
@@ -77,7 +84,6 @@ function AppContent() {
   };
 
   const handleLogoClick = () => {
-    setCurrentUser(null);
     navigate("/");
   };
 

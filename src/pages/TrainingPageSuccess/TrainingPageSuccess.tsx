@@ -12,6 +12,13 @@ interface Exercise {
   progress?: number;
 }
 
+interface Workout {
+  _id: string;
+  name: string;
+  video: string;
+  exercises: Exercise[];
+}
+
 interface TrainingPageSuccessProps {
   userName?: string;
   userEmail?: string;
@@ -33,6 +40,8 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
   const [courseId, setCourseId] = useState<string>("");
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [workoutName, setWorkoutName] = useState("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [videoError, setVideoError] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -49,14 +58,26 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
     }
   }, [token, id, courseId]);
 
+  useEffect(() => {
+    if (!loading) {
+      const timer = setTimeout(() => {
+        navigate(`/training/${id}/updated?courseId=${courseId}`);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loading, id, courseId, navigate]);
+
   const loadWorkoutData = async () => {
     if (!token || !id || !courseId) return;
 
     try {
       setLoading(true);
 
-      const workout = await workoutsService.getWorkoutById(id, token);
+      const workout: Workout = await workoutsService.getWorkoutById(id, token);
       setWorkoutName(workout.name);
+      setVideoUrl(workout.video || "");
+      setVideoError(false);
 
       const progress = await coursesService.getWorkoutProgress(
         courseId,
@@ -94,14 +115,8 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
     }
   };
 
-  const handleUpdateProgress = () => {
-    navigate(`/training/${id}/updated?courseId=${courseId}`);
-  };
-
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      handleUpdateProgress();
-    }
+  const handleVideoError = () => {
+    setVideoError(true);
   };
 
   const calculateProgress = (exercise: Exercise) => {
@@ -113,6 +128,8 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
       : 0;
   };
 
+  const showVideo = videoUrl && !videoError;
+
   if (loading) {
     return (
       <div className={styles.page}>
@@ -123,7 +140,7 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
 
   return (
     <div className={styles.page}>
-      <div className={styles.pageOverlay} onClick={handleOverlayClick} />
+      <div className={styles.pageOverlay} />
 
       <img
         src={`${process.env.PUBLIC_URL}/images/logo.svg`}
@@ -148,11 +165,33 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
         <div className={styles.videoContainer}>
-          <img
-            src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
-            alt="Video"
-            className={styles.videoImage}
-          />
+          {showVideo ? (
+            <iframe
+              width="100%"
+              height="100%"
+              src={videoUrl}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className={styles.videoIframe}
+              onError={handleVideoError}
+            />
+          ) : (
+            <div className={styles.videoPlaceholder}>
+              <p>Видео временно недоступно</p>
+              {videoUrl && (
+                <a
+                  href={videoUrl.replace("/embed/", "/watch?v=")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.videoLink}
+                >
+                  Открыть на YouTube
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={styles.exercisesBlock}>
@@ -187,13 +226,6 @@ const TrainingPageSuccess: React.FC<TrainingPageSuccessProps> = ({
                 </div>
               ))}
             </div>
-
-            <button
-              className={styles.progressButton}
-              onClick={handleUpdateProgress}
-            >
-              Обновить свой прогресс
-            </button>
           </div>
         </div>
       </div>

@@ -15,7 +15,6 @@
     margin: 0 auto;
 }
 
-/* Затемнение для всей страницы */
 .pageOverlay {
     position: fixed;
     top: 0;
@@ -41,7 +40,7 @@
     top: 145px;
     left: 140px;
     width: 1160px;
-    height: 1154px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -61,7 +60,8 @@
 
 .videoContainer {
     width: 1160px;
-    height: 639px;
+    height: auto;
+    aspect-ratio: 1160/639;
 }
 
 .videoImage {
@@ -72,7 +72,7 @@
 
 .exercisesBlock {
     width: 1160px;
-    height: 395px;
+    height: auto;
     border-radius: 30px;
     padding: 40px;
     background: #FFFFFF;
@@ -82,11 +82,10 @@
 
 .exercisesContent {
     width: 1080px;
-    height: 223px;
-    /* Увеличено для правильного размещения */
+    height: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
 }
 
 .exercisesTitle {
@@ -102,41 +101,39 @@
 
 .exercisesGrid {
     width: 1080px;
+    height: auto;
     display: flex;
     gap: 60px;
+    flex-wrap: wrap;
 }
 
 .exerciseColumn {
     width: 320px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Обычные колонки (первые две) */
 .exerciseColumnDefault {
-    height: 148px;
+    height: auto;
 }
 
-/* Колонка с многострочным текстом (третья) */
 .exerciseColumnLarge {
-    height: 168px;
-    /* Увеличено для двух строк текста */
+    height: auto;
 }
 
-/* Обычные элементы (две верхние строки) */
 .exerciseItem {
     width: 320px;
-    height: 36px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* Специальный элемент для третьей строки */
 .exerciseItemLarge {
     width: 320px;
-    height: 56px;
+    height: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -144,33 +141,25 @@
 
 .exerciseText {
     width: 320px;
-    height: 20px;
+    height: auto;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;
     line-height: 110%;
     color: #000000;
     margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Текст для многострочного упражнения */
 .exerciseTextLarge {
     width: 320px;
-    height: 40px;
-    /* Текст занимает 40px (две строки по 20px) */
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;
-    line-height: 20px;
-    /* Высота строки 20px для двух строк */
+    line-height: 110%;
     color: #000000;
     margin: 0;
     white-space: normal;
     word-wrap: break-word;
-    display: flex;
-    align-items: center;
 }
 
 .progressBarBg {
@@ -211,7 +200,6 @@
     opacity: 0.9;
 }
 
-/* Модальное окно успеха */
 .successModal {
     position: absolute;
     top: 645px;
@@ -228,6 +216,14 @@
     align-items: center;
     gap: 34px;
     z-index: 2000;
+}
+
+.autoCloseText {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .successTitle {
@@ -265,7 +261,6 @@
     object-fit: contain;
 }
 
-/* Планшеты (768px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
     .page {
         width: 100%;
@@ -288,6 +283,17 @@
         width: calc(100% - 60px);
     }
 
+    .title {
+        width: 100%;
+        font-size: 48px;
+        height: auto;
+    }
+
+    .videoContainer {
+        width: 100%;
+        aspect-ratio: 1160/639;
+    }
+
     .exercisesGrid {
         gap: 30px;
     }
@@ -295,9 +301,36 @@
     .exerciseColumn {
         width: calc(33.33% - 20px);
     }
+
+    .exercisesContent {
+        width: 100%;
+    }
+
+    .exercisesTitle {
+        width: 100%;
+        font-size: 28px;
+    }
+
+    .exerciseText {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .progressButton {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .successModal {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
-/* Маленькие ноутбуки (1025px - 1280px) */
 @media (min-width: 1025px) and (max-width: 1280px) {
     .page {
         width: 100%;
@@ -319,9 +352,13 @@
         left: 40px;
         width: calc(100% - 80px);
     }
+
+    .successModal {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
-/* Средние ноутбуки (1281px - 1440px) */
 @media (min-width: 1281px) and (max-width: 1440px) {
     .page {
         width: 100%;
@@ -330,7 +367,6 @@
     }
 }
 
-/* Большие экраны (1441px и больше) */
 @media (min-width: 1441px) {
     .page {
         width: 1440px;
@@ -338,7 +374,6 @@
     }
 }
 
-/* Мобильные устройства (до 768px) */
 @media (max-width: 768px) {
     .page {
         width: 100%;
@@ -351,8 +386,9 @@
         position: relative;
         top: 40px;
         left: 0;
-        width: 220px;
-        height: 35px;
+        width: 160px;
+        height: 28px;
+        z-index: 10;
     }
 
     .userProfileWrapper {
@@ -382,7 +418,6 @@
 
     .videoContainer {
         width: 100%;
-        height: auto;
         aspect-ratio: 1160/639;
     }
 
@@ -392,115 +427,177 @@
         aspect-ratio: 1160/639;
     }
 
+    .exercisesBlock {
+        width: 100%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .exercisesContent {
+        width: 100%;
+        height: auto;
+        gap: 20px;
+    }
+
+    .exercisesTitle {
+        width: 100%;
+        font-size: 28px;
+        height: auto;
+        white-space: normal;
+    }
+
+    .exercisesGrid {
+        width: 100%;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .exerciseColumn {
+        width: 100%;
+        height: auto;
+    }
+
+    .exerciseItem {
+        width: 100%;
+        height: auto;
+        min-height: 36px;
+    }
+
+    .exerciseItemLarge {
+        width: 100%;
+        height: auto;
+        min-height: 56px;
+    }
+
+    .exerciseText {
+        width: 100%;
+        font-size: 16px;
+        white-space: normal;
+        line-height: 20px;
+    }
+
+    .exerciseTextLarge {
+        width: 100%;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .progressButton {
+        width: 100%;
+        margin-top: 20px;
+    }
+
     .successModal {
         position: fixed;
-        /* Меняем с absolute на fixed */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        width: 90% !important;
-        max-width: 343px !important;
-        height: auto !important;
-        min-height: 252px !important;
-        padding: 30px 20px !important;
-        margin: 0 auto;
-        z-index: 9999 !important;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 343px;
+        height: auto;
+        min-height: 252px;
+        padding: 30px 20px;
+        margin: 0;
     }
 
     .successTitle {
-        width: 100% !important;
-        height: auto !important;
-        font-size: 24px !important;
-        line-height: 110% !important;
+        width: 100%;
+        height: auto;
+        font-size: 24px;
     }
 
     .iconContainer {
-        width: 56px !important;
-        height: 56px !important;
+        width: 56px;
+        height: 56px;
     }
 
     .successIcon {
-        width: 46px !important;
-        height: 46px !important;
-        top: 5px !important;
-        left: 5px !important;
+        width: 46px;
+        height: 46px;
+        top: 5px;
+        left: 5px;
     }
 
     .successIcon img {
-        width: 46px !important;
-        height: 46px !important;
+        width: 46px;
+        height: 46px;
     }
 }
 
-.exercisesBlock {
-    width: 100%;
-    height: auto;
-    padding: 20px;
+@media (max-width: 480px) {
+    .title {
+        font-size: 28px;
+    }
+
+    .exercisesTitle {
+        font-size: 24px;
+    }
+
+    .exerciseText {
+        font-size: 14px;
+    }
+
+    .progressButton {
+        font-size: 16px;
+        padding: 14px 20px;
+        height: 48px;
+    }
 }
 
-.exercisesContent {
-    width: 100%;
-    height: auto;
-    gap: 15px;
+@media (max-width: 375px) {
+    .logo {
+        width: 140px;
+        height: 24px;
+    }
+
+    .exercisesTitle {
+        font-size: 22px;
+        line-height: 28px;
+    }
+
+    .progressButton {
+        font-size: 15px;
+        padding: 12px 18px;
+        height: 46px;
+    }
 }
 
-.exercisesTitle {
-    width: 100%;
-    font-size: 24px;
-    height: auto;
-    white-space: normal;
-}
+@media (max-width: 320px) {
+    .contentBlock {
+        top: 100px;
+    }
 
-.exercisesGrid {
-    width: 100%;
-    flex-direction: column;
-    gap: 20px;
-}
+    .exercisesBlock {
+        padding: 15px;
+    }
 
-.exerciseColumn {
-    width: 100%;
-    height: auto !important;
-}
+    .exercisesTitle {
+        font-size: 20px;
+        line-height: 26px;
+    }
 
-.exerciseColumnDefault,
-.exerciseColumnLarge {
-    height: auto !important;
-    min-height: auto;
-}
+    .exerciseText {
+        font-size: 13px;
+    }
 
-.exerciseItem {
-    width: 100%;
-    height: auto;
-    min-height: 36px;
-}
+    .progressButton {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 16px;
+        font-size: 14px;
+        height: 44px;
+    }
 
-.exerciseItemLarge {
-    width: 100%;
-    height: auto;
-    min-height: 56px;
-}
+    .successModal {
+        max-width: 300px;
+        padding: 25px 15px;
+    }
 
-.exerciseText {
-    width: 100%;
-    height: auto;
-    font-size: 16px;
-    line-height: 20px;
-    white-space: normal;
-}
-
-.exerciseTextLarge {
-    width: 100%;
-    height: auto;
-    min-height: 40px;
-    font-size: 16px;
-    line-height: 20px;
-}
-
-.progressBarBg {
-    width: 100%;
-}
-
-.progressButton {
-    width: 100%;
-    margin-top: 20px;
+    .successTitle {
+        font-size: 22px;
+    }
 }

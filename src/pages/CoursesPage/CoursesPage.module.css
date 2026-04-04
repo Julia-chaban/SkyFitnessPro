@@ -179,17 +179,150 @@
     font-size: 20px;
 }
 
-/* Мобильная версия 375px */
-@media (max-width: 375px) {
+@media (min-width: 769px) and (max-width: 1024px) {
     .page {
-        width: 375px;
-        min-height: 2915px;
-        padding: 0;
-        margin: 0 auto;
-        background: #FAFAFA;
+        width: 100%;
+        max-width: 1024px;
+        padding: 0 30px;
+        box-sizing: border-box;
     }
 
-    /* Скрываем ненужные элементы */
+    .logo {
+        left: 30px;
+        top: 40px;
+    }
+
+    .loginButton {
+        right: 30px;
+        left: auto;
+        top: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 30px;
+        left: auto;
+        top: 40px;
+    }
+
+    .subtitle {
+        left: 30px;
+        top: 90px;
+    }
+
+    .title {
+        left: 30px;
+        top: 160px;
+        width: calc(100% - 60px);
+        font-size: 48px;
+        height: auto;
+    }
+
+    .greenBlock {
+        left: auto;
+        right: 30px;
+        top: 160px;
+        width: 240px;
+        height: auto;
+    }
+
+    .coursesGrid {
+        left: 30px;
+        width: calc(100% - 60px);
+        gap: 20px;
+        top: 320px;
+    }
+
+    .courseCard {
+        width: calc(33.33% - 14px);
+        height: auto;
+    }
+
+    .courseImage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 360/325;
+    }
+
+    .courseContent {
+        width: calc(100% - 30px);
+    }
+
+    .courseTitle {
+        width: 100%;
+        font-size: 28px;
+        height: auto;
+    }
+
+    .iconsRow {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .page {
+        width: 100%;
+        max-width: 1280px;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .loginButton {
+        right: 40px;
+        left: auto;
+    }
+
+    .userProfileWrapper {
+        right: 40px;
+        left: auto;
+    }
+
+    .subtitle {
+        left: 40px;
+    }
+
+    .title {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+
+    .greenBlock {
+        left: auto;
+        right: 40px;
+    }
+
+    .coursesGrid {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1440px) {
+    .page {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1441px) {
+    .page {
+        width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        width: 100%;
+        min-height: 2915px;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
     .subtitle {
         display: none;
     }
@@ -198,47 +331,39 @@
         display: none;
     }
 
-    /* Логотип */
     .logo {
         position: absolute;
         top: 40px;
         left: 16px;
-        width: 220px;
-        height: 35px;
+        width: 160px;
+        height: 28px;
     }
 
-    /* Кнопка войти */
     .loginButton {
         position: absolute;
         top: 40px;
-        left: 276px;
+        right: 16px;
+        left: auto;
         width: 83px;
         height: 36px;
         padding: 8px 16px;
         font-size: 14px;
-        border-radius: 46px;
-        background: #BCEC30;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
     }
 
-    /* Профиль пользователя (если авторизован) */
     .userProfileWrapper {
         position: absolute;
         top: 40px;
-        left: 276px;
+        right: 16px;
+        left: auto;
         width: auto;
         max-width: 83px;
     }
 
-    /* Заголовок */
     .title {
         position: absolute;
         top: 95px;
         left: 16px;
-        width: 343px;
+        width: calc(100% - 32px);
         height: auto;
         font-size: 32px;
         line-height: 110%;
@@ -246,12 +371,11 @@
         color: #000000;
     }
 
-    /* Сетка карточек */
     .coursesGrid {
         position: absolute;
         top: 254px;
         left: 16px;
-        width: 343px;
+        width: calc(100% - 32px);
         height: auto;
         min-height: 2600px;
         display: flex;
@@ -260,10 +384,11 @@
         margin: 0;
     }
 
-    /* Карточка курса */
     .courseCard {
-        width: 343px;
-        height: 492px;
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        min-height: 492px;
         border-radius: 30px;
         padding-bottom: 15px;
         gap: 24px;
@@ -274,26 +399,25 @@
         flex-direction: column;
     }
 
-    /* Изображение курса */
     .courseImage {
-        width: 343px;
-        height: 325px;
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        aspect-ratio: 343/325;
         border-radius: 30px;
         object-fit: cover;
     }
 
-    /* Контент карточки */
     .courseContent {
-        width: 283px;
+        width: calc(100% - 60px);
         margin: 24px 30px 0 30px;
         display: flex;
         flex-direction: column;
         gap: 16px;
     }
 
-    /* Название курса */
     .courseTitle {
-        width: 283px;
+        width: 100%;
         height: auto;
         font-size: 24px;
         line-height: 110%;
@@ -301,33 +425,28 @@
         margin: 0;
     }
 
-    /* Ряд с иконками */
     .iconsRow {
         display: flex;
         gap: 6px;
-        width: 283px;
+        width: 100%;
     }
 
-    /* Иконка дней */
     .daysIcon {
         width: 103px;
         height: 38px;
     }
 
-    /* Иконка времени */
     .timeIcon {
         width: 163px;
         height: 38px;
     }
 
-    /* Иконка сложности */
     .difficultyIcon {
         width: 129px;
         height: 38px;
         display: block;
     }
 
-    /* Кнопка наверх - справа внизу фиксированно */
     .scrollButton {
         position: fixed !important;
         bottom: 20px !important;
@@ -359,15 +478,230 @@
     }
 }
 
-/* Для очень маленьких экранов (до 320px) */
-@media (max-width: 320px) {
+@media (max-width: 480px) {
     .logo {
-        left: 10px;
-        width: 180px;
+        width: 140px;
     }
 
     .loginButton {
-        left: 220px;
+        width: 75px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .courseTitle {
+        font-size: 22px;
+    }
+
+    .daysIcon,
+    .timeIcon,
+    .difficultyIcon {
+        height: 34px;
+    }
+
+    .daysIcon {
+        width: 90px;
+    }
+
+    .timeIcon {
+        width: 145px;
+    }
+
+    .difficultyIcon {
+        width: 115px;
+    }
+
+    .scrollButton {
+        width: 110px !important;
+        height: 48px !important;
+        padding: 14px 20px !important;
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .page {
+        width: 100%;
+        min-height: 2915px;
+        padding: 0;
+        margin: 0 auto;
+        background: #FAFAFA;
+    }
+
+    .subtitle {
+        display: none;
+    }
+
+    .greenBlock {
+        display: none;
+    }
+
+    .logo {
+        position: absolute;
+        top: 40px;
+        left: 16px;
+        width: 160px;
+        height: 28px;
+    }
+
+    .loginButton {
+        position: absolute;
+        top: 40px;
+        right: 16px;
+        left: auto;
+        width: 83px;
+        height: 36px;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 46px;
+        background: #BCEC30;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .userProfileWrapper {
+        position: absolute;
+        top: 40px;
+        right: 16px;
+        left: auto;
+        width: auto;
+        max-width: 83px;
+    }
+
+    .title {
+        position: absolute;
+        top: 95px;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: auto;
+        font-size: 32px;
+        line-height: 110%;
+        margin: 0;
+        color: #000000;
+    }
+
+    .coursesGrid {
+        position: absolute;
+        top: 254px;
+        left: 16px;
+        width: calc(100% - 32px);
+        height: auto;
+        min-height: 2600px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin: 0;
+    }
+
+    .courseCard {
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        min-height: 492px;
+        border-radius: 30px;
+        padding-bottom: 15px;
+        gap: 24px;
+        background: #FFFFFF;
+        box-shadow: 0px 4px 67px -12px rgba(0, 0, 0, 0.13);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .courseImage {
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        aspect-ratio: 343/325;
+        border-radius: 30px;
+        object-fit: cover;
+    }
+
+    .courseContent {
+        width: calc(100% - 60px);
+        margin: 24px 30px 0 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .courseTitle {
+        width: 100%;
+        height: auto;
+        font-size: 24px;
+        line-height: 110%;
+        color: #000000;
+        margin: 0;
+    }
+
+    .iconsRow {
+        display: flex;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .daysIcon {
+        width: 103px;
+        height: 38px;
+    }
+
+    .timeIcon {
+        width: 163px;
+        height: 38px;
+    }
+
+    .difficultyIcon {
+        width: 129px;
+        height: 38px;
+        display: block;
+    }
+
+    .scrollButton {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 127px !important;
+        height: 52px !important;
+        border-radius: 46px !important;
+        padding: 16px 26px !important;
+        background: #BCEC30 !important;
+        border: none !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        cursor: pointer !important;
+        font-family: 'Roboto', sans-serif !important;
+        font-size: 16px !important;
+        color: #000000 !important;
+        font-weight: 500 !important;
+        z-index: 9999 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .arrow {
+        font-size: 18px !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo {
+        left: 10px;
+        width: 140px;
+    }
+
+    .loginButton {
+        right: 10px;
         width: 75px;
         padding: 6px 12px;
         font-size: 13px;
@@ -375,37 +709,35 @@
 
     .title {
         left: 10px;
-        width: 300px;
+        width: calc(100% - 20px);
         font-size: 28px;
     }
 
     .coursesGrid {
         left: 10px;
-        width: 300px;
+        width: calc(100% - 20px);
     }
 
     .courseCard {
-        width: 300px;
-        height: 470px;
+        max-width: 300px;
     }
 
     .courseImage {
-        width: 300px;
-        height: 290px;
+        max-width: 300px;
     }
 
     .courseContent {
-        width: 240px;
+        width: calc(100% - 60px);
         margin: 20px 30px 0 30px;
     }
 
     .courseTitle {
-        width: 240px;
+        width: 100%;
         font-size: 22px;
     }
 
     .iconsRow {
-        width: 240px;
+        width: 100%;
         flex-wrap: wrap;
     }
 

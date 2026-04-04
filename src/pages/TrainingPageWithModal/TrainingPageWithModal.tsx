@@ -12,6 +12,13 @@ interface Exercise {
   quantity: number;
 }
 
+interface Workout {
+  _id: string;
+  name: string;
+  video: string;
+  exercises: Exercise[];
+}
+
 interface TrainingPageWithModalProps {
   userName?: string;
   userEmail?: string;
@@ -32,6 +39,8 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
   const { id } = useParams<{ id: string }>();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [workoutName, setWorkoutName] = useState("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const [videoError, setVideoError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [courseId, setCourseId] = useState<string>("");
@@ -58,8 +67,10 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
     try {
       setLoading(true);
 
-      const workout = await workoutsService.getWorkoutById(id, token);
+      const workout: Workout = await workoutsService.getWorkoutById(id, token);
       setWorkoutName(workout.name);
+      setVideoUrl(workout.video || "");
+      setVideoError(false);
       setExercises(workout.exercises);
 
       if (courseId) {
@@ -110,6 +121,10 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
     }
   };
 
+  const handleVideoError = () => {
+    setVideoError(true);
+  };
+
   const handleSaveProgress = async (progressData: number[]) => {
     if (!token || !id || !courseId) {
       throw new Error(
@@ -139,6 +154,8 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
       ? Math.min(Math.round((currentValue / exercise.quantity) * 100), 100)
       : 0;
   };
+
+  const showVideo = videoUrl && !videoError;
 
   if (loading)
     return (
@@ -181,11 +198,33 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
         <h1 className={styles.title}>{workoutName || "Тренировка"}</h1>
 
         <div className={styles.videoContainer}>
-          <img
-            src={`${process.env.PUBLIC_URL}/images/vid1.svg`}
-            alt="Video"
-            className={styles.videoImage}
-          />
+          {showVideo ? (
+            <iframe
+              width="100%"
+              height="100%"
+              src={videoUrl}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className={styles.videoIframe}
+              onError={handleVideoError}
+            />
+          ) : (
+            <div className={styles.videoPlaceholder}>
+              <p>Видео временно недоступно</p>
+              {videoUrl && (
+                <a
+                  href={videoUrl.replace("/embed/", "/watch?v=")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.videoLink}
+                >
+                  Открыть на YouTube
+                </a>
+              )}
+            </div>
+          )}
         </div>
 
         <div className={styles.exercisesBlock}>

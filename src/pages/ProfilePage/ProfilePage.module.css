@@ -281,10 +281,376 @@
     pointer-events: none;
 }
 
-/* Мобильные устройства 375px */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .page {
+        width: 100%;
+        max-width: 1024px;
+        padding: 0 30px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 30px;
+        top: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 30px;
+        left: auto;
+        top: 40px;
+    }
+
+    .contentBlock {
+        left: 30px;
+        width: calc(100% - 60px);
+        height: auto;
+    }
+
+    .profileTitle {
+        width: 100%;
+        font-size: 36px;
+        height: auto;
+    }
+
+    .profileCard {
+        width: 100%;
+        height: auto;
+    }
+
+    .profileInner {
+        width: 100%;
+    }
+
+    .coursesSection {
+        width: 100%;
+        height: auto;
+    }
+
+    .coursesTitle {
+        width: 100%;
+        font-size: 36px;
+        height: auto;
+    }
+
+    .coursesGrid {
+        width: 100%;
+        height: auto;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .courseCard {
+        width: calc(33.33% - 20px);
+        height: auto;
+    }
+
+    .courseImage {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 360/325;
+    }
+
+    .courseContent {
+        width: calc(100% - 30px);
+        height: auto;
+    }
+
+    .courseTitle {
+        width: 100%;
+        font-size: 28px;
+        height: auto;
+    }
+
+    .iconsRow {
+        width: 100%;
+    }
+
+    .progressSection {
+        width: 100%;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .courseButton {
+        width: 100%;
+    }
+
+    .imageContainer {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 360/325;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+    .page {
+        width: 100%;
+        max-width: 1280px;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        left: 40px;
+    }
+
+    .userProfileWrapper {
+        right: 40px;
+        left: auto;
+    }
+
+    .contentBlock {
+        left: 40px;
+        width: calc(100% - 80px);
+    }
+}
+
+@media (min-width: 1281px) and (max-width: 1440px) {
+    .page {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1441px) {
+    .page {
+        width: 1440px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        width: 100%;
+        min-height: 100vh;
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .logo {
+        position: absolute;
+        top: 40px;
+        left: 16px;
+        width: 160px;
+        height: 28px;
+    }
+
+    .userProfileWrapper {
+        position: absolute;
+        top: 40px;
+        right: 16px;
+        left: auto;
+        width: auto;
+        max-width: 83px;
+    }
+
+    .contentBlock {
+        position: relative;
+        top: 95px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        gap: 30px;
+    }
+
+    .profileTitle {
+        width: 100%;
+        font-size: 32px;
+        line-height: 110%;
+        height: auto;
+        margin: 0 0 10px 0;
+    }
+
+    .profileCard {
+        width: 100%;
+        height: auto;
+        border-radius: 30px;
+        padding: 20px;
+    }
+
+    .profileInner {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .profileIcon {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+
+    .profileIcon img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .profileInfo {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profileName {
+        width: 100%;
+        font-size: 24px;
+        height: auto;
+    }
+
+    .profileLogin {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .logoutButton {
+        width: 100%;
+        max-width: 200px;
+        height: 44px;
+        padding: 12px 20px;
+        font-size: 16px;
+        margin: 0 auto;
+    }
+
+    .coursesSection {
+        width: 100%;
+        height: auto;
+        gap: 20px;
+    }
+
+    .coursesTitle {
+        width: 100%;
+        font-size: 32px;
+        height: auto;
+    }
+
+    .coursesGrid {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .courseCard {
+        width: 100%;
+        max-width: 343px;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .imageContainer {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 360/325;
+    }
+
+    .courseImage {
+        width: 100%;
+        height: 100%;
+    }
+
+    .courseContent {
+        width: calc(100% - 40px);
+        margin: 20px;
+        height: auto;
+        gap: 16px;
+    }
+
+    .courseTitle {
+        width: 100%;
+        font-size: 24px;
+        height: auto;
+    }
+
+    .iconsRow {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .daysIcon,
+    .timeIcon,
+    .difficultyIcon {
+        width: calc(50% - 4px);
+        height: 38px;
+    }
+
+    .progressSection {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .progressText {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .progressBarBg {
+        width: 100%;
+    }
+
+    .courseButton {
+        width: 100%;
+        height: 44px;
+        padding: 12px 20px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profileTitle {
+        font-size: 28px;
+    }
+
+    .coursesTitle {
+        font-size: 28px;
+    }
+
+    .profileName {
+        font-size: 22px;
+    }
+
+    .profileLogin {
+        font-size: 14px;
+    }
+
+    .logoutButton {
+        max-width: 180px;
+        height: 40px;
+        padding: 10px 16px;
+        font-size: 15px;
+    }
+
+    .courseTitle {
+        font-size: 22px;
+    }
+
+    .daysIcon,
+    .timeIcon,
+    .difficultyIcon {
+        height: 34px;
+    }
+
+    .courseButton {
+        height: 42px;
+        padding: 10px 18px;
+        font-size: 15px;
+    }
+}
+
 @media (max-width: 375px) {
     .page {
-        width: 375px;
+        width: 100%;
         min-height: 100vh;
         padding: 0 16px;
         margin: 0 auto;
@@ -310,32 +676,6 @@
         width: auto;
         max-width: 83px;
         z-index: 1000;
-    }
-
-    .userProfile {
-        width: auto;
-        gap: 4px;
-    }
-
-    .profileIcon {
-        width: 35px;
-        height: 35px;
-    }
-
-    .profileIcon img {
-        width: 35px;
-        height: 35px;
-        object-fit: cover;
-    }
-
-    .profileData {
-        display: none;
-    }
-
-    .arrowIcon {
-        width: 8px;
-        height: 8px;
-        margin-left: 2px;
     }
 
     .contentBlock {
@@ -487,7 +827,7 @@
 
     .courseContent {
         width: calc(100% - 40px);
-        margin: 20px 20px;
+        margin: 20px;
         display: flex;
         flex-direction: column;
         gap: 16px;
@@ -575,5 +915,54 @@
         background: #CCCCCC;
         cursor: not-allowed;
         pointer-events: none;
+    }
+}
+
+@media (max-width: 320px) {
+    .logo {
+        width: 140px;
+    }
+
+    .profileTitle {
+        font-size: 28px;
+    }
+
+    .coursesTitle {
+        font-size: 28px;
+    }
+
+    .profileName {
+        font-size: 22px;
+    }
+
+    .profileLogin {
+        font-size: 14px;
+    }
+
+    .logoutButton {
+        max-width: 180px;
+        height: 40px;
+        padding: 10px 16px;
+        font-size: 15px;
+    }
+
+    .courseCard {
+        max-width: 300px;
+    }
+
+    .courseTitle {
+        font-size: 22px;
+    }
+
+    .daysIcon,
+    .timeIcon,
+    .difficultyIcon {
+        height: 34px;
+    }
+
+    .courseButton {
+        height: 42px;
+        padding: 10px 18px;
+        font-size: 15px;
     }
 }

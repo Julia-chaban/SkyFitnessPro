@@ -1,13 +1,31 @@
 import React from "react";
 import styles from "./Icon.module.css";
 
-const Icon: React.FC = () => {
+interface IconProps {
+  type?: "plus" | "minus";
+  onClick?: (e: React.MouseEvent) => void;
+}
+
+const Icon: React.FC<IconProps> = ({ type = "plus", onClick }) => {
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
   return (
-    <div className={styles.iconContainer}>
-      <div className={styles.crossIcon}>
-        <div className={`${styles.line} ${styles.horizontal}`} />
-        <div className={`${styles.line} ${styles.vertical}`} />
-      </div>
+    <div className={styles.iconContainer} onClick={handleClick}>
+      {type === "plus" ? (
+        <div className={styles.crossIcon}>
+          <div className={`${styles.line} ${styles.horizontal}`} />
+          <div className={`${styles.line} ${styles.vertical}`} />
+        </div>
+      ) : (
+        <div className={styles.minusIcon}>
+          <div className={styles.minusLine} />
+        </div>
+      )}
     </div>
   );
 };

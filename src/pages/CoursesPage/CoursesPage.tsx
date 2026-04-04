@@ -53,7 +53,7 @@ const CoursesPage: React.FC<CoursesPageProps> = ({
   };
 
   const handleAddCourse = () => {
-    navigate("/add-course");
+    navigate("/courses");
   };
 
   const handleLogoClick = () => {
