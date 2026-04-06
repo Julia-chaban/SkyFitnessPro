@@ -229,7 +229,7 @@
 
     .listContainer {
         width: 100%;
-        height: auto;
+
         max-height: 380px;
     }
 
@@ -237,13 +237,13 @@
         width: 100%;
         height: auto;
         max-height: 350px;
-        padding-right: 5px;
+        padding-right: 10px;
     }
 
     .trainingItem {
         width: 100%;
         height: auto;
-        min-height: 60px;
+
         padding-right: 5px;
     }
 
@@ -308,9 +308,8 @@
 @media (max-width: 375px) {
     .modalContainer {
         width: 95%;
-        max-width: 300px;
         padding: 18px 12px;
-        gap: 18px;
+        gap: 30px;
     }
 
     .title {

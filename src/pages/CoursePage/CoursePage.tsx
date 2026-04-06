@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCourseImage } from "../../data/courseImages";
+import {
+  getCourseImage,
+  getMainPageImage,
+  courseNames,
+} from "../../data/courseImages";
+import { coursesService } from "../../services/courses.service";
+import { Course } from "../../types/api.types";
 import styles from "./CoursePage.module.css";
 
 interface CoursePageProps {
@@ -15,6 +21,8 @@ const CoursePage: React.FC<CoursePageProps> = ({
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,6 +32,25 @@ const CoursePage: React.FC<CoursePageProps> = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      loadCourse();
+    }
+  }, [id]);
+
+  const loadCourse = async () => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      const data = await coursesService.getCourseById(id);
+      setCourse(data);
+    } catch (err) {
+      console.error("Error loading course:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLoginClick = () => {
     if (onLoginClick) {
@@ -43,6 +70,13 @@ const CoursePage: React.FC<CoursePageProps> = ({
         ? `${process.env.PUBLIC_URL}/images/ioga.svg`
         : `${process.env.PUBLIC_URL}/images/card1.jpg`;
     }
+
+    const courseName = courseNames[id];
+    if (courseName) {
+      const imageName = getMainPageImage(courseName);
+      return `${process.env.PUBLIC_URL}/images/${imageName}`;
+    }
+
     const imageName = getCourseImage(id, isMobile);
     return `${process.env.PUBLIC_URL}/images/${imageName}`;
   };
@@ -53,6 +87,14 @@ const CoursePage: React.FC<CoursePageProps> = ({
     }
     return `${process.env.PUBLIC_URL}/images/block3.svg`;
   };
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.loading}>Загрузка...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -72,7 +114,7 @@ const CoursePage: React.FC<CoursePageProps> = ({
 
       <img
         src={getCourseImageUrl()}
-        alt="Course"
+        alt={course?.nameRU || "Course"}
         className={styles.courseImage}
       />
 
@@ -80,33 +122,25 @@ const CoursePage: React.FC<CoursePageProps> = ({
         Подойдет для вас, если:
       </h2>
 
-      <div className={styles.blocksRow}>
-        <img
-          src={`${process.env.PUBLIC_URL}/images/block.svg`}
-          alt="Block 1"
-          className={`${styles.block} ${styles.block1}`}
-        />
-        <img
-          src={`${process.env.PUBLIC_URL}/images/block1.svg`}
-          alt="Block 2"
-          className={`${styles.block} ${styles.block2}`}
-        />
-        <img
-          src={`${process.env.PUBLIC_URL}/images/block2.svg`}
-          alt="Block 3"
-          className={`${styles.block} ${styles.block3}`}
-        />
+      <div className={styles.fittingBlocks}>
+        {course?.fitting?.map((item, index) => (
+          <div key={index} className={styles.fittingBlock}>
+            <p className={styles.fittingText}>{item}</p>
+          </div>
+        ))}
       </div>
 
       <h2 className={`${styles.sectionTitle} ${styles.directionsTitle}`}>
         Направления
       </h2>
 
-      <img
-        src={getDirectionsImage()}
-        alt="Directions"
-        className={styles.directionsImage}
-      />
+      <div className={styles.directionsBlocks}>
+        {course?.directions?.map((item, index) => (
+          <div key={index} className={styles.directionBlock}>
+            <p className={styles.directionText}>{item}</p>
+          </div>
+        ))}
+      </div>
 
       <div className={styles.offerBlock}>
         <div className={styles.whiteBlock} />
@@ -116,15 +150,8 @@ const CoursePage: React.FC<CoursePageProps> = ({
             Начните путь <br />к новому телу
           </h3>
           <p className={styles.offerDescription}>
-            проработка всех групп мышц
-            <br />
-            тренировка суставов
-            <br />
-            улучшение циркуляции крови
-            <br />
-            упражнения заряжают бодростью
-            <br />
-            помогают противостоять стрессам
+            {course?.description ||
+              "Улучшите качество жизни с нашими тренировками"}
           </p>
           <button className={styles.offerButton} onClick={handleLoginClick}>
             Войдите, чтобы добавить курс

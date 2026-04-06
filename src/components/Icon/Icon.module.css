@@ -12,12 +12,61 @@
     cursor: pointer;
     z-index: 10;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.iconContainer:hover {
+    transform: scale(1.05);
+}
+
+.iconContainer:active {
+    transform: scale(0.95);
+}
+
+.iconContainer.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.iconContainer.disabled:hover {
+    transform: none;
 }
 
 .crossIcon {
     width: 16px;
     height: 16px;
     position: relative;
+}
+
+.minusIcon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.minusLine {
+    width: 16px;
+    height: 2px;
+    background: #000000;
+}
+
+.checkIcon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkmark {
+    width: 12px;
+    height: 8px;
+    border-left: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    transform: rotate(-45deg);
+    margin-top: -2px;
 }
 
 .line {
@@ -49,9 +98,20 @@
         height: 30px;
     }
 
-    .crossIcon {
+    .crossIcon,
+    .minusIcon,
+    .checkIcon {
         width: 14px;
         height: 14px;
+    }
+
+    .minusLine {
+        width: 14px;
+    }
+
+    .checkmark {
+        width: 10px;
+        height: 7px;
     }
 }
 
@@ -63,9 +123,20 @@
         height: 28px;
     }
 
-    .crossIcon {
+    .crossIcon,
+    .minusIcon,
+    .checkIcon {
         width: 14px;
         height: 14px;
+    }
+
+    .minusLine {
+        width: 14px;
+    }
+
+    .checkmark {
+        width: 10px;
+        height: 7px;
     }
 }
 
@@ -77,9 +148,20 @@
         height: 26px;
     }
 
-    .crossIcon {
+    .crossIcon,
+    .minusIcon,
+    .checkIcon {
         width: 12px;
         height: 12px;
+    }
+
+    .minusLine {
+        width: 12px;
+    }
+
+    .checkmark {
+        width: 9px;
+        height: 6px;
     }
 }
 
@@ -91,9 +173,20 @@
         height: 24px;
     }
 
-    .crossIcon {
+    .crossIcon,
+    .minusIcon,
+    .checkIcon {
         width: 12px;
         height: 12px;
+    }
+
+    .minusLine {
+        width: 12px;
+    }
+
+    .checkmark {
+        width: 9px;
+        height: 6px;
     }
 }
 
@@ -105,8 +198,19 @@
         height: 22px;
     }
 
-    .crossIcon {
+    .crossIcon,
+    .minusIcon,
+    .checkIcon {
         width: 10px;
         height: 10px;
+    }
+
+    .minusLine {
+        width: 10px;
+    }
+
+    .checkmark {
+        width: 8px;
+        height: 5px;
     }
 }

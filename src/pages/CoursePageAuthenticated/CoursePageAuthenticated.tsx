@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import UserProfile from "../../components/UserProfile/UserProfile";
 import { coursesService } from "../../services/courses.service";
-import { getCourseImage } from "../../data/courseImages";
+import {
+  getCourseImage,
+  getMainPageImage,
+  courseNames,
+} from "../../data/courseImages";
+import { Course } from "../../types/api.types";
 import styles from "./CoursePageAuthenticated.module.css";
 
 const USER_COURSES_KEY = "user_selected_courses";
@@ -29,6 +34,8 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
   const [isAdding, setIsAdding] = useState(false);
   const [isCourseAdded, setIsCourseAdded] = useState(false);
+  const [course, setCourse] = useState<Course | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,8 +46,24 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
   }, []);
 
   useEffect(() => {
-    checkIfCourseAdded();
+    if (id) {
+      loadCourse();
+      checkIfCourseAdded();
+    }
   }, [id]);
+
+  const loadCourse = async () => {
+    if (!id) return;
+    try {
+      setLoading(true);
+      const data = await coursesService.getCourseById(id);
+      setCourse(data);
+    } catch (err) {
+      console.error("Error loading course:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const checkIfCourseAdded = () => {
     const saved = localStorage.getItem(USER_COURSES_KEY);
@@ -98,15 +121,15 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         ? `${process.env.PUBLIC_URL}/images/ioga.svg`
         : `${process.env.PUBLIC_URL}/images/card1.jpg`;
     }
+
+    const courseName = courseNames[id];
+    if (courseName) {
+      const imageName = getMainPageImage(courseName);
+      return `${process.env.PUBLIC_URL}/images/${imageName}`;
+    }
+
     const imageName = getCourseImage(id, isMobile);
     return `${process.env.PUBLIC_URL}/images/${imageName}`;
-  };
-
-  const getDirectionsImage = () => {
-    if (isMobile) {
-      return `${process.env.PUBLIC_URL}/images/block6.svg`;
-    }
-    return `${process.env.PUBLIC_URL}/images/block3.svg`;
   };
 
   const getButtonText = () => {
@@ -114,6 +137,14 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
     if (isAdding) return "Добавление...";
     return "Добавить курс";
   };
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <div className={styles.loading}>Загрузка...</div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.page}>
@@ -139,7 +170,7 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
 
       <img
         src={getCourseImageUrl()}
-        alt="Course"
+        alt={course?.nameRU || "Course"}
         className={styles.courseImage}
       />
 
@@ -147,33 +178,25 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
         Подойдет для вас, если:
       </h2>
 
-      <div className={styles.blocksRow}>
-        <img
-          src={`${process.env.PUBLIC_URL}/images/block.svg`}
-          alt="Block 1"
-          className={`${styles.block} ${styles.block1}`}
-        />
-        <img
-          src={`${process.env.PUBLIC_URL}/images/block1.svg`}
-          alt="Block 2"
-          className={`${styles.block} ${styles.block2}`}
-        />
-        <img
-          src={`${process.env.PUBLIC_URL}/images/block2.svg`}
-          alt="Block 3"
-          className={`${styles.block} ${styles.block3}`}
-        />
-      </div>
+      <ul className={styles.fittingList}>
+        {course?.fitting?.map((item, index) => (
+          <li key={index} className={styles.fittingItem}>
+            {item}
+          </li>
+        ))}
+      </ul>
 
       <h2 className={`${styles.sectionTitle} ${styles.directionsTitle}`}>
         Направления
       </h2>
 
-      <img
-        src={getDirectionsImage()}
-        alt="Directions"
-        className={styles.directionsImage}
-      />
+      <ul className={styles.directionsList}>
+        {course?.directions?.map((item, index) => (
+          <li key={index} className={styles.directionItem}>
+            {item}
+          </li>
+        ))}
+      </ul>
 
       <div className={styles.offerBlock}>
         <div className={styles.whiteBlock} />
@@ -183,15 +206,8 @@ const CoursePageAuthenticated: React.FC<CoursePageAuthenticatedProps> = ({
             Начните путь <br />к новому телу
           </h3>
           <p className={styles.offerDescription}>
-            проработка всех групп мышц
-            <br />
-            тренировка суставов
-            <br />
-            улучшение циркуляции крови
-            <br />
-            упражнения заряжают бодростью
-            <br />
-            помогают противостоять стрессам
+            {course?.description ||
+              "Улучшите качество жизни с нашими тренировками"}
           </p>
           <button
             className={styles.offerButton}

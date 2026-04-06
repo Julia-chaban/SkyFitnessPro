@@ -17,6 +17,7 @@ interface LocalCourse {
   image: string;
   progress: number;
   buttonText: string;
+  isDeleted?: boolean;
   workoutProgress?: {
     completed: number;
     total: number;
@@ -109,27 +110,52 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
                   token,
                 );
                 totalWorkouts = progress.workoutsProgress.length;
+                
+                // Подсчитываем только те тренировки, которые полностью завершены
                 completedWorkouts = progress.workoutsProgress.filter(
-                  (w: WorkoutProgress) => w.workoutCompleted,
+                  (w: WorkoutProgress) => w.workoutCompleted === true
                 ).length;
-                overallProgress =
-                  totalWorkouts > 0
-                    ? Math.round((completedWorkouts / totalWorkouts) * 100)
-                    : 0;
-              } catch {
-                // Игнорируем ошибки API
+
+                if (totalWorkouts > 0 && completedWorkouts > 0) {
+                  overallProgress = Math.round(
+                    (completedWorkouts / totalWorkouts) * 100
+                  );
+                } else {
+                  overallProgress = 0;
+                }
+                
+                // Дополнительная проверка: если completedWorkouts === totalWorkouts, то 100%
+                if (completedWorkouts === totalWorkouts && totalWorkouts > 0) {
+                  overallProgress = 100;
+                }
+              } catch (err) {
+                overallProgress = 0;
+                completedWorkouts = 0;
+                totalWorkouts = 0;
               }
             }
 
             const courseName = getCourseNameById(course._id);
             const image = getMainPageImage(courseName);
 
+            const isNewCourse = overallProgress === 0;
+            let buttonText = "Продолжить";
+
+            if (overallProgress === 0 && isNewCourse) {
+              buttonText = "Начать тренировки";
+            } else if (overallProgress === 100) {
+              buttonText = "Начать заново";
+            } else {
+              buttonText = "Продолжить";
+            }
+
             return {
               id: course._id,
               title: course.nameRU,
               image: image,
               progress: overallProgress,
-              buttonText: getButtonText(overallProgress, overallProgress === 0),
+              buttonText: buttonText,
+              isDeleted: false,
               workoutProgress: {
                 completed: completedWorkouts,
                 total: totalWorkouts,
@@ -178,16 +204,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
   const handleCourseClick = (courseId: string) => {
     const course = courses.find((c) => c.id === courseId);
-    if (course) {
+    if (course && !course.isDeleted) {
       navigate(`/course/${courseId}/authenticated`);
     }
   };
 
   const handleDeleteCourse = async (courseId: string) => {
-    if (!token) {
-      console.error("No token available");
-      return;
-    }
+    if (!token) return;
 
     try {
       await coursesService.removeCourseFromUser(courseId, token);
@@ -204,7 +227,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         prevCourses.filter((course) => course.id !== courseId),
       );
     } catch (error) {
-      console.error("Error deleting course:", error);
+      // Игнорируем ошибки
     }
   };
 
@@ -232,7 +255,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
       let workoutIdToOpen = "";
 
       const incompleteWorkout = progress.workoutsProgress.find(
-        (w: WorkoutProgress) => !w.workoutCompleted,
+        (w: WorkoutProgress) => w.workoutCompleted === false,
       );
 
       if (incompleteWorkout) {
@@ -245,7 +268,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
       navigate(`/training/${workoutIdToOpen}?courseId=${course.id}`);
     } catch (error) {
-      // Игнорируем ошибки
       setSelectedCourse(course);
       setIsTrainingModalOpen(true);
     }
@@ -326,7 +348,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
             {courses.map((course) => (
               <div
                 key={course.id}
-                className={styles.courseCard}
+                className={`${styles.courseCard} ${course.isDeleted ? styles.deletedCourse : ""}`}
                 onClick={() => handleCourseClick(course.id)}
               >
                 <div className={styles.imageContainer}>
@@ -378,11 +400,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
                   </div>
 
                   <button
-                    className={styles.courseButton}
+                    className={`${styles.courseButton} ${course.isDeleted ? styles.disabledButton : ""}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleStartTraining(course);
                     }}
+                    disabled={course.isDeleted}
                   >
                     {course.buttonText}
                   </button>

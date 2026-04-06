@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../Icon/Icon";
 import { coursesService } from "../../services/courses.service";
@@ -27,6 +27,13 @@ const CourseCard: React.FC<CourseCardProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isAdding, setIsAdding] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem(USER_COURSES_KEY);
+    const courses = saved ? JSON.parse(saved) : [];
+    setIsAdded(courses.includes(course.id));
+  }, [course.id]);
 
   const handleCardClick = () => {
     if (isAuthenticated) {
@@ -44,7 +51,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
       return;
     }
 
-    if (isAdding) return;
+    if (isAdding || isAdded) return;
 
     try {
       setIsAdding(true);
@@ -60,18 +67,24 @@ const CourseCard: React.FC<CourseCardProps> = ({
 
         courses.push(course.id);
         localStorage.setItem(USER_COURSES_KEY, JSON.stringify(courses));
+        setIsAdded(true);
       }
 
       try {
         await coursesService.addCourseToUser(course.id, token);
       } catch (apiError) {
-        
+        // Игнорируем ошибки API
       }
     } catch (error) {
-      
+      // Игнорируем ошибки
     } finally {
       setIsAdding(false);
     }
+  };
+
+  const getIconType = () => {
+    if (isAdded) return "check";
+    return "plus";
   };
 
   return (
@@ -85,7 +98,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
             e.currentTarget.style.background = "#D9D9D9";
           }}
         />
-        <Icon type="plus" onClick={handleAddCourse} />
+        <Icon
+          type={getIconType()}
+          onClick={handleAddCourse}
+          disabled={isAdded}
+        />
       </div>
 
       <div className={styles.contentContainer}>
