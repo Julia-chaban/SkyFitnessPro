@@ -215,7 +215,7 @@
 .block4 {
     position: absolute;
     top: 0;
-    left: 615.19px;
+    left: 670px;
     width: 487px;
     height: 542.49px;
     object-fit: contain;
@@ -226,7 +226,7 @@
 .block5 {
     position: absolute;
     top: 182.6px;
-    left: 445.06px;
+    left: 560px;
     width: 670.18px;
     height: 390.98px;
     object-fit: contain;
@@ -356,14 +356,14 @@
     }
 
     .block4 {
-        left: 50%;
+        left: 57%;
         width: 40%;
         height: auto;
         top: -20px;
     }
 
     .block5 {
-        left: 30%;
+        left: 48%;
         width: 50%;
         height: auto;
         top: 150px;
@@ -503,7 +503,7 @@
         top: 115px;
         left: 16px;
         width: calc(100% - 32px);
-        height: auto;
+
         aspect-ratio: 343/389;
         object-fit: cover;
         border-radius: 30px;

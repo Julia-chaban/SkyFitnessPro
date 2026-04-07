@@ -50,8 +50,10 @@ const UserProfile: React.FC<UserProfileProps> = ({
             alt="Profile"
           />
         </div>
-        <span className={styles.profileName}>{userName}</span>
-        <div className={styles.arrowIcon} />
+        <div className={styles.userInfo}>
+          <span className={styles.profileName}>{userName}</span>
+          <div className={styles.arrowIcon} />
+        </div>
       </div>
 
       <ProfileModal

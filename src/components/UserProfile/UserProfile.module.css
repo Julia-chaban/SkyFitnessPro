@@ -3,26 +3,28 @@
     height: 50px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     cursor: pointer;
-}
-
-.profileIconContainer {
-    width: 50px;
-    height: 50px;
-    position: relative;
 }
 
 .profileIcon {
     width: 41.67px;
     height: 41.67px;
-    top: 4.17px;
-    left: 4.17px;
+    flex-shrink: 0;
 }
 
 .profileIcon img {
     width: 41.67px;
     height: 41.67px;
     object-fit: cover;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 12px;
 }
 
 .profileName {
@@ -33,7 +35,6 @@
     text-align: right;
     color: #000000;
     white-space: nowrap;
-    margin-left: 8px;
 }
 
 .arrowIcon {
@@ -45,7 +46,6 @@
     border-color: #000000;
     border-top: none;
     border-right: none;
-    margin-left: 75px;
     flex-shrink: 0;
 }
 
@@ -57,14 +57,11 @@
 
     .profileName {
         font-size: 18px;
-        margin-left: 6px;
     }
 
     .profileIcon {
         width: 36px;
         height: 36px;
-        top: 4.5px;
-        left: 4.5px;
     }
 
     .profileIcon img {
@@ -75,7 +72,6 @@
     .arrowIcon {
         width: 7px;
         height: 7px;
-        margin-left: 10px;
     }
 }
 
@@ -83,19 +79,15 @@
     .userProfile {
         width: auto;
         height: 40px;
-        gap: 6px;
     }
 
     .profileName {
         font-size: 16px;
-        margin-left: 6px;
     }
 
     .profileIcon {
         width: 32px;
         height: 32px;
-        top: 4px;
-        left: 4px;
     }
 
     .profileIcon img {
@@ -106,18 +98,12 @@
     .arrowIcon {
         width: 7px;
         height: 7px;
-        margin-left: 8px;
     }
 }
 
 @media (max-width: 480px) {
-    .userProfile {
-        gap: 4px;
-    }
-
     .profileName {
         font-size: 14px;
-        margin-left: 4px;
     }
 
     .profileIcon {
@@ -133,7 +119,10 @@
     .arrowIcon {
         width: 6px;
         height: 6px;
-        margin-left: 6px;
+    }
+
+    .userInfo {
+        gap: 8px;
     }
 }
 
@@ -141,7 +130,6 @@
     .userProfile {
         width: 54px;
         height: 36px;
-        gap: 4px;
     }
 
     .profileName {
@@ -158,10 +146,13 @@
         height: 30px;
     }
 
+    .userInfo {
+        gap: 4px;
+    }
+
     .arrowIcon {
         width: 8px;
         height: 8px;
-        margin-left: 2px;
     }
 }
 
@@ -169,7 +160,6 @@
     .userProfile {
         width: 50px;
         height: 34px;
-        gap: 3px;
     }
 
     .profileIcon {
@@ -185,6 +175,5 @@
     .arrowIcon {
         width: 6px;
         height: 6px;
-        margin-left: 2px;
     }
 }

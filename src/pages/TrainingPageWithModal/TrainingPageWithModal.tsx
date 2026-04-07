@@ -56,13 +56,13 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
   }, [location]);
 
   useEffect(() => {
-    if (token && id) {
+    if (token && id && courseId) {
       loadWorkoutData();
     }
   }, [token, id, courseId]);
 
   const loadWorkoutData = async () => {
-    if (!token || !id) return;
+    if (!token || !id || !courseId) return;
 
     try {
       setLoading(true);
@@ -73,18 +73,14 @@ const TrainingPageWithModal: React.FC<TrainingPageWithModalProps> = ({
       setVideoError(false);
       setExercises(workout.exercises);
 
-      if (courseId) {
-        try {
-          const progress = await coursesService.getWorkoutProgress(
-            courseId,
-            id,
-            token,
-          );
-          setExistingProgress(progress.progressData || []);
-        } catch (err) {
-          setExistingProgress(new Array(workout.exercises.length).fill(0));
-        }
-      } else {
+      try {
+        const progress = await coursesService.getWorkoutProgress(
+          courseId,
+          id,
+          token,
+        );
+        setExistingProgress(progress.progressData || []);
+      } catch (err) {
         setExistingProgress(new Array(workout.exercises.length).fill(0));
       }
     } catch (err) {

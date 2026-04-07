@@ -109,22 +109,26 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
                   course._id,
                   token,
                 );
-                totalWorkouts = progress.workoutsProgress.length;
-                
-                // Подсчитываем только те тренировки, которые полностью завершены
+
+                // Получаем общее количество тренировок из курса
+                const fullCourse = await coursesService.getCourseById(
+                  course._id,
+                );
+                totalWorkouts = fullCourse.workouts.length;
+
+                // Количество завершенных тренировок из API прогресса
                 completedWorkouts = progress.workoutsProgress.filter(
-                  (w: WorkoutProgress) => w.workoutCompleted === true
+                  (w: WorkoutProgress) => w.workoutCompleted === true,
                 ).length;
 
                 if (totalWorkouts > 0 && completedWorkouts > 0) {
                   overallProgress = Math.round(
-                    (completedWorkouts / totalWorkouts) * 100
+                    (completedWorkouts / totalWorkouts) * 100,
                   );
                 } else {
                   overallProgress = 0;
                 }
-                
-                // Дополнительная проверка: если completedWorkouts === totalWorkouts, то 100%
+
                 if (completedWorkouts === totalWorkouts && totalWorkouts > 0) {
                   overallProgress = 100;
                 }
